@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>[커넥츠 영단기] 미래를 앞당기는 용기  ::</title>
+	<title></title>
+
+	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">	
+	<script src="/js/bootstrap/3-3-7/bootstrap.min.js"></script>
+	<!-- datetimepicker -->
+	<link href="/css/jquery/jquery.datetimepicker.css" rel="stylesheet">
+	<script type='text/javascript' src='/js/jquery/jquery.datetimepicker.js'></script>
+	
+	<!-- datatable -->
+	<script type="text/javascript" src="/js/jquery/jquery.dataTables.js"></script>	
+	<script type="text/javascript" src="/js/admin/dataTables.bootstrap.js"></script>
+	<link rel='stylesheet' href='/css/datatable/dataTables.bootstrap.css' type='text/css' charset="utf-8"/>
+
+	<script src="/js/common/underscore.js"></script>
+	<script src="/js/common/common.js"></script>
+	<script src="/js/common/site.js"></script>
+	<script type="text/javascript" src="/js/tinymce/tinymce/tinymce.min.js"></script>
+	<script src="/js/vue/vue.js"></script>
+	<script src="/js/vue/vue_extend.js"></script>
+<style>
+	.base_color {background-color: #faa732;}
+	.bg_lev1 {font-size: 12px; }
+	.left_menu_selected {background-color: #b2d7e8;}
+	.btn {border: 1px solid #cccccc;}
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #faa732;
+      color: white;
+      padding: 15px;
+    }
+</style>
+
+</head>
+<body class="">
+	<nav class="navbar navbar-inverse base_color">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" style="color:#333;">Logo</a>
+			</div>
+			<div class="" id="">
+				<ul class="nav navbar-nav">
+					<li class="active base_color"><a style="background-color: #CB966B;" href="#">ST Unitas offeng.dangi.co.kr BACKOFFICE SYSTEM</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" style="color:#333;"><?=$adm_name;?>님</a></li>
+					<li><a href="/adm/login/out" style="color:#333;"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+<?if (!$nomenu):?>
+	<div id="left-menu" class="col-sm-2 sidenav" >
+		<div id="menu" calss="">
+			<div id="lev1_site_management" class="panel list-group">
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_site_management" shape="rect">사이트 관리</a>
+				<div class="collapse" id="tree_lev1_site_management" style="height: auto;">
+					<li class="list-group-item"><a href="/adm/instructor/teacher" data-ptag-target="lev1_site_management" target="_self">선생님 관리</a></li>
+					<li class="list-group-item"><a href="/adm/content/content/banner_list" data-ptag-target="lev1_site_management" target="_self">배너 관리</a></li>
+					<li class="list-group-item"><a href="/adm/content/content/free_lecture_list" data-ptag-target="lev1_site_management" target="_self">무료자료 관리</a></li>
+					<li class="list-group-item"><a href="/adm/content/content/event_list" data-ptag-target="lev1_site_management" target="_self">이벤트 관리</a></li>
+				</div>
+			</div>
+			<div id="lev1_stat_management" class="panel list-group">
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_stat_management" shape="rect">무료강의/자료 관리</a>
+				<div class="collapse" id="tree_lev1_stat_management" style="height: auto;">
+					<li class="list-group-item"><a href="/adm/main/info" data-ptag-target="lev1_stat_management" target="_self">통계 관리</a></li>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script>
+	(function(){
+		window.app_head = {};
+		app_head.uri_segments = <?=json_encode($uri_segments);?>;
+		app_head.uri_string = <?=json_encode($uri_string);?>;
+		app_head.get_params = <?=json_encode($get_params);?>;
+		app_head.adm_member = <?=json_encode($adm_member);?>;
+		app_head.select_left_menu = function(){
+			var url = app_head.uri_string;
+			var url_tail = '';
+			if (Object.keys(app_head.get_params).length>0){
+				var keys = Object.keys(app_head.get_params);
+				var temp = [];
+				keys.forEach(function(key) {
+				    temp.push(''+key+'='+app_head.get_params[key]);
+				});
+				url_tail += '?' + temp.join('&')
+			}
+			if ($('div#left-menu a[href$="' +  url + url_tail + '"]').length>0) {
+				var target = $($('div#left-menu a[href$="' + url + url_tail + '"]')).attr('data-ptag-target');
+				$($('div#left-menu a[href$="' + url + url_tail + '"]')).parent().addClass('left_menu_selected');
+				$($('#' + target).find('a')[0]).trigger('click');
+			}
+			else if ($('div#left-menu a[href$="' +  url + '"]').length>0) {
+				var target = $($('div#left-menu a[href$="' + url + '"]')).attr('data-ptag-target');
+				$($('div#left-menu a[href$="' + url + '"]')).parent().addClass('left_menu_selected');
+				$($('#' + target).find('a')[0]).trigger('click');
+			}
+
+		}
+		app_head.init = function(){
+			app_head.select_left_menu();
+		}
+	})();
+	$(document).ready(function(){
+		app_head.init();
+	});
+</script>
+<?endif;?>
+	<div class="container-fluid">
+		<div class="row content">
+			<div id="content_main_body" class="col-sm-10 text-left"> 
+			<!-- body content -->
+

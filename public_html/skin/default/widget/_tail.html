@@ -1,0 +1,14 @@
+<? /* 마냐보드의 editor와 js가 충돌함 */ ?>
+<!--script type="text/javascript" src="<?=JS_DIR?>/extra/min/jquery-ui.min.js"></script-->
+<? foreach ($js as $script): ?>
+<script type='text/javascript' src='<?=JS_DIR?>/<?=$script?>.js'></script>
+<? endforeach; ?>
+<script type='text/javascript'>
+	var totalExecTime = '<?=$this->benchmark->elapsed_time()?>';
+	if(totalExecTime > 1) //1초 이상일 경우 저장
+	{
+		$.post( "/common/log/execTime", { totalExecTime : totalExecTime, url : '<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>' } );
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<?php
+// include("../../codeigniter/st/skin/chinadangi/china_header.html");
+?>
+<? header('X-UA-Compatible: IE=edge'); ?>
+<!DOCTYPE html>
+<html lang="ko">
+<!--[if IE 7]> <html class="ie7" lang="ko"> <![endif]-->
+<head>
+<meta charset="<?=$this->config->item('charset')?>" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="keywords" content="<?=$meta_keywords?>">
+<meta name="description" content="<?=$meta_description?>">
+<title><?=$title?></title>
+
+<meta property="og:title" content="커넥츠 중단기 :: 중국어 1위의 자신감"><!-- 제목표시 -->
+<meta property="og:description" content="중국어 1위, 기초 중국어, 중국어회화, 신HSK 3급 4급 5급 6급, 중국어 교육 전문사이트"><!-- 본문내용 -->
+<meta property="og:type" content="website"><!-- 사이트 종류 -->
+<meta property="og:image" content="http://eng.dangi.co.kr/img/engdangi/common/common_v4/img_header_cont_china_logo.jpg"><!-- 이미지경로 -->
+<meta property="og:site_name" content="커넥츠 중단기 :: 중국어 1위의 자신감"><!-- 사이트 이름 -->
+<meta property="og:url" content="http://china.dangi.co.kr/"><!-- 표준 URL -->
+
+<link rel="shortcut icon" type="image/x-icon" href="/img/common/chinadangi.ico" />
+<!-- 전체 공통용 -수정은 UI개발팀에 요청 -->
+<link rel="stylesheet" type="text/css" href="<?=CONECTS_STATIC_HOST?>/common/css/st-comm-v3/st-comm-v3.1.0.css?<?=date('YmdHi')?>">
+<!-- 전체 개별용 -수정은 사업부 자체 처리 -->
+<link rel="stylesheet" href="/css/chinadangi/common/common.css?<?=date("Ymdh",time())?>" type="text/css" media="all" >
+<?if($main_yn):?>
+<!-- ***** ALL메인용 -->
+<!-- 메인 공통용 -수정은 UI개발팀에 요청 -->
+<link rel="stylesheet" type="text/css" href="<?=CONECTS_STATIC_HOST?>/common/css/st-main-v3/st-main-v3.0.0.css?<?=date('YmdHi')?>">
+<!-- 메인 개별용 -수정은 사업부 자체 처리 -->
+<link rel="stylesheet" href="<?=CSS_DIR?>/main/main.css?<?=date("Ymdh",time())?>" type="text/css" media="all" >
+<?endif;?>
+
+<!-- CSS (publishing) -->
+<? if($css): ?>
+<? foreach($css as $each_css) :?>
+<link rel="stylesheet" type="text/css" href="<?=CSS_DIR?>/<?=$each_css?>?<?=date("Ymdh",time())?>" />
+<? endforeach; ?>
+<? endif; ?>
+<? if($common_css_use): ?>
+<?endif;?>
+<? if($css_direct): ?>
+<? foreach($css_direct as $each_css) :?>
+<link rel="stylesheet" type="text/css" href="//<?=DANGI_HOST?>/<?=$each_css?>?<?=date("Ymdh",time())?>" />
+<? endforeach; ?>
+<? endif; ?>
+
+<!-- JS-->
+<script type="text/javascript" src="<?=CONECTS_STATIC_HOST?>/common/js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="<?=CONECTS_STATIC_HOST?>/common/js/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<?=CONECTS_STATIC_HOST?>/common/js/bxslider/jquery.bxslider.js"></script>
+<script type="text/javascript" src="<?=CONECTS_STATIC_HOST?>/common/js/greensock/TweenMax.min.js"></script>
+<script type="text/javascript" src="<?=CONECTS_STATIC_HOST?>/common/js/jquery.menu-aim/jquery.menu-aim.js"></script>
+<script type="text/javascript" src="<?=CONECTS_STATIC_HOST?>/common/js/st-pub-v3/st-pub-v3.1.0.js?<?=date('YmdHi')?>"></script>
+<script type="text/javascript">
+	$(function(){
+	    // CONECTS GNB 인스턴스
+	    var COMM_CONECTS_GNB = new ST_CONECTS_GNB();
+	    COMM_CONECTS_GNB.init('.st-connects-v3', 'learning'); //러닝 카테고리가 아닌 경우(북, 튜터 등등)은 init내 두번째 파라미터 사용하시지 않으면, 2depth노출 되지 않습니다.
+	})
+</script>
+<!-- 어학 공통 css,js -->
+<script type="text/javascript" src="<?=CONECTS_STATIC_HOST?>/common_lang/js/pub/lang-common.js?<?=date('YmdHi')?>"></script>
+<link rel="stylesheet" href="<?=CONECTS_STATIC_HOST?>/common_lang/css/pub/lang-common.css?<?=date('YmdHi')?>" type="text/css" media="all" >
+<!-- //어학 공통 css.js -->
+
+<script type="text/javascript" src="<?=JS_DIR?>/common/common.js?<?=date("Ymdh",time())?>"></script>
+<!-- JS(develop)-->
+<? if($js): ?>
+<? foreach($js as $each_js) :?>
+<script type="text/javascript" src="<?=JS_DIR?>/<?=$each_js?>?<?=date("Ymdh",time())?>"></script>
+<? endforeach; ?>
+<? endif; ?>
+
+<script type="text/javascript">
+<?//랜딩페이지 관리자 등록 정보 호출?>
+/* $(function(){
+    var url_info = document.location.href;
+    $.post("/landing_information/main",{url:url_info},function(data){
+		$.each(data,function(idx,val){
+			$.each(val, function (s_idx, s_val){
+				if(s_val.info_type == "b"){
+					if(s_val.link){
+						$html_node = '<a href="'+s_val.link+'"><img src="'+s_val.file_url+'" alt="'+s_val.banner_name+'"></a>';
+					}else if(s_val.img_map){
+						$html_node = '<img src="'+s_val.file_url+'" alt="'+s_val.banner_name+'" usemap="#landing_'+s_val.no_ba_id+'">'+
+						'<map name="#landing_'+s_val.no_ba_id+'" id="#landing_'+s_val.no_ba_id+'">'+
+				    		s_val.img_map+
+						'</map>';
+					}else{
+						$html_node = '<img src="'+s_val.file_url+'" alt="'+s_val.banner_name+'">';
+					}
+					$("#"+s_val.class_name).html($html_node);
+					$("."+s_val.class_name).html($html_node);
+				}
+				if(s_val.info_type == "n"){
+					$("#"+s_val.class_name).html(s_val.notice_txt);
+					$("."+s_val.class_name).html(s_val.notice_txt);
+				}
+			});
+		});
+    },"json");
+}) */
+</script>
+<!-- 마케팅 요청 트래킹 -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-30529619-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<? if( preg_match("/eng.dangi.co.kr/i", $_SERVER['HTTP_HOST'] )){ ?>
+	<script>
+		(function() {
+			var _fbq = window._fbq || (window._fbq = []);
+			if (!_fbq.loaded) {
+			var fbds = document.createElement('script');
+			fbds.async = true;
+			fbds.src = '//connect.facebook.net/en_US/fbds.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(fbds, s);
+			_fbq.loaded = true;
+			}
+			_fbq.push(['addPixelId', '1668509753382952']);
+		})();
+		window._fbq = window._fbq || [];
+		window._fbq.push(['track', 'PixelInitialized', {}]);
+	</script>
+	<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=1668509753382952&amp;ev=PixelInitialized" /></noscript>
+
+	<!-- 마케팅 요청 2015-09-04 -->
+	<script type="text/javascript">
+	    var roosevelt_params = {
+	        retargeting_id:'IlrpHcaVv4eB55ou9swxZA00',
+	        tag_label:'FXqsi0sUTaC3MB7Eth_U_A'
+	    };
+	</script>
+	<script type="text/javascript" src="//adimg.daumcdn.net/rt/roosevelt.js" async></script>
+<? } ?>
+
+<? if( preg_match("/member.dangi.co.kr\/member\/welcome_v2/i",$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] )){ ?>
+	<!-- Facebook Conversion Code for 영단기 RCLC 회원가입 - PC -->
+	<script>
+		(function() {
+			var _fbq = window._fbq || (window._fbq = []);
+			if (!_fbq.loaded) {
+				var fbds = document.createElement('script');
+				fbds.async = true;
+				fbds.src = '//connect.facebook.net/en_US/fbds.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(fbds, s);
+				_fbq.loaded = true;
+			}
+		})();
+		window._fbq = window._fbq || [];
+		window._fbq.push(['track', '6027315111212', {'value':'0.00','currency':'KRW'}]);
+	</script>
+	<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6027315111212&amp;cd[value]=0.00&amp;cd[currency]=KRW&amp;noscript=1" /></noscript>
+<? } ?>
+
+<script type="text/javascript">
+var tab_select = "<?=$tab_select?>";
+<? if($is_top){ ?>
+// $(document).ready(function(){
+// 	$.ajax({
+// 		url: "//<?=MYCLASS_HOST?>/api/event/count",
+// 		dataType : "jsonp",
+// 		cache : false,
+// 		success : function(data){
+// 			if(data.resultCode == '0000' && data.totalCount>0){
+// 				$('#header_event').find('.alarm').remove();
+// 				$('#header_event').append('<div class="alarm">'+data.totalCount+'</div>');
+// 			}
+// 		}
+// 	});
+// });
+<? } ?>
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+//####################
+//####### gnb ########
+//####################
+	$('#gnb .gnb_list > li').hover(function(){
+		$(this).addClass('on').children('.sub').stop().slideDown('fast');
+	},function(){
+		$(this).removeClass('on');
+		$(this).children('.sub').stop().slideUp('fast',function(){
+			$(this).parent().removeClass('on');
+		});
+	});
+//#############################
+//####### quick_banner ########
+//#############################
+	$(window).load(function(){
+		//출사표영역 높이 + 헤더 높이 = top_slide_on_off
+		top_slide_on_off = Math.floor($('.top_slide_zone').height() + $('#header').height());
+
+		//현재 헤더랑 배너의 top거리(.sub_banner 의 top값) = sub_banner_top
+		if (typeof $(".banner_box .sub_banner").css('top') != 'undefined') {
+			sub_banner_top = $(".banner_box .sub_banner").css('top').replace('px', '');
+			//스크롤 이동시 (브라우져 상단과의 떨어져있는 높이 만큼 배너 멈추게하기)
+			//상단 출사표 열림/닫힘 에 따라 높이가 다르기 때문에 체크해줘야한다.
+			$(window).on("scroll",function(){
+				top_slide_on_off = Math.floor($('.top_slide_zone').height() + $('#header').height());
+				var scTop=$(this).scrollTop();
+				if(scTop <= top_slide_on_off){
+					//scTop = sub_banner_top;
+					$(".banner_box .sub_banner").removeClass('sub_ban_fixed');
+				}else{
+					//scTop=scTop-(top_slide_on_off-10);
+					$(".banner_box .sub_banner").addClass('sub_ban_fixed');
+				};
+				//$(".banner_box .sub_banner").css('top',scTop);
+			});
+		}
+	});
+	$('.header_slide_box ul').bxSlider({
+		slideWidth: 195,
+		mode: 'vertical',
+		auto:($('.header_slide_box ul li').length > 1) ? true: false,
+		controls: true,
+		pager: false
+	});
+	var lnb_slide;
+	lnb_slide = $('.lnb_slide_box ul').bxSlider({
+		slideWidth:280,
+		controls: false,
+		pager: true,
+		auto:($('.lnb_slide_box ul li').length > 1) ? true: false,
+		speed:500
+	});
+	$('#header .lnb_list li').mouseenter(function(){
+		$('#header .lnb_sub_box').slideDown('fast');
+		lnb_slide.destroySlider();
+		lnb_slide.reloadSlider();
+	});
+	$('#header .lnb_box').mouseleave(function(){
+		$('#header .lnb_sub_box').slideUp('fast');
+		lnb_slide.destroySlider();
+	});
+	if( $('.top_random_title .top_line_title').length > 1){
+		//1개보다 많을때
+		$('.top_random_title .top_line_title').eq(Math.floor((Math.random()*$('.top_random_title .top_line_title').length))).css('display','block');
+	}else{
+		//1개일때
+		$('.top_random_title .top_line_title').eq(0).css('display','block');
+	};
+});
+<?if($heatmap_yn){?>
+(function(h,e,a,t,m,p) {
+m=e.createElement(a);m.async=!0;m.src=t;
+p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
+})(window,document,'script','https://u.heatmap.it/log.js');
+<?}?>
+</script>
+</head>
+
+<body>
+
+<input type="hidden" name="redirect_url" id="redirect_url" value="<?=urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])?>" />
+<input type="hidden" name="is_member" id="is_member" value="<?=IS_MEMBER?>" />
+
+<?php
+	include("../../codeigniter/st/skin/common/common_conects.html");
+?>
+
+<? if($is_top) : ?>
+<!-- wrap -->
+<div id="wrap">
+
+
+	<div id="header">
+		<div class="st-header-v3">
+			<h2>
+				<a href="/" class="bi"><img src="<?=IMG_DIR?>/common/header/bi-CONECTS-CHINA-h-40.gif" alt="중단기"></a>
+			</h2>
+
+			<div class="nav-linkage-group num02">
+				<!--<ul>
+					<li ><a href="/gangnam/main/toeic">토익</a></li>
+				</ul>-->
+			</div>
+
+			<div class="nav-1depth">
+				<ul class="">
+					<li class="">
+						<a href="/registration/" class="depth">수강신청</a>
+						<div class="nav-2depth">
+							<div class="column">
+								<!-- <strong class="tit-01"></strong> -->
+								<ul class="list">
+									<?if(date('Ymd') > '20170911'):?>
+									<li>
+										<a href="/promotion/tantan">기초탄탄 평생패스</a>
+									</li>
+									<?endif;?>
+									<?if(date('Ymd') < '20170912'):?>
+									<li>
+										<a href="/promotion/all_freepass">중단기 평생 프리패스</a>
+									</li>
+									<?endif;?>
+									<li>
+										<a href="/promotion/hsk_zeropass/main/pc">HSK 0원 환급반</a>
+									</li>
+
+									<li>
+										<a href="/promotion/start_zero/">왕초보 0원 환급반</a>
+									</li>
+									<li>
+										<a href="/registration/china_call">전화중국어</a>
+									</li>
+									<li>
+										<a href="/registration/book">교재</a>
+									</li>
+									<li>
+										<a href="/registration/" class="btn_all_show"><img src="<?=IMG_DIR?>/common/header/btn_all_show.png" alt="전체 강좌 보기"></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="">
+						<a href="/freemovie/" class="depth">무료강의/정보</a>
+						<div class="nav-2depth">
+							<div class="column">
+								<!-- <strong class="tit-01"></strong> -->
+								<ul class="list">
+									<li>
+										<a href="/freemovie?tab=01">기초/회화</a>
+									</li>
+									<li>
+										<a href="/freemovie?tab=02">HSK / 중고급</a>
+									</li>
+									<li>
+										<a href="/promotion/level_test_new">레벨테스트</a>
+									</li>
+									<li>
+										<a href="/fullservice/main">HSK 풀서비스</a>
+									</li>
+									<li>
+										<a href="/promotion/hsk_guide/">중국어시험가이드</a>
+									</li>
+									<li>
+										<a href="/promotion/hsk_test_new">HSK 실전모의고사</a>
+									</li>
+									<li>
+										<a href="/promotion/guide_map/main">맞춤 학습 가이드</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="">
+						<a href="/teacher/" class="depth">선생님</a>
+						<div class="nav-2depth">
+							<div class="column">
+								<!-- <strong class="tit-01"></strong> -->
+								<ul class="list">
+									<li>
+										<a href="/teacher/home?teacher_id=242">남미숙 선생님</a>
+									</li>
+									<li>
+										<a href="/teacher/home?teacher_id=195">강현주 선생님</a>
+									</li>
+									<li>
+										<a href="/teacher/home?teacher_id=211">김수현 선생님</a>
+									</li>
+									<li>
+										<a href="/teacher/home?teacher_id=577">이선아 선생님</a>
+									</li>
+									<li>
+										<a href="/teacher/home?teacher_id=256">서성영 선생님</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="">
+						<a href="/community/v3/main/courses_postscript" class="depth">커뮤니티</a>
+						<div class="nav-2depth">
+							<div class="column">
+								<!-- <strong class="tit-01"></strong> -->
+								<ul class="list">
+									<li>
+										<a href="/community/v3/main/courses_postscript">수강후기</a>
+									</li>
+									<li>
+										<a href="/community/v3/main/exam_postscript">시험후기</a>
+									</li>
+									<li>
+										<a href="/community/v3/main/pass_postscript">합격수기</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="">
+						<a href="/event/v3/notice/" class="depth">공지/이벤트</a>
+						<div class="nav-2depth">
+							<div class="column">
+								<!-- <strong class="tit-01"></strong> -->
+								<ul class="list">
+									<li>
+										<a href="/event/v3/notice/">공지사항</a>
+									</li>
+									<li>
+										<a href="/event/v3/event/">이벤트</a>
+									</li>
+									<li>
+										<a href="/event/v3/winner/">당첨자 발표</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="">
+						<a href="/customer_center/v3/qna_board/" class="depth">고객센터</a>
+						<div class="nav-2depth">
+							<div class="column">
+								<!-- <strong class="tit-01"></strong> -->
+								<ul class="list">
+									<li>
+										<a href="/customer_center/v3/faq_board/main">FAQ</a>
+									</li>
+									<li>
+										<a href="/customer_center/v3/qna_board/study_install">학습프로그램</a>
+									</li>
+									<li>
+										<a href="/customer_center/v3/qna_board/pc_remote">PC원격지원</a>
+									</li>
+									<li>
+										<a href="/customer_center/v3/qna_board/qna_list">1:1문의</a>
+									</li>
+									<li>
+										<a href="/customer_center/v3/qna_board/want_to_china">중단기에바란다</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<!--
+			<strong class="tit">강남캠퍼스의 다른 과목</strong>
+			<div class="nav-add-service">
+				<ul>
+					<li><a href="#"><img src="//placeholdit.imgix.net/~text?txtsize=10&amp;txt=140%C3%9724&amp;w=140&amp;h=24" alt="중단기 학원"></a></li>
+					<li><a href="#"><img src="//placeholdit.imgix.net/~text?txtsize=10&amp;txt=140%C3%9724&amp;w=140&amp;h=24" alt="원어민회화 학원"></a></li>
+					<li><a href="#"><img src="//placeholdit.imgix.net/~text?txtsize=10&amp;txt=140%C3%9724&amp;w=140&amp;h=24" alt="SAT/ACT 학원"></a></li>
+					<li><a href="#"><img src="//placeholdit.imgix.net/~text?txtsize=10&amp;txt=140%C3%9724&amp;w=140&amp;h=24" alt="GMAT/GRE 학원"></a></li>
+					<li><a href="#"><img src="//placeholdit.imgix.net/~text?txtsize=10&amp;txt=140%C3%9724&amp;w=140&amp;h=24" alt="취업단기 학원"></a></li>
+				</ul>
+			</div>
+			-->
+
+			<strong class="tit">오프라인 학원</strong>
+			<div class="nav-1depth">
+				<ul>
+					<li><a href="http://offeng.dangi.co.kr/china" target="_blank">중단기 강남학원</a></li>
+					<li><a href="http://offeng.dangi.co.kr/busan_china" target="_blank">중단기 부산학원</a></li>
+				</ul>
+			</div>
+
+			<!--
+			<strong class="tit">연관 서비스</strong>
+			<div class="nav-relationship">
+				<ul>
+					<li><a href="#"><img src="<?=IMG_DIR?>/common/header/bi-CONECTS-BARO-h-36.png" alt=""></a></li>
+					<li><a href="#"><img src="<?=IMG_DIR?>/common/header/bi-CONECTS-SORIDREAM-h-36.png" alt=""></a></li>
+					<li><a href="#"><img src="<?=IMG_DIR?>/common/header/bi-CONECTS-DIRECTENGLISH-h-36.png" alt=""></a></li>
+					<li><a href="#"><img src="<?=IMG_DIR?>/common/header/bi-CONECTS-PRINCETON-h-36.png" alt=""></a></li>
+				</ul>
+			</div>
+			-->
+
+
+			<strong class="tit">중단기 SNS</strong>
+			<div class="nav-link-sns">
+				<ul>
+					<li>
+						<a href="https://ko-kr.facebook.com/chinadangi/" target="_blank" class="btn-sns-t02">
+							<span class="ico-sns-t02 facebook">facebook</span>
+						</a>
+					</li>
+					<li>
+						<a href="http://blog.naver.com/prologue/PrologueList.nhn?blogId=chinadangi" target="_blank" class="btn-sns-t02">
+							<span class="ico-sns-t02 blog">blog</span>
+						</a>
+					</li>
+					<li>
+						<a href="http://post.naver.com/my.nhn?memberNo=24342833" target="_blank" class="btn-sns-t02">
+							<span class="ico-sns-t02 post">post</span>
+						</a>
+					</li>
+					<!-- <li>
+						<a href="https://www.instagram.com/engdangi" target="_blank" class="btn-sns-t02">
+							<span class="ico-sns-t02 instagram">instagram</span>
+						</a>
+					</li>
+					<li><a href="https://www.youtube.com/user/engdangi" target="_blank"><img src="http://offeng.dangi.co.kr/img/offengdangi/common/social/btn_youtube.png" alt="유튜브"></a></li> -->
+				</ul>
+			</div>
+
+		</div>
+		<script type="text/javascript">
+		$(function(){
+			// GNB실행 함수
+			var ENG_GNB = new GNB();
+			ENG_GNB.init('.st-header-v3');
+		})
+		</script>
+	</div>
+
+
+
+	<!-- container -->
+	<div id="container">
+		<!-- pr배너 -->
+		<?if(date('YmdHis') < '20170721210500'):?>
+			<div style="position:relative;width:100%;background:#fffde5;text-align:center;">
+				<a href="http://china.dangi.co.kr/promotion/hsk_secret" target="_blank">
+					<img src="<?=IMG_DIR?>common/header/ban/ban_top_pr_10502.png" alt="">
+				</a>
+			</div>
+		<?endif;?>
+		<!-- //pr배너 -->
+
+		<!-- contents -->
+		<div id="contents">
+
+		<?endif;?>

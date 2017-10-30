@@ -1,0 +1,75 @@
+<style>
+	.wid100 {width:100%} 
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//선생님 테이블 
+		$("#teacher_table").dataTable();
+
+		//검색시
+		$('#search_teacher_name').on( 'keyup click', function () {
+	        formSearch(1);
+	    } );
+	});
+	
+	function writeTeacher(cd){
+		window.location.href='/<?=ADM_F?>/teacher/teacher_code/write_form?cd=' + cd;
+	}
+
+	function formSearch(i){
+		$("#teacher_table").dataTable().column(i).search(
+	        $('#search_teacher_name').val(), 
+	        false, 
+	        true
+   	 	).draw();
+	}
+
+	
+</script>
+</head>
+<body>
+<div id="wrap">
+	<h1 class="skip">선생님 관리</h1>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <a href="javascript:writeTeacher('');" class="btn btn-default update" style="float:right">추가</a>
+	  </div>
+	</div>	
+	  <!-- <a href="javascript:search();" class="btn btn-default update">검색</a>	   -->
+	<p />
+	<!-- write -->
+	<div class="row">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">                           
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="teacher_table">
+                        <thead role="row">
+                            <tr>
+                                <th>코드</th>
+                                <th>코드 이름</th>
+                                <th>comment</th>
+                                <th>upcode</th>
+                                <th>등록자</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tab_list_vlew">
+                        <? foreach ($list as $key => $value) { ?>
+                			<tr>
+                				<!-- <td></td> -->
+                                <td><?= $value["cd"] ?></td>
+                                <td><a href="javascript:writeTeacher('<?=$value["cd"]  ?>');"><?= $value["cd_nm"] ?></a></td>
+                                <td><?= $value["comment"] ?></td>
+                                <td><?= $value["upcode"] ?></td>
+                                <td><?= $value["reg_id"] ?></td>
+                			</tr>
+                        <? } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- write -->
+</div>
+</body>
+</html>

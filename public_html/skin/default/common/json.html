@@ -1,0 +1,16 @@
+<?
+/**
+ * 필수적인 데이타
+ * $dataset 	: 데이타 리스트
+ * 
+ * 선택적인 데이타
+ * $callback : callback 여부 | jsonp 호출
+ */
+if ($callback) {
+	header("Content-Type: application/json");
+	echo $callback."(".json_encode($dataset).")";
+} else {
+	header("Content-Type: application/json");
+	echo json_encode($dataset);
+}
+?>

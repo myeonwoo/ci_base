@@ -1,0 +1,381 @@
+<style>
+#contents{padding-bottom:0;}
+.event_20170407 .flo_clear{zoom:1}
+.event_20170407 .flo_clear:after{content:'';display:block;clear:both;}
+.event_20170407 .cont_1050{position:relative;width:1050px;margin:0 auto;}
+.event_20170407 .cont_900{width:900px;margin:0 auto;}
+
+/* 상단 타임보드 */
+.po_fixed{position:fixed;top:0;left:71px;}
+.sec_clock{overflow:hidden;width:100%;height:99px; padding-top:30px; background:#000;z-index:10;}
+.sec_clock .bi{display:block;float:left;margin-right:35px;padding-top:11px;}
+.sec_clock .clock_cont{float:left;}
+.sec_clock .clock_cont strong{float:left; display:block; margin:0 10px; padding-top:21px; font-size:18px; color:#fff;letter-spacing:-2px;}
+.sec_clock .clock_cont strong:first-child{padding-top:10px;}
+.sec_clock .clock_cont em{float:left; display:block;width:118px; height:70px; padding-left:9px; font-family:Tahoma, helvetica,sans-serif; line-height:70px; font-size:56px; color:#000; font-weight:bold; letter-spacing:14px; background:url(<?=IMG_DIR?>promotion/membership/clock_bg.png) no-repeat left bottom;}
+.sec_clock .clock_cont em span{overflow:hidden;position:absolute;top:-999em;left:-999em;width:1px;height:1px;letter-spacing:-2px;}
+.sec_clock .clock_cont .day{width:147px;background-position:left top;}
+.sec_clock .clock_cont .hour{}
+.sec_clock .clock_cont .min{}
+.sec_clock .clock_cont .sec{width:93px;}
+.sec_clock .btn_free{display:block;position:absolute;top:12px;right:0;}
+
+/* sec_visual */
+.sec_visual{height:734px;background: url(<?=IMG_DIR?>promotion/membership/visual_bg.jpg) no-repeat center top;}
+.sec_visual .dragonflies{position:absolute;top:50px;left:30px;width:122px;height:134px;z-index:2;}
+.sec_visual .dragonflies_shadow{position:absolute;top:70px;left:50px;width:122px;height:134px;z-index:1;}
+
+/* sec_teacher_slide */
+.sec_teacher_slide{padding:60px 0;background:#fdf2d9;}
+.sec_teacher_slide .tit{text-align:center;}
+.sec_teacher_slide .tab_list{position:relative;margin:0 auto;width:900px;height:247px;}
+.sec_teacher_slide .tab_list li{position:absolute;bottom:0;}
+.sec_teacher_slide .tab_list li.b1{left:80px;width:182px;height:213px;z-index:0;}
+.sec_teacher_slide .tab_list li.b2{left:215px;width:172px;height:213px;z-index:1;}
+.sec_teacher_slide .tab_list li.b3{left:330px;width:231px;height:216px;z-index:2;}
+.sec_teacher_slide .tab_list li.b4{left:500px;width:187px;height:216px;z-index:1;}
+.sec_teacher_slide .tab_list li.b5{left:602px;width:257px;height:213px;z-index:0;}
+.sec_teacher_slide .tab_list li a{position:absolute;bottom:0;left:0;display:block;width:100%;height:100%;}
+.sec_teacher_slide .tab_list li img{width:100%;height:100%;}
+.sec_teacher_slide .tab_list li.on{z-index:3;}
+.sec_teacher_slide .tab_list li .t_info_txt{position:absolute;bottom:10px;display:block;width:115px;height:40px;}
+.sec_teacher_slide .tab_list li.b1 .t_info_txt{left:10px;background:url(<?=IMG_DIR?>/promotion/membership/t_info01.png) no-repeat left top;}
+.sec_teacher_slide .tab_list li.b2 .t_info_txt{left:5px;background:url(<?=IMG_DIR?>/promotion/membership/t_info02.png) no-repeat left top;}
+.sec_teacher_slide .tab_list li.b3 .t_info_txt{left:55px;background:url(<?=IMG_DIR?>/promotion/membership/t_info03.png) no-repeat left top;}
+.sec_teacher_slide .tab_list li.b4 .t_info_txt{left:62px;background:url(<?=IMG_DIR?>/promotion/membership/t_info04.png) no-repeat left top;}
+.sec_teacher_slide .tab_list li.b5 .t_info_txt{left:115px;background:url(<?=IMG_DIR?>/promotion/membership/t_info05.png) no-repeat left top;}
+.sec_teacher_slide .tab_con{width:896px;height:416px;border:2px solid #202020;overflow:hidden;}
+.sec_teacher_slide .tab_con .slide_box{display:none;width:896px;height:416px;}
+.sec_teacher_slide .tab_con .on{}
+.sec_teacher_slide .bx-controls{width:100%;height:30px;}
+.sec_teacher_slide .bx-controls-direction a{display:block;position:absolute;top:500px;width:24px;height:61px;background-image:url(<?=IMG_DIR?>/promotion/membership/btn_arrow.png);font-size:0;text-indent:-9999px;}
+.sec_teacher_slide .bx-controls-direction .bx-prev{left:0px;background-position:left top;}
+.sec_teacher_slide .bx-controls-direction .bx-next{right:0px;background-position:right top;}
+.sec_teacher_slide .bx-pager{position:absolute;bottom:15px;left:0;width:100%;height:30px;text-align:center;}
+.sec_teacher_slide .bx-pager .bx-pager-item{display:inline-block;margin-top:10px;height:20px;*display:inline;*zoom:1}
+.sec_teacher_slide .bx-pager .bx-pager-item a{display:block;width:22px;height:22px;background:url(<?=IMG_DIR?>/promotion/membership/btn_dot.png) no-repeat left top;vertical-align:top;font-size:0;text-indent:-9999px;}
+.sec_teacher_slide .bx-pager .bx-pager-item a.active{background-position:right top;}
+
+/* sec_benefit_free */
+.sec_benefit_free{background:#007eff;}
+
+/* sec_lec_choice */
+.sec_lec_choice{background:#fff;}
+
+/* sec_guide */
+.sec_guide{padding-bottom:60px;background:#fe4d4d;}
+
+/* sec_bottom_box */
+.sec_bottom_box{padding-bottom:60px;text-align:center;background:#fff url(<?=IMG_DIR?>/promotion/membership/bottom_box_bg.jpg) no-repeat center top;}
+.sec_bottom_box .bottom_dragonflies{position:absolute;top:253px;left:75px;}
+
+</style>
+
+<div class="event_20170407">
+
+	<div id="sec_clock" class="sec_clock">
+		<div class="cont_1050 flo_clear">
+			<a href="http://china.dangi.co.kr/" class="bi"><img src="<?=IMG_DIR?>promotion/membership/bi_china.png" alt="중국어 학원 1위 중단기"></a>
+			<div class="clock_cont">
+				<strong>이벤트<br>종료까지</strong>
+				<em class="day">00<span>day</span></em>
+				<em class="hour">00<span>시간</span></em>
+				<em class="min">00<span>분</span></em>
+				<em class="sec">00<span>초</span></em>
+				<strong>남았습니다.</strong>
+			</div>
+			<a href="javascript:go_join();" class="btn_free"><img src="<?=IMG_DIR?>promotion/membership/btn_free.png" alt="무료 수강권 받으러 가기"></a>
+		</div>
+	</div><!-- //sec_clock -->
+
+	<div class="sec_visual">
+		<div class="cont_1050">
+			<div class="cont_900">
+				<h2><img src="<?=IMG_DIR?>promotion/membership/visual_img.png" alt="중국어 전 강의 0원" usemap="#map_visual_img"></h2>
+				<map name="map_visual_img" id="map_visual_img">
+					<area shape="rect" coords="208,595,681,706" href="#" alt="72시간 무료 수강하기">
+				</map>
+				<span class="dragonflies"><img src="<?=IMG_DIR?>promotion/membership/dragonflies.png" alt="잠자리"></span>
+				<span class="dragonflies_shadow"><img src="<?=IMG_DIR?>promotion/membership/dragonflies_shadow.png" alt="잠자리"></span>
+			</div>
+		</div>
+	</div><!-- //sec_visual -->
+
+	<div class="sec_teacher_slide">
+		<div class="cont_1050">
+			<div class="cont_900">
+				<p class="tit"><img src="<?=IMG_DIR?>promotion/membership/teacher_slide_tit.gif" alt="쉽고 빠른 중국어, 중단기와 함꼐하는 1등 강사진을 소개합니다."></p>
+
+				<ul class="tab_list">
+					<li class="b1 on">
+						<a href="#" onclick="return false;">
+							<img src="<?=IMG_DIR?>promotion/membership/btn_t01_off.png" alt="">
+							<span class="t_info_txt"></span>
+						</a>
+					</li>
+					<li class="b2">
+						<a href="#" onclick="return false;">
+							<img src="<?=IMG_DIR?>promotion/membership/btn_t02_off.png" alt="">
+							<span class="t_info_txt"></span>
+						</a>
+					</li>
+					<li class="b3">
+						<a href="#" onclick="return false;">
+							<img src="<?=IMG_DIR?>promotion/membership/btn_t03_off.png" alt="">
+							<span class="t_info_txt"></span>
+						</a>
+					</li>
+					<li class="b4">
+						<a href="#" onclick="return false;">
+							<img src="<?=IMG_DIR?>promotion/membership/btn_t04_off.png" alt="">
+							<span class="t_info_txt"></span>
+						</a>
+					</li>
+					<li class="b5">
+						<a href="#" onclick="return false;">
+							<img src="<?=IMG_DIR?>promotion/membership/btn_t05_off.png" alt="">
+							<span class="t_info_txt"></span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab_con">
+					<div class="slide_box on">
+						<ul>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s1_1.gif" alt=""></li>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s1_2.gif" alt=""></li>
+						</ul>
+					</div>
+					<div class="slide_box">
+						<ul>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s2_1.gif" alt=""></li>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s2_2.gif" alt=""></li>
+						</ul>
+					</div>
+					<div class="slide_box">
+						<ul>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s3_1.gif" alt=""></li>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s3_2.gif" alt=""></li>
+						</ul>
+					</div>
+					<div class="slide_box">
+						<ul>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s4_1.gif" alt=""></li>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s4_2.gif" alt=""></li>
+						</ul>
+					</div>
+					<div class="slide_box">
+						<ul>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s5_1.gif" alt=""></li>
+							<li><img src="<?=IMG_DIR?>/promotion/membership/s5_2.gif" alt=""></li>
+						</ul>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div><!-- //sec_teacher_slide -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="sec_benefit_free">
+		<div class="cont_1050">
+			<div class="cont_900">
+				<img src="<?=IMG_DIR?>/promotion/membership/benefit_free.jpg" alt="1등 강사진의 모든 강의와 특별 혜택이 모두 무료!">
+			</div>
+		</div>
+	</div><!-- //sec_benefit_free -->
+
+	<div class="sec_lec_choice">
+		<div class="cont_1050">
+			<div class="cont_900">
+				<img src="<?=IMG_DIR?>/promotion/membership/lec_choice.jpg" alt="어떤 강의를 들으면 좋을까요?" usemap="#map_lec_choice">
+				<map name="map_lec_choice" id="map_lec_choice">
+					<area shape="rect" coords="670,340,861,382" href="/teacher/lecture?teacher_id=242" target="_blank" alt="남미숙 자세히보기">
+					<area shape="rect" coords="222,584,413,625" href="/teacher/lecture?teacher_id=195" target="_blank" alt="강현주 자세히보기">
+					<area shape="rect" coords="670,583,862,626" href="/teacher/lecture?teacher_id=211" target="_blank" alt="김수현 자세히보기">
+					<area shape="rect" coords="222,827,414,869" href="/teacher/lecture?teacher_id=577" target="_blank" alt="이선아 자세히보기">
+					<area shape="rect" coords="668,827,861,870" href="/teacher/lecture?teacher_id=256" target="_blank" alt="서성영 자세히보기">
+				</map>
+			</div>
+		</div>
+	</div><!-- //sec_lec_choice -->
+
+	<div class="sec_guide">
+		<div class="cont_1050">
+			<div class="cont_900">
+				<p><img src="<?=IMG_DIR?>/promotion/membership/guide_tit.jpg" alt="강의는 어떻게 수강할 수 있나요?"></p>
+				<img src="<?=IMG_DIR?>/promotion/membership/guide.gif" alt="가이드 이미지">
+			</div>
+		</div>
+	</div><!-- //sec_guide -->
+
+	<div class="sec_bottom_box">
+		<div class="cont_1050">
+			<div class="cont_900">
+				<p><img src="<?=IMG_DIR?>/promotion/membership/bottom_box_tit.jpg" alt="중국어학원 1위의 강의력! 직접 들어보고 결정하세요"></p>
+				<a href="http://member.dangi.co.kr/member/join" target="_blank"><img src="<?=IMG_DIR?>/promotion/membership/btn_72free.gif" alt="72시간 무료 수강하기"></a>
+				<a href="/promotion/hsk_payback" target="_blank"><img src="<?=IMG_DIR?>/promotion/membership/bottom_ban.jpg" alt="중단기 0원 환급반 자세히보기"></a>
+				<span class="bottom_dragonflies"><img src="<?=IMG_DIR?>/promotion/membership/bottom_dragonflies.png" alt="잠자리"></span>
+			</div>
+		</div>
+	</div><!-- //sec_bottom_box -->
+
+
+
+
+
+
+
+
+
+
+</div>
+<!-- //event_20170407 -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+
+	var tab_index;//현재 탭의 인덱스 값
+	var new_index; //현재 연결된 슬라이드 인덱스 값
+	var duble_num=0; //더블 클릭 방지용
+
+	//bx슬라이드 선언용 함수
+	function slide_box(){
+		slider = $('.sec_teacher_slide .tab_con .on ul').bxSlider({
+			slideWidth:896,
+			auto:false,
+			pause:2000,
+			pager:true,
+			controls:true,
+			infiniteLoop:false,
+			onSliderLoad: function($slideElement, oldIndex, newIndex){
+				new_index=0;
+			},
+			onSlideAfter: function($slideElement, oldIndex, newIndex){
+				new_index = newIndex;
+			}
+		});
+	};
+	slide_box(); //처음 초기 bx연결(지우면안됨)
+
+	$('.sec_teacher_slide .tab_list li a').click(function(){
+		if( duble_num == 1 ){ return; }
+			duble_num=1;
+
+		tab_index = $(this).parent().index(); //현재 탭 인덱스 값
+		$(this).parent().addClass('on').siblings().removeClass('on');
+
+		$('.sec_teacher_slide .tab_list li a img').each(function(){
+			$(this).attr('src',$(this).attr('src').replace('_on','_off'));
+		});
+		$(this).children('img').attr('src',$(this).children('img').attr('src').replace('_off','_on'));
+
+		TweenLite.to( $(this).parent().siblings().find('a'), .3, { width:100+'%' , height:100+'%' } );
+		TweenLite.to( $(this), .7, { width:107+'%' , height:107+'%' , marginLeft:-4+'%' , ease: Back.easeOut.config(3) } );
+
+		
+		slider.destroySlider(); //탭안의 bx연결 파괴!
+		$('.tab_con .slide_box').eq(tab_index).addClass('on').fadeIn('fast',function(){
+			slide_box(); //현재 노출되어있는 탭 bx연결!
+			duble_num=0;
+		}).siblings().removeClass('on').css('display','none');
+	});
+
+	/* 자동롤링 부분 시작 */
+	function banbok(){
+		myVar = setInterval(function(){
+			$('.sec_teacher_slide .bx-next').trigger('click');
+		},3000);
+	};
+	$('.sec_teacher_slide').hover(function(){
+		clearInterval(myVar);
+	},function(){
+		banbok();
+	});
+	banbok(); //초기 자동롤링 시작 호출용
+	/* 자동롤링 부분 끝 */
+
+	//왼쪽 버튼 클릭시 이벤트(반드시 bx옵션에서 controls는 true로 해야함)
+	$('body').on( "click",'.sec_teacher_slide .bx-prev', function() {
+		if( new_index == 0 ){
+			if( tab_index == 0 ){
+				tab_index=$('.sec_teacher_slide .tab_list li').length-1;
+			}else{
+				tab_index--;
+			};
+			$('.sec_teacher_slide .tab_list li').eq(tab_index).find('a').click();
+		};
+	});
+
+	//오른쪽 버튼 클릭시 이벤트(반드시 bx옵션에서 controls는 true로 해야함)
+	$('body').on( "click",'.sec_teacher_slide .bx-next', function() {
+		if( new_index == $('.sec_teacher_slide .tab_con .on li').length-1){
+			if( tab_index < $('.sec_teacher_slide .tab_list li').length-1 ){
+				tab_index++;
+			}else{
+				tab_index=0;
+			};
+			$('.sec_teacher_slide .tab_list li').eq(tab_index).find('a').click();
+		};
+	});
+
+
+
+	var t1 = new TimelineLite();
+	var t2 = new TimelineLite();
+	var dragonflies_class = $('.dragonflies');
+	var dragonflies_shadow = $('.dragonflies_shadow');
+		t1.to( dragonflies_class, 0, { ease: Power0.easeNone, rotation:70 } );
+		t2.to( dragonflies_shadow, 0, { ease: Power0.easeNone, rotation:70 } );
+
+	$(window).load(function(){
+		//처음 초기 오픈시킬 탭순서 eq뒤에 숫자만 원하는 순서 숫자로 넣어주면 됨!
+		$('.sec_teacher_slide .tab_list li:eq(0) a').click();
+		t1.to( dragonflies_class, .3, { ease: Power0.easeNone, top:10, left:150, rotation:125 } );
+		t1.to( dragonflies_class, .4, { ease: Power0.easeNone, top:50, left:500, rotation:150 } );
+		t1.to( dragonflies_class, .4, { ease: Power0.easeNone, top:150, left:700, rotation:170 } );
+		t1.to( dragonflies_class, .4, { ease: Power0.easeNone, top:300, left:850, rotation:190 } );
+		t1.to( dragonflies_class, .4, { ease: Power0.easeNone, top:500, left:900, rotation:220 } );
+		t1.to( dragonflies_class, 1, { ease: Power0.easeNone, top:650, left:1000, rotation:360 } );
+		t2.to( dragonflies_shadow, .3, { ease: Power0.easeNone, top:30, left:170, rotation:125 } );
+		t2.to( dragonflies_shadow, .4, { ease: Power0.easeNone, top:70, left:520, rotation:150 } );
+		t2.to( dragonflies_shadow, .4, { ease: Power0.easeNone, top:170, left:720, rotation:170 } );
+		t2.to( dragonflies_shadow, .4, { ease: Power0.easeNone, top:320, left:870, rotation:190 } );
+		t2.to( dragonflies_shadow, .4, { ease: Power0.easeNone, top:520, left:920, rotation:220 } );
+		t2.to( dragonflies_shadow, 1, { ease: Power0.easeNone, top:670, left:1020, rotation:360 } );
+
+		//상단 타임보드바 고정 스크립트
+		var top_bar = $('.sec_clock').offset().top;
+		$(window).on("scroll",function(){
+			var scTop=$(this).scrollTop()
+			if( scTop >= top_bar ){
+				$('.sec_clock').addClass('po_fixed');
+				$('.event_20170407').css('paddingTop',$('.sec_clock').height());
+			}else{
+				$('.sec_clock').removeClass('po_fixed');
+				$('.event_20170407').css('paddingTop',0);
+			}
+		});
+	});
+
+
+
+
+});
+</script>

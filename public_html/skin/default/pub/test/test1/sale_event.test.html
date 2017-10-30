@@ -1,0 +1,135 @@
+<script type="text/javascript">
+$(document).ready(function(){
+      
+    //상단 영역이동 고정바
+    $("#sec_top_nav").moveBar({
+        FIXED: true,
+        CLICK: true,
+        FIXED_SIZE :1462,
+        FIXED_LEFT : 71,
+        SHADOW_HEIGHT: 0,
+        MOVE_SPEED: 1000  
+    });
+    //토글(유의사항 옵션있을때)
+    $('.sec_note .note_tit').secToggle({
+        TOGGLE_SPEED: 'slow',
+        DIV_CONT : '.cont_box'
+    });
+    //토글
+    $('.sec_note1 .note_tit1').secToggle();
+    //스카이 배너
+    $('.quick_menu').quickMenu({
+        HEADER_ID: '#header',
+        FIXED_CLS: 'ban_fixed',
+        FIXED_SIZE :1462
+    });
+      
+    //버튼 스크롤링
+    moveLink(".move_gogo");
+      
+    // 리스트 자동롤링 DELAY:반복시간/LIST_SPEED:슬라이드 up으로 사라지는 속도slow/fast
+/*
+    $('.list_con').listRolling({ // <ul class="list_con">
+        DELAY: 3000,
+        LIST_SPEED: 'slow'
+    });
+*/
+  
+});
+</script>
+
+<style type="text/css">
+    
+#contents{padding-bottom:0;}    
+.event_20170202{width:100%; text-align: center;}    
+   
+/*sec_top*/
+.sec_top{background:#f3d322;}
+.sec_top .cont_main{width:1165px; margin:0 auto; padding-top:124px; padding-bottom:55px; background:url(<?=IMG_DIR?>/pub_test/test1/bg_03.gif) no-repeat bottom;} 
+
+.ban_unite .quick_menu{position:absolute; top:150px; right:-10px; width:120px;}
+.ban_unite .quick_menu li{overflow:hidden; width:120px; margin-bottom:10px;}
+.ban_unite .quick_menu.ban_fixed{position:fixed; top:70px; right:50%; margin-right:-740px;}
+.ban_unite .quick_menu li a{background:none 0;}   
+
+/*sec_list*/
+.sec_list .list_head{width:100%; padding:57px 0; background:#f3c422;}    
+.sec_list ul{background:#ffffff url(<?=IMG_DIR?>/pub_test/test1/i_11.gif) no-repeat center top;}
+.sec_list ul li{padding-top:52px;}    
+.sec_list ul .l1,{border-bottom:2px solid #d2d2d2; padding-bottom:51px;} 
+.sec_list ul .tpass{border-bottom:2px solid #d2d2d2;}    
+/*.sec_list ul .tpass{width:900px; margin:0 auto; position:relative;}    
+.sec_list ul .tpass a{display: block; width:100px; height:20px; position:absolute; right:75px; top:59%;} */ 
+.sec_list ul .l3{border:none; border-top:2px solid #d2d2d2;}    
+/*sec_event*/
+.sec_event{background:#fd6b61 url(<?=IMG_DIR?>/pub_test/test1/bg_red_07.png) no-repeat center top; padding-bottom:69px; }
+.sec_event>h3{padding-top:66px;}
+.sec_event .cont_event .event01{position:relative;}    
+.sec_event .cont_event .event01 p{width:900px; margin:0 auto; background:#ffffff; padding-top:16px; padding-bottom:35px;} 
+.sec_event .cont_event .event01 .tpass a{display: block; width:140px; height:20px; position:absolute; left:50%; top:70%;  margin-left:-295px;}    
+.sec_event .cont_event .event02 p{width:900px; margin:0 auto; background:#ffee7d; padding-bottom:40px; border-bottom-left-radius:20px; border-bottom-right-radius:20px;}    
+
+/*sec_note*/
+.sec_note .note_tit{background:#282828; padding:32px 0;}
+    .sec_note .note_txt{background:#e5e5e5; height:89px;} 
+</style>
+
+
+<!-- event_20170202 -->
+<div class="event_20170202">
+    <div class="sec_top">
+        <div class="cont_main">
+            <img src="<?=IMG_DIR?>/pub_test/test1/main_03.png" alt="수능 짜이찌엔">
+            
+            <div class="ban_unite">
+                <!-- //quick_menu -->
+                <div class="quick_menu">
+                <ul>
+                    <li><a href="#sec_clock"><img src="<?=IMG_DIR?>/pub_test/test1/img_05.jpg" alt="남미숙t-pass"></a></li>
+                </ul>
+                </div>
+            <!-- //quick_menu -->  
+            </div>
+        </div>
+        
+    <div class="sec_list">
+        <div class="list_head"><img src="<?=IMG_DIR?>/pub_test/test1/time_head.gif" alt="중국어No.1 중단기의 기승전자랑 TIME"></div>
+        <ul> 
+            <li class="l1"><img src="<?=IMG_DIR?>/pub_test/test1/i_14.gif" alt="중단기를 만나면 중국어가 한글보다 쉬워집니다."></li>
+            <li class="tpass"><img src="<?=IMG_DIR?>/pub_test/test1/i_17.gif" alt="중단기를 만나면 남들보다 빠르게 HSK에 합격합니다.">
+                <a href="http://china.dangi.co.kr/promotion/nms_tpass/main/pc"><img src="<?=IMG_DIR?>/pub_test/test1/btn_tpass.png" alt="T-Pass 자세히보기"></a>
+            </li>
+            <li class="l3"><img src="<?=IMG_DIR?>/pub_test/test1/i_20.gif" alt="중단기를 만나면 효율적인 학습이 가능해집니다."></li> 
+        </ul>
+    </div>
+        
+    <div class="sec_event">
+        <h3><img src="<?=IMG_DIR?>/pub_test/test1/img_21.jpg" alt="중단기 라이라이!할인 EVENT"></h3>
+        <div class="cont_event">
+            <div class="event01">
+                <img src="<?=IMG_DIR?>/pub_test/test1/img_22.jpg" alt="남미숙 수강할인권">
+                <span class="tpass"><a href="http://china.dangi.co.kr/promotion/nms_tpass/main/pc"><img src="<?=IMG_DIR?>/pub_test/test1/tpass.png" alt="T-Pass자세히 보기"></a></span>
+                <p><a href="#"><img src="<?=IMG_DIR?>/pub_test/test1/btn_coupon1.png" alt="쿠폰 몽땅 받기"></a></p>
+            </div>
+            <div class="event02">
+                <img src="<?=IMG_DIR?>/pub_test/test1/img_28.jpg" alt="T-PASS 구매하면 카카오톡 이모티콘 무료">
+                <p><a href="#"><img src="<?=IMG_DIR?>/pub_test/test1/btn_emot.png" alt="이모티콘 받기"></a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- sec_note -->
+    <div id="sec_note" class="sec_note">
+        <div class="note_tit">
+            <h4><a href="#note_txt"><span><img src="<?=IMG_DIR?>/pub_test/test1/notice.gif" alt="유의사항"></span></a></h4>
+        </div>
+        <!-- //note_tit -->
+        <div class="note_txt">
+        </div>
+        <!-- //note_txt -->
+    </div>
+    <!-- //sec_note -->
+</div> 
+<!-- //event_20170202 -->
+    
+    

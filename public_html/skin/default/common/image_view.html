@@ -1,0 +1,12 @@
+<?
+/**
+ * desc: 이미지 뷰
+ * example: $path = "/var/www/eng_dangicokr/public_html/data/cast/engdangi/1444738915_1.jpg";
+ */
+if ($path) {
+	$mime = get_mime_by_extension($path);
+	$im = file_get_contents($path);
+	header("Content-type: ". $mime);
+	echo $im;
+}
+?>

@@ -1,0 +1,193 @@
+<!-- select box 이벤트 적용 -->
+<script>
+    $(document).on("click", ".select_box>div", function(){
+        var ul_display = $(this).next("ul").css("display");
+
+
+        $(this).on("selectstart", function(event){ return false; });
+
+        //oepn select box close
+        $(".select_box>div").css("background-image","url(<?=IMG_DIR?>/myclass/support_contents/selectbox_arrow.gif)");
+        $(".select_box>div").parent().css('z-index', 0);
+        $(".select_box>div").next("ul").hide();
+
+        if(ul_display!="block"){
+
+            $(this).parent().css('z-index', 5);
+            $(this).next("ul").show();
+
+            $(this).css("background-image","url(<?=IMG_DIR?>/myclass/support_contents/selectbox_arrow_up.gif)");
+        }else{
+            $(this).parent().css('z-index', 0);
+            $(this).next("ul").hide();
+            $(this).css("background-image","url(<?=IMG_DIR?>/myclass/support_contents/selectbox_arrow.gif)");
+        }
+    });
+</script>
+
+<style type="text/css">
+    /*iframe{position:absolute;width:0;height:0;}*/
+</style>
+
+
+<!-- ====네이버 검색 공통 태그=======  -->
+
+<!-- 공통 적용 스크립트 , 모든 페이지에 노출되도록 설치. 단 전환페이지 설정값보다 항상 하단에 위치해야함 -->
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"> </script>
+<script type="text/javascript">
+if (!wcs_add) var wcs_add={};
+wcs_add["wa"] = "s_51fb1349aad2";
+if (!_nasa) var _nasa={};
+wcs.inflow();
+wcs_do(_nasa);
+</script>
+
+
+<!-- 영단기 구글 리마케팅 태그 코드 -->
+<!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1021884350;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1021884350/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<!-- 구글 리마케팅 태그 iframe 사이즈 이슈 해결 -->
+<style type="text/css">
+iframe[name='google_conversion_frame'] {
+    height: 0 !important;
+    width: 0 !important;
+    line-height: 0 !important;
+    font-size: 0 !important;
+    margin-top: -13px;
+    float: left;
+}
+</style>
+
+
+<!-- WIDERPLANET  SCRIPT START 2016.9.28 -->
+<div id="wp_tg_cts" style="display:none;"></div>
+<script type="text/javascript">
+var wptg_tagscript_vars = wptg_tagscript_vars || [];
+wptg_tagscript_vars.push(
+(function() {
+	return {
+		wp_hcuid:"",   /*Cross device targeting을 원하는 광고주는 로그인한 사용자의 Unique ID (ex. 로그인 ID, 고객넘버 등)를 암호화하여 대입.
+				*주의: 로그인 하지 않은 사용자는 어떠한 값도 대입하지 않습니다.*/
+		ti:"20685",	/*광고주 코드*/
+		ty:"Home",	/*트래킹태그 타입*/
+		device:"web"	/*디바이스 종류 (web 또는 mobile)*/
+
+	};
+}));
+</script>
+<script type="text/javascript" async src="//cdn-aitg.widerplanet.com/js/wp_astg_4.0.js"></script>
+<!-- // WIDERPLANET  SCRIPT END 2016.9.28 -->
+
+<script type="text/javascript">
+    var roosevelt_params = {
+        retargeting_id:'IlrpHcaVv4eB55ou9swxZA00',
+        tag_label:'-PWi1YPJTXmk8IWy9cCDog'
+    };
+</script>
+<script type="text/javascript" src="//adimg.daumcdn.net/rt/roosevelt.js" async></script>
+<!-- DDN banner SCRIPT START 2017.5.16 -->
+<script type="text/javascript">
+    var roosevelt_params = {
+        retargeting_id:'ktbEaSAaiCgI7ekW__aJ5g00',
+        tag_label:'JqKAni1fQTGZztZ938mbSQ'
+    };
+</script>
+<script type="text/javascript" src="//adimg.daumcdn.net/rt/roosevelt.js" async></script>
+<!-- //DDN banner SCRIPT START 2017.5.16 -->
+
+<?php
+// include("../../codeigniter/st/skin/chinadangi/china_footer.html");
+?>
+
+                <?$dangi = $this->session->userdata('ss_mb_dangi');?>
+                </div><!-- // contents -->
+            </div>
+    <!-- //container -->
+
+<? if($is_footer) : ?>
+        <div id="footer">
+            <div class="st-footer-v3">
+                <div class="footer-dangi">
+                    <a href="http://china.dangi.co.kr/" class="dangi"><img src="//s3.ap-northeast-2.amazonaws.com/st.dangidata/common/img/bi/CHINA_h_36.gif" alt="중단기"></a>
+
+                    <div class="address">
+                        <strong>온라인 고객센터 1577-6852(월~금 10:00~ 24:00, 주말 10:00~19:00 운영, 12:00~13:00 제외) | FAX 02-6442-9932</strong><br>
+                        사업자등록번호 : 119-86-27573
+                        <a href="#" onclick="window.open('http://www.ftc.go.kr/info/bizinfo/communicationViewPopup.jsp?wrkr_no=1198627573', 'communicationViewPopup', 'width=750, height=700');return false;" class="link-info">사용자 정보확인&gt;</a><br>
+                        통신판매업신고 : 2014-서울강남-01131 | 서울시 강남구 대치2동 오토웨이타워 948 3층 <br> | 서울시 강남구 대치2동 오토웨이타워 948 3층 <br>
+                        ㈜에스티유니타스 | 대표이사 : 윤성혁, 이정진 | 개인정보보호 책임자 : 서준호(<a href="mailto:privacy@stunitas.com">privacy@stunitas.com</a>)<br>
+                        <strong>Copyright 2012 중단기.  All Rights Reserved.</strong>
+                    </div>
+                </div>
+
+                <div class="footer-st">
+                    <a href="http://www.stunitas.com/" target="_blank" class="st"><img src="//s3.ap-northeast-2.amazonaws.com/st.dangidata/common/img/st-comm-v3/CI-ST.gif" alt="ST UNITAS"></a>
+
+                    <ul class="nav-footer-st">
+                        <li><a href="http://www.stunitas.com/" target="_blank">회사소개</a></li>
+                        <li>
+                            <a href="https://member.dangi.co.kr/member/popup_info/service_agree" target="_blank">이용약관</a>
+                            <a href="#" class="modify" onclick="window.open('http://member.dangi.co.kr/common/terms/use_terms', 'popup_notice1', 'width=880,height=700,scrollbars=yes,top=0,left=0,location=0,resizable=no,status=no,directories=no');return false;">변경내용</a>
+                        </li>
+                        <li>
+                            <a class="personal" href="https://member.dangi.co.kr/member/popup_info/private_agree" target="_blank">개인정보처리방침</a>
+                            <a href="#" class="modify" onclick="window.open('http://member.dangi.co.kr/common/terms/private_terms', 'popup_notice2', 'width=880,height=700,scrollbars=yes,top=0,left=0,location=0,resizable=no,status=no,directories=no');return false;">변경내용</a>
+                        </li>
+                    </ul>
+
+                    <div class="wrap-isms">
+                        <a href="#" onclick="$('.layer-isms').fadeIn();return false;"><img src="//s3.ap-northeast-2.amazonaws.com/st.dangidata/common/img/st-comm-v3/ISMS.jpg" alt="isms" class="isms"></a>
+
+                        <div class="layer-isms">
+                            <a href="#" onclick="$('.layer-isms').fadeOut();return false;"><img src="//s3.ap-northeast-2.amazonaws.com/st.dangidata/common/img/st-comm-v3/ISMS-auth.gif" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<? endif; ?>
+
+</div>
+<!-- //wrap -->
+
+<!-- JS (develop)-->
+<? if($js): ?>
+<? foreach($js as $each_js) :?>
+<script src="<?=JS_DIR?>/<?=$each_js?>"></script>
+<? endforeach; ?>
+<? endif; ?>
+</body>
+</html>
+
+<!-- LOGGER(TM) TRACKING SCRIPT V.40 FOR logger.co.kr / 52532 : COMBINE TYPE / DO NOT ALTER THIS SCRIPT. -->
+<script type="text/javascript">var _TRK_LID="52532";var _TRK_DANGI="chinadangi";var _L_TD="ssl.logger.co.kr";var _TRK_CDMN=".dangi.co.kr";</script>
+<script type="text/javascript">var _CDN_DOMAIN = location.protocol == "https:" ? "https://fs.bizspring.net" : "http://fs.bizspring.net";
+(function(b,s){var f=b.getElementsByTagName(s)[0],j=b.createElement(s);j.async=true;j.src='//fs.bizspring.net/fs4/bstrk.dangi.js';f.parentNode.insertBefore(j,f);})
+
+(document,'script');</script>
+<noscript><img alt="Logger Script" width="1" height="1" src="http://ssl.logger.co.kr/tracker.1.tsp?u=52532&amp;js=N" /></noscript>
+<!-- END OF LOGGER TRACKING SCRIPT -->
+
+<!-- Withpang Tracker v3.0 [공용] start -->
+<script src="https://cdn.megadata.co.kr/js/enliple_min2.js"></script>
+<script type="text/javascript">
+    var rf = new EN();
+    rf.setData("sc", encodeURIComponent(""));
+    rf.setSSL(true);
+
+    rf.sendRf();
+</script>
+<!-- Withpang Tracker v3.0 [공용] end -->

@@ -1,0 +1,306 @@
+
+<div id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>사이트 관리</h2>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    배너 등록
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form1" id = "form1"  method = "post"  action = "/adm/content/content/submit_banner" enctype="multipart/form-data" >
+                        <input type="hidden" name="content_id" v-bind:value="banner.content_id" >
+                        <input type="hidden" name="content_category_id" v-bind:value="banner.content_category_id" >
+                        <div class="form-group">
+                        	<label for="text1" class="control-label col-lg-2">이벤트 명</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="subject" class="form-control" v-bind:value="banner.subject">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="text1" class="control-label col-lg-2">이벤트 설명</label>
+                        	<div class="col-lg-8">
+                                <input type="input" id="date2" name="desc_main" class="form-control"  v-bind:value="banner.desc_main" >
+                        	</div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="text1" class="control-label col-lg-2">카테고리</label>
+                        	<div class="col-lg-8">
+                                <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
+                                    <option value="">전체</option>
+                                    <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                                </select>
+                                <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
+                                    <option value="">전체</option>
+                                    <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                                </select>
+                        	</div>
+                        </div>
+
+                        <div class="form-group">
+                        	<label for="text1" class="control-label col-lg-2">기간</label>
+                        	<div class="col-lg-8">
+                        		<input type="text" name="dt_start" class="btn date_picker"  style="width:180px;" v-bind:value="banner.dt_start"> ~
+                        		<input type="text" name="dt_end" class="btn date_picker"  style="width:180px;" v-bind:value="banner.dt_start">
+                        	</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">D-Day 사용여부</label>
+                            <div class="col-lg-8">
+                            	<input type="text" id="dt_dday" name="dt_dday" class="btn date_picker"  style="width:180px;"  v-bind:value="banner.dt_dday" >
+                            	<div class="btn btn-warning" onclick="$('#dt_dday').val('');">제거</div>
+                        		<label style='color:#ff0000'>** D-Day 날짜정보 계산용.</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 경로</label>
+                            <div class="row col-lg-10">
+                            	
+                        		<div style="margin-bottom: 20px;">
+                        			<input id="img_file" type="file" name="img_file" class="col-lg-3" >
+                        			<div class="btn btn-sm btn-info" v-on:click="upload_file()">이미지 올리기</div>
+                        			<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
+                        		</div>
+                        		<div class="col-lg-12" style="margin-bottom: 20px;">
+                        			<input type="input" name="img_main" class="form-control" v-model="banner.img_main">
+                        		</div>
+                                <div class="col-lg-12" style="margin-bottom: 20px;">
+                                	<a v-bind:href="banner.link_main" target="_blank">
+                                    	<img v-bind:src="banner.img_main" width="100" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 사이즈</label>
+                            <div class="col-lg-8">
+                        		<input type="text" name="width_main" class="btn" v-model="banner.width_main">
+                            </div>
+                        </div>
+                        <div class="form-group" id="link_type_link">
+                            <label for="text1" class="control-label col-lg-2">이미지 링크</label>
+                            <div class="col-lg-10">
+                                 <input type="text" name="link_main" class="form-control" v-model="banner.link_main">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 링크 타겟</label>
+                            <div class="col-lg-10">
+                        		<label><input class="uniform" type="radio" name="img_link_target" value="1" v-model="banner.img_link_target" /> 새창</label>
+                        		<label><input class="uniform" type="radio" name="img_link_target" value="0" v-model="banner.img_link_target" /> 이동</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="link_type_imagemap" v-show="banner.img_link_target === 'imagemap'">
+                            <label for="text1" class="control-label col-lg-2">ImageMap</label>
+                            <div class="col-lg-10">
+                            	<textarea name="img_html" class="btn col-lg-12" style="text-align: left;height:150px" v-model="banner.img_html"></textarea>
+                            	<br /><strong style="color:#ff3333">&lt;map&gt; 태그 안쪽의 내용만 입력해주세요.</strong> 
+                            	ex) &lt;area shape="rect" coords="10,20,30,40" href="http://eng.dangi.co.kr"/&gt;
+                            </div>
+                        </div>        	           
+                                   
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">배너 스타일</label>
+                            <div class="col-lg-10">
+                                 <label><input type="radio" name="img_link_type" value="1" v-model="banner.img_link_type"> 단일링크 </label>
+                                 <label><input type="radio" name="img_link_type" value="2" v-model="banner.img_link_type"> ImageMap </label>
+                                 <!-- <label><input type="radio" name="img_link_type" value="floating" v-model="banner.img_link_type"> 플로팅 </label>
+                                 <label><input type="radio" name="img_link_type" value="notehtml" v-model="banner.img_link_type"> 유의사항 </label> -->
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">노출순서</label>
+                            <div class="col-lg-8">
+                        		<input type="text" class="btn" name="order" v-model="banner.order">
+                            </div>
+                            <br />
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">사용여부</label>
+                            <div class="col-lg-8">
+                            
+                            <label><input class="uniform" type="radio" name="yn_used" value="1" v-model="banner.yn_used" /> Y</label>
+                            <label><input class="uniform" type="radio" name="yn_used" value="0" v-model="banner.yn_used" /> N</label>
+                                    
+                            </div>
+                        </div>
+                        <div class="form-group " >
+                        	<label for="text1" class="control-label col-lg-2"></label>
+                        	<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
+                        	<input type="submit" value="저장" class="btn btn-danger col-lg-2">
+                        </div>
+                        <div class="form-group">
+                        	<label for="text1" class="control-label col-lg-2">미리보기</label>
+                        	<div class="col-lg-8">
+                        		<div v-show="banner.img_link_type == 1">
+                        			<a v-bind:href="banner.link_main">
+                        				<img v-bind:src="banner.img_main" v-bind:width="banner.width_main" alt="">
+                        			</a>
+                        		</div>
+                        		<div v-show="banner.img_link_type == 2">
+                        			<img v-bind:src="banner.img_main" v-bind:width="banner.width_main" alt="" usemap="#banner_">
+                                	<map name="banner_" v-html="banner.img_html">
+                                	</map>
+                        		</div>
+                        		
+                        	</div>
+                        </div>
+
+        	        </form>
+        	    </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+<form id="upload_file" action="/adm/content/content/upload_file" method="post" enctype="multipart/form-data"></form>
+
+<script>
+function remove(array, element) {
+    const index = array.indexOf(element);
+    
+    if (index !== -1) {
+        array.splice(index, 1);
+    }
+}
+(function(){
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , category: <?=json_encode($category);?>
+            , category_selection_1_options: []
+            , category_selection_2_options: []
+            , banner: <?=json_encode($banner);?>
+            , banner_category_path: <?=json_encode($banner_category_path);?>
+        }
+        ,methods: {
+            //  카테고리 변경 change_category_select_options
+            change_category_select_options: function(depth){
+                var data = {};
+                data.category_id = $('#category_selection_'+depth).val();
+
+                this.set_category_selection(depth, data.category_id);
+            }
+            , set_category_selection: function(depth, content_category_id) {
+                if (depth==1) {
+                    this.category_selection_2_options = [];
+                    if (content_category_id) {
+                        $('#category_selection_2_options').val('');
+                        this.category_selection_2_options = this.category.lookup[content_category_id].children;
+                    }
+
+                    // reset
+                    $('#category_selection_2').val('');
+                }
+                else if (depth==2) {
+
+                }
+                // reset
+                this.banner.content_category_id = this.category.lookup[content_category_id].content_category_id;
+                // if (this.)
+            }
+            // banner_category_path 기준으로 select 설정
+            , update_category_select: function() {
+                setTimeout(function(){
+                    if (app.banner_category_path.length>0) {
+                        $('#category_selection_1').val(app.banner_category_path[0].content_category_id);
+                        app.change_category_select_options(1);
+                    }
+                }, 500);
+                
+                setTimeout(function(){
+                    if (app.banner_category_path.length>1) {
+                        $('#category_selection_2').val(app.banner_category_path[1].content_category_id);
+                        app.change_category_select_options(2);
+                    }
+                }, 1000);
+            }
+            , upload_file: function(){
+            	$('#upload_file').submit();
+            }
+            , set_upload_file: function (target_form, target_input, callback) {
+                $('#'+target_form).submit(function () {
+                    var formdata = new FormData();
+                    var fileObj = document.getElementById(target_input).files;
+                    for (var i = 0; i < fileObj.length; i++) {
+                        formdata.append("file", fileObj[i]);
+                    }
+                    $.ajax({
+                        type: 'POST', 
+                        url: '/adm/content/content/upload_file',
+                        data: formdata,
+                        contentType: false,
+                        processData: false
+                    }).then(function (data) {
+                        callback(data);
+                    }, function () {
+                        //failCal
+                    });
+                    return false;
+                });
+            }
+            , init: function(){
+                app.category_selection_1_options = app.category.hierarchy;
+                app.update_category_select();
+            }
+        }
+    });
+
+})();
+
+
+
+$(document).ready(function(){
+    app.init();
+
+	$(".date_picker").datetimepicker({
+	     lang:'ko',
+	     format:'Y-m-d H:i'
+	});
+
+	app.set_upload_file('upload_file', 'img_file', function(data){
+		console.log(data.result.file);
+		app.banner.img_main = data.result.file;
+	});
+
+	return;
+
+	tinymce.init({
+	    selector: "textarea.tinymce",
+	    plugins: [
+	        "advlist autolink lists link image charmap preview anchor",
+	        "searchreplace visualblocks code fullscreen",
+	        "insertdatetime table textcolor contextmenu paste"
+	    ],
+	    toolbar: " undo redo | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | source code",
+	    language: "ko_KR",
+	    width : 828,
+	    height: 392,
+	    menubar: false,
+	    fields: {
+	        content: {
+	            validators: {
+	                notEmpty: {
+	                    message: '내용을 입력하세요.'
+	                }
+	            }
+	        }
+	    }
+	});
+  
+});
+
+</script>

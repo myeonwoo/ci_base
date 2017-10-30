@@ -1,0 +1,304 @@
+<style>
+#preview{
+	position:absolute;
+	border:0px solid #ccc;
+	background:rgba( 255, 255, 255, 0 );
+	padding:3px;
+	display:none;
+	color:#fff;
+	}
+</style>
+<script type="text/javascript">
+this.imagePreview = function(){
+	/* CONFIG */
+		
+		xOffset = 10;
+		yOffset = 30;
+		
+		// these 2 variable determine popup's distance from the cursor
+		// you might want to adjust to get the right result
+		
+	/* END CONFIG */
+	$("a.preview").hover(function(e){
+		this.t = this.title;
+		this.title = "";	
+		var c = (this.t != "") ? "<br/>" + this.t : "";
+		$("body").append("<p id='preview'><img src='"+ this.href +"' alt='Image preview' />"+ c +"</p>");								 
+		$("#preview")
+			.css("top",(e.pageY - xOffset) + "px")
+			.css("left",(e.pageX + yOffset) + "px")
+			.fadeIn("fast");						
+    },
+	function(){
+		this.title = this.t;	
+		$("#preview").remove();
+    });	
+	$("a.preview").mousemove(function(e){
+		$("#preview")
+			.css("top",(e.pageY - xOffset) + "px")
+			.css("left",(e.pageX + yOffset) + "px");
+	});			
+};
+$(document).ready(function(){
+	imagePreview();
+	$(".cate_preview").hide();
+	
+	$("[id^='subcate_']").click(
+		function() { 
+			var num = $(this).attr("id").split("_");
+			getPreview(num[1]);
+	} );
+
+});
+
+function getSubCategory(parent_category_id, category_id, reload){
+	if(reload==1){
+		getPreview('');
+	}else{
+		var data = 'parent_category_id='+parent_category_id;
+		var opt = "<option value=''>전체</option>";
+		$.ajax({ 
+	        type: 'POST', 
+	        url: '/adm/banner/banner/get_banner_category_list_ajax', 
+	        data:data, 
+	        success: function (data) { 
+	        	if(data.msg == 'OK'){
+	        		
+	        		$.each( data.list, function( key, value ) {
+	        			opt += '<option value = '+value['category_id']+'>'+value['subject']+'</option>';
+		        	});
+	        		
+	        		$('#banner_sub_category_id').html(opt);
+	        		
+	        		if(parent_category_id){
+	        			$("#banner_category_id").val(parent_category_id).attr("selected", "selected");
+	        			$("#banner_sub_category_id").val(category_id).attr("selected", "selected");
+	        			$("#subcate_"+category_id).addClass("box_a_selected");
+	        		}
+	        		if(!category_id){
+	        			$("[id^='subcate_']").addClass("box_a_selected");
+	        		}
+	        	}
+	        }
+	    });
+		preview_select(parent_category_id);
+	}
+	
+}
+
+function getPreview(subcate_id){
+	if(subcate_id)	location.href = '/adm/banner/banner/banner?category_id='+$("select[name=banner_category_id]").val()+'&sub_category_id='+subcate_id+'&type=<?=$type?>';
+	else			location.href = '/adm/banner/banner/banner?category_id='+$("select[name=banner_category_id]").val()+'&type=<?=$type?>';
+}
+
+
+function onDeleteSubmit(banner_id){
+	
+	if(confirm('삭제하시겠습니까?') == false) return false;
+	
+	var url="/adm/banner/banner/banner_proc";
+	var params = 'mode=del&banner_id='+banner_id;
+	$.ajax({      
+        type:"POST",  
+        url:url,      
+        data:params,      
+        dataType:"json",
+        success:function(data){
+        	if(data.result == '1'){
+        		alert('삭제되었습니다.');
+	        	location.reload();
+        	}
+        },   
+        error:function(e){
+          
+        }  
+    });  
+	 
+}
+
+//미리보기 
+function preview_select(type){
+	var id = $(".cate_"+type);
+	$(".cate_preview").hide();
+
+	id.show();
+}
+
+function alert_msg(banner_id,msg,code,top){
+	var alert_style = 'alert-danger';
+	if(code === 1){
+		alert_style = 'alert-success';
+	}
+	var ele = "<div id='success-alert-"+banner_id+"' class='alert "+alert_style+"' style='display:none;top: "+top+"px;right: 20%;margin: auto 0;position: absolute;text-align: center;'><strong>"+msg+"</strong></div>";
+	$('#banner_table').append(ele);
+	$("#success-alert-"+banner_id).alert();
+    $("#success-alert-"+banner_id).fadeTo(1000, 300).slideUp(300, function(){
+    $("#success-alert-"+banner_id).slideUp(300);}); 
+} 
+
+$(document).ready(function() {
+    $('#banner_table').dataTable({
+        "order":[[0,"desc"]]
+    });
+    
+    $('[data-toggle="tooltip"]').tooltip();
+    
+} );
+$(document).on("change", '.use_yn', function() {
+	var obj = $(this).parent().parent().parent().offset();
+	console.log("left: " + obj.left + "px, top: " + obj.top + "px");
+	
+	var use_yn = 'N';
+	if($(this).prop('checked')){
+ 	use_yn = 'Y';
+	}
+	var banner_id = $(this).parent().parent().parent().children().first().html();
+	var url="/adm/banner/banner/ajax_proc";
+	$.ajax({      
+        type:"POST",  
+        url:url,      
+        data:{use_yn:use_yn,banner_id:banner_id},      
+        dataType:"json",
+        success:function(data){
+        	console.log(data.result);
+        	code = data.result;
+        	var msg = 'empty';
+        	if(code === 1){
+        		msg = '수정 성공!';
+        	}else{
+        		msg = '수정 실패!';
+        	}
+        	alert_msg(banner_id,msg,code,(obj.top-250));
+        },   
+        error:function(e){
+          
+        }  
+    });
+});
+
+
+var pre_order_val = '';
+$(document).on("dblclick" , ".display_order", function() {
+	pre_order_val = $(this).val();
+	$(this).attr('disabled',false);
+	$(this).focus();
+}).on('focusout','.display_order', function(){
+	var ts = $(this);
+	if(ts.val()===pre_order_val){
+		$(ts).attr('disabled',true);
+		return false;
+	}
+	var obj = ts.parent().parent().offset();
+	console.log("left: " + obj.left + "px, top: " + obj.top + "px");
+	var display_order = $(ts).val();
+	var banner_id = $(ts).parent().parent().children().first().html();
+	var url="/adm/banner/banner/ajax_proc";
+	$.ajax({      
+        type:"POST",  
+        url:url,      
+        data:{display_order:display_order,banner_id:banner_id},      
+        dataType:"json",
+        success:function(data){
+        	console.log(data);
+        	code = data.result;
+        	var msg = 'empty';
+        	if(code === 1){
+        		msg = '수정 성공!';
+        	}else{
+        		msg = '수정 실패!';
+        	}
+        	alert_msg(banner_id,msg,code,(obj.top-250));
+			$(ts).attr('disabled',true);
+        },   
+        error:function(e){
+        }  
+    });
+});
+
+</script>
+
+
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            배너 등록
+        </div>
+
+        <div class="panel-body">
+        <div >
+        	<label style ="width:150px; float:left;">배너 위치</label>
+    	
+             <select  name ="banner_category_id"  id = "banner_category_id" style ="width:150px; float:left;"  onChange = "getSubCategory(this.value, '', 1);">
+             	<option value="">전체</option>
+             <?foreach($category_list as $k =>$v):?>
+             <option value ="<?=$v['category_id']?>"  ><?=$v['subject']?></option>
+             <?endforeach?>
+              </select>
+              <select class="form-control"  name ="banner_sub_category_id" id = "banner_sub_category_id"  style ="width:200px; float:left;" onChange = "getPreview(this.value);"></select>
+             <br />
+             
+        	<br />
+         <div>
+    	</div>
+    	  
+		</div>
+
+            <div style="clear:both"><a href="/adm/banner/banner/banner_write?category_id=<?=$category_id ?>&sub_category_id=<?=$sub_category_id ?>&type=<?=$type?>" class="btn btn-default btn-lg btn-round" >등록</a></div>
+
+            <div class="table-responsive"  style="clear:both; padding-top:20px;">
+                <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="banner_table">                                    
+                	<thead>
+                        <tr role="row">
+                        	<th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column ascending" style="width: 30px;">N</th>
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 140px;">제목</th>
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 150px;">이미지 미리보기</th>
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 60px;">대분류</th>
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 80px;">중분류</th>
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 140px;">이벤트기간</th>
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 40px;">오픈</th>
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 40px;">표시순서</th>
+                        	
+                        	<th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 30px;">삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            		<?foreach($banner_list as $k=>$v){
+                        if($v['use_yn']!='N' && date('Y-m-d H:i:s') > $v['start_time'] && date('Y-m-d H:i:s') < $v['end_time'] ) {
+                            $open_yn ='';
+                        }else{
+                            $open_yn = 'non_open';
+                        }
+
+                    ?>
+
+                    <tr class="gradeA odd">
+                            <td class="sorting_1"><?=$v['banner_id']?></td>
+                            <td class="center "><a href = "/adm/banner/banner/banner_write?banner_id=<?=$v['banner_id']?>&type=<?=$type?>"><?=$v['subject']?></a></td>
+                            <td class="center"><a target="_blank" href="<?=$v['img_url']?>" class="preview"><img src="<?=$v['img_url']?>" alt="" height=100 /></a></td>
+                            <td class="center <?=$open_yn?>"><?=$category_list_all[$v['category_id']]['subject']?></td>
+                            <td class="center <?=$open_yn?>"><?=$category_list_all[$v['sub_category_id']]['subject']?></td>
+                            <td class="center <?=$open_yn?>"><?=$v['start_time']?> ~ <br /><?=$v['end_time']?></td>
+                            <td class="center ">
+                            <input class="use_yn" type="checkbox" <?=$v['use_yn']==='Y'?'checked':'' ?> data-toggle="toggle">
+                            </td>
+                            <td class="center <?=$open_yn?>">
+                            <input class="display_order" data-toggle="tooltip" title="숫자만입력하세요." type="text" disabled value="<?=$v['display_order']?>" style="width:30%" maxlength="2">
+                            </td>
+                            <td class="center "><a href="#" class="btn btn-default btn-sm btn-round"  onClick ="onDeleteSubmit('<?=$v['banner_id']?>'); return false;" >삭제</a></td>
+                        </tr>
+                       <?}?>
+                        </tbody>
+                </table>
+
+                <!-- <a href="/adm/banner/banner/banner_write?category_id=<?=$category_id?>&sub_category_id=<?=$sub_category_id?>" class="btn btn-default btn-lg btn-round" >등록</a> -->
+                
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+                

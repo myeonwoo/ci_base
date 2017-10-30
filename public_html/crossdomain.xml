@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<cross-domain-policy>
+<allow-access-from domain="dev.*.dangi.co.kr" />
+<allow-access-from domain="*.dangi.co.kr" />
+<allow-access-from domain="*.chdangi.co.kr" />
+</cross-domain-policy>

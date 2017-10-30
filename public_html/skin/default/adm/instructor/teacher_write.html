@@ -1,0 +1,146 @@
+<div id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2></h2>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    선생님 등록
+                </div>
+                <div class="panel-body">
+                    <form name="frm1" id="frm1" action="/adm/instructor/teacher/submit_teacher" method="post" enctype="multipart/form-data">
+						<div class="form-group col-lg-12">
+						       <label for="text1" class="control-label col-lg-2">teacher_id</label>
+						       <div class="col-lg-10">
+						            <input type="text" name="teacher_id" id="teacher_id" class="form-control" v-bind:value="teacher.teacher_id">
+						       </div>
+						</div>
+						<div class="form-group col-lg-12">
+							<label for="text1" class="control-label col-lg-2">이름</label>
+							<div class="col-lg-10">
+								<input type="text" name="teacher_name" id="teacher_name" class="form-control" v-bind:value="teacher.teacher_name">
+							</div>
+						</div>
+						<div class="form-group col-lg-12">
+							<label for="text1" class="control-label col-lg-2">이미지: 썸네일</label>
+							<div class="col-lg-10">
+								<input id="img_thumbnail" type="file" name="img_thumbnail" class="" > 
+								<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
+								<input type="input" name="img_main" class="form-control" v-model="teacher.img_main">
+
+								<div class="col-lg-12">
+									<img v-bind:src="teacher.img_thumbnail" width="100" alt="">
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-lg-12">
+							<label for="text1" class="control-label col-lg-2">이미지: 썸네일</label>
+							<div class="col-lg-10">
+								<input id="img_main" type="file" name="img_main" class="" > 
+								<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
+								<input type="input" name="img_main" class="form-control" v-model="teacher.img_main">
+
+								<div class="col-lg-12">
+									<img v-bind:src="teacher.img_main" width="100" alt="">
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-lg-12">
+						       <label for="text1" class="control-label col-lg-2">설명: 약력</label>
+						       <div class="col-lg-10">
+						       		<textarea name="desc_profile" style="width: 100%" v-model="teacher.teacher_name"></textarea>
+						       		<!-- <textarea name="img_html" class="btn col-lg-12" style="text-align: left;height:150px" v-model="banner.img_html"></textarea> -->
+						            <!-- <datetime-picker name="desc_profile" class="btn date_picker" date-format="yy-mm-dd H:i" v-bind:value="occasion.desc_profile"></datetime-picker> -->
+						       </div>
+						</div>
+						<div class="form-group col-lg-12">
+						       <label for="text1" class="control-label col-lg-2">설명: 좌우명</label>
+						       <div class="col-lg-10">
+						            <input type="text" name="desc_motto" id="desc_motto" class="form-control" v-model="teacher.desc_motto">
+						       </div>
+						</div>
+						<div class="form-group col-lg-12">
+						       <label for="text1" class="control-label col-lg-2"></label>
+						       <div class="col-lg-10">
+						       	<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
+						            <input type="submit" value="저장" class="btn btn-danger col-lg-2">
+						       </div>
+						</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<script>
+(function(){
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , teachers: <?=json_encode($teachers);?>
+            , teacher: <?=json_encode($teacher);?>
+        }
+        ,methods: {
+            init: function(){
+            }
+        }
+    });
+})();
+$(document).ready(function(){
+	app.init();
+});
+</script>
+
+
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+    plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste"
+    ],
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+});
+
+//이미지 라디오박스 선택시 
+function setContentsType(type){
+	var id = $("#contents_type_"+type);
+	$("#contents_type_image").hide();
+	$("#contents_type_link").hide();
+
+	id.show();
+}
+
+//특별 이유 행 추가
+function addRowSpecailReason(){
+	//alert("addRowSpecailReason");
+	var target_list = $("#special_reason_list");
+	var add_input = $(target_list).find("input").eq(0).clone();
+
+	$(add_input).attr("value", "");
+	$(target_list).append($(add_input));
+
+}
+
+function formSubmit(){
+	var frm = $("#frm1");
+
+	 //validation check
+    if(!null_check(frm)){
+        return;
+    }
+
+
+	$(frm).submit();
+}
+
+</script>

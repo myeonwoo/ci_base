@@ -1,0 +1,176 @@
+
+<div id="wrap">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2></h2>
+        </div>
+    </div>
+    <hr/>
+    <div id="app">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    배너 검색/등록
+                </div>
+                <div id="" class="panel-body">
+                    <p class="col-lg-12">
+                        <a class="btn btn-info" href="/adm/content/content/banner_write?content_category_id=&sub_content_category_id=&type=">등록</a>
+                    </p>
+                    <div class="col-lg-12">
+                        <select name="category_selection" id="select_category_1" class="btn" v-on:change="change_category_selection(1)">
+                            <option value="">전체</option>
+                            <option v-for="item in category.hierarchy" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                        </select>
+                        <select v-if="category_selection_2.length>0" name="category_selection" id="category_selection_2" class="btn" v-on:change="change_category_selection(2)">
+                            <option value="">전체</option>
+                            <option  v-for="item in category_selection_2" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="panel-heading">
+                    조회 결과
+                </div>
+                <div id="" class="panel-body">
+                    <table id="table_dataset" class="table table-striped table-bordered table-hover dataTable no-footer"></table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<script>
+
+(function(){
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , banners: <?=json_encode($banners);?>
+            , category: <?=json_encode($category);?>
+            , category_selection_2: []
+            , category_selection_3: []
+        }
+        ,methods: {
+            delete_content: function(tag) {
+
+                if (confirm('삭제하시겠습니까?')) {
+                    var data = {};
+                    data.content_id = $(tag).attr('data-content_id');
+
+                    var url="/adm/content/content/delete_content";
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: data,
+                        success: function (data) {
+
+                            app.banners = _.filter(app.banners, function(item){
+                                return item.content_id != data.params.content_id;
+                            });
+                            app.datatable.clear();
+                            app.datatable.rows.add(app.banners);
+                            app.datatable.draw();
+                        }
+                    });
+                }
+            }
+            , onoff_content: function(tag) {
+                var data = {};
+                data.content_id = $(tag).attr('data-content_id');
+                
+                var url="/adm/content/content/onoff_content";
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: data,
+                    success: function (data) {
+                        for (var i=0; i < app.banners.length; i++) {
+                            if (app.banners[i].content_id === data.content.content_id) {
+                                app.banners[i] = data.content;
+
+                                app.datatable.clear();
+                                app.datatable.rows.add(app.banners);
+                                app.datatable.draw();
+                                return;
+                            }
+                        }
+                    }
+                });
+            }
+            , change_category_selection: function(depth){
+                var data = {};
+                data.content_category_id = $('#select_category_'+depth).val();
+
+                this.set_category_selection(depth, data.content_category_id);
+            }
+            , set_category_selection: function(depth, content_category_id) {
+                if (depth==1) {
+                    this.category_selection_2 = this.category_selection_3 = [];
+                    if (content_category_id) {
+                        $('#category_selection_2').val('');
+                        this.category_selection_2 = this.category.lookup[content_category_id].children;
+
+                        // search
+                        // this.datatable.columns(1).search(content_category_id, true, true).draw();
+                        this.datatable.columns(1).search('^'+content_category_id+'$', true, true).draw();
+                    } else {
+                        this.datatable.columns(1).search('', true, true).draw();
+                    }
+                }
+                else if (depth==2) {
+                    this.category_selection_3 = [];
+                    if (content_category_id) {
+                        this.category_selection_3 = this.category.lookup[content_category_id].children;
+                    }
+                }
+            }
+            , init: function(){
+                // var 
+                // _.each(app.category_list, function(item){
+                //     console.log(item);
+                // });
+
+                // app.set_category_selection(1,1);
+            }
+        }
+    });
+})();
+
+$(document).ready(function(){
+    app.init();
+
+    app.datatable = $('#table_dataset').DataTable( {
+        data: app.banners
+        ,columns: [
+            { title: "#", data:"content_id", width:"30px"}
+            , { title: "content_category_id", data:"content_category_id", width:"30px"}
+            , { title: "제목", data:"subject", render:function(data, type, row, meta){
+                return '<a target="_blank" href="/adm/content/content/banner_write?content_id='+ row.content_id + '&type=">' + row.subject + '</a>';
+            }}
+            ,{ title: "이미지", data:"img_main", width: "50px", render:function(data, type, row, meta){
+                return '<a target="_blank" href="' + row.img_main + '" class="preview" title="">' + '<img src="' + row.img_main + '" alt="" style="width:100%;" alt="Smiley face">' + '</a>';
+            }}
+            , { title: "기간", data:"dt_start", render:function(data, type, row, meta){
+                var tmp = new Date(row.dt_start);
+                var str = ''+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
+                tmp = new Date(row.dt_end);
+                str += ' ~ '+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
+                return str;
+            }}
+            , { title: "오픈", data:"yn_used"}
+            , { title: "순서", data:"order"}
+            , { title: "삭제", data:"subject", render:function(data, type, row, meta){
+                var str = '<div class="btn btn-warning btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';
+                str += '<div class="btn btn-info btn-sm btn-round" onclick="app.onoff_content(this)" data-content_id="'+ row.content_id +'">오픈 on/off</div>'
+                return str;
+            }}
+        ]
+    } );
+    return;
+
+
+});
+
+</script>

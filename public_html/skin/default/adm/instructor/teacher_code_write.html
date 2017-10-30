@@ -1,0 +1,92 @@
+<script type="text/javascript">
+
+$(document).ready(function(){
+    var cd = $("#cd option:selected").text();
+    var sort = $("#sort option:selected").text();
+    $("#form1").submit(function(){
+        if(cd!=$("#cd option:selected").text()&&$("#cd option:selected").text().charAt($("#cd option:selected").text().length-1)==']'){
+            alert("이미 선택되어 있는 코드입니다.");
+            return false;
+        }
+        if(sort!=$("#sort option:selected").text()&&$("#sort option:selected").text().charAt($("#sort option:selected").text().length-1)==']'){
+            alert("이미 선택되어 있는 순서입니다.");
+            return false;
+        }
+    });
+
+    $("#img_circle").change(function(){
+        if($("#img_circle").val()!=null)
+            $("#preview").html("<img src='"+$("#img_circle").val()+"'>");
+        else
+            $("#preview").html("");
+    })
+})
+
+</script>
+
+<div class="col-lg-12">
+    <h2>선생님 코드 <?=($info)? "수정" : "등록" ?></h2>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary ng-scope">
+            <div class="panel-heading" translate="">선생님 코드 <?=($info)? "수정" : "등록" ?></div>
+            <div class="panel-body">
+                <div id="div-1" class="accordion-body collapse in body">
+                    <form class="form-horizontal" name ="form1" id = "form1"  method = "post"  action = "/<?=ADM_F?>/teacher/teacher_code/write_proc">
+                        <input type="hidden" name="mode" value="<?=($info)? "mod" : "ins" ?>">
+                        <input type="hidden" name="old_cd" value="<?=($info)? $info[0]['cd'] : "" ?>">
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">코드</label>
+                            <div class="col-lg-4">
+                                <select class="form-control" id="cd" name="cd">
+                                    <?foreach($emptyCodeList as $k => $v):?>
+                                    <option value="<?=$k?>" <?=($info[0]['cd']==$k)?'selected':''?>><?=$v?></option>
+                                    <?endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">선생님 이름</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="cd_nm" name="cd_nm" value="<?=$info[0]['cd_nm']?>">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">추가 설명</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="comment" name="comment" value="<?=$info[0]['comment']?>">
+                            </div>                            
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-3">원형 이미지 URL</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="img_circle" name="img_circle" value="<?=$info[0]['img_url']?>">
+                            </div>                            
+                        </div>
+
+                        <hr/>
+                        <div class="left">
+                            <div class="col-lg-4">
+                                <input type="submit" class="btn btn-primary btn-sm" id="btn_submit" value="<?=($info)? "수정" : "등록" ?>">
+                                <a href="javascript:history.go(-1)" class="btn btn-default btn-sm" >취소</a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="col-lg-6" style="text-align:right">
+                        <? $url = '/'.ADM_F.'/teacher/teacher_code/del_proc?cd='.$info[0]['cd'].'&img_id='.$info[0]['img_id']?>
+                        <?=($info)?'<a href="'.$url.'"><button class="btn btn-danger btn-sm">삭제</button></a>':''?>
+                    </div>
+
+                    <div class="col-lg-10"><hr/>이미지 미리보기</div>
+                    <div class="col-lg-10" id="preview"><?=($info[0]['img_url'])?"<img src=".$info[0]['img_url'].">":""?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

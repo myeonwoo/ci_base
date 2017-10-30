@@ -1,0 +1,183 @@
+<style type="text/css">
+/* 공통 적용 */
+.cont_countdown,.cont_visual,.cont_refund, .cont_review,.cont_movie,.cont_plus,.cont_medal{position:relative;min-width:320px;max-width:640px;margin:0 auto}
+.event_20170721{background:#f4f4f4}
+.skip{overflow:hidden;position:absolute;top:-999em;left:-999em;width:1px;height:1px;font-size:1px;line-height:0}
+/* 상단 타임보드 */
+.sec_countdown{overflow:hidden;padding:21px 0;background:#000}
+.sec_countdown .clock_box{float:left;margin-left:60px;letter-spacing:-1px}
+.sec_countdown .clock_box strong{display:block;float:left;margin:0 25px;padding-top:0px;font-size:18px;color:#fff}
+.sec_countdown .clock_box em{display:block;float:left;width:88px;height:50px;padding-left:9px;background:url(<?=M_IMG_DIR?>/promotion/start_zero/bg_clock.png) no-repeat left bottom;font-family:Tahoma,helvetica,sans-serif;line-height:48px;font-size:38px;font-weight:bold;color:#000;letter-spacing:0.15em}
+.sec_countdown.clock_box em span{overflow:hidden;position:absolute;top:-999em;left:-999em;width:1px;height:1px}
+.sec_countdown .clock_box .day{width:104px;background-position:left top}
+.sec_countdown .clock_box .sec{width:66px}
+.sec_countdown .btn_clock{float:left;margin-left:25px}
+.sec_countdown .btn_clock a.btn_free{position:relative}
+.sec_countdown .btn_clock a span.icon_hand{position:absolute;right:0; top:35px}
+/* sec_visual */
+.sec_visual{background:#010073}
+.sec_visual p{margin-bottom:63px}
+.register_box{position:relative;width:580px;margin:0 auto;padding-bottom:11px;background:#fff;text-align:center}
+.register_box strong{position:absolute;left:0;top:-39px}
+.register_box em{display:inline-block;margin:27px 0 30px}
+/* sec_refund */
+.sec_refund{padding:71px 0;text-align:center}
+/* sec_review */
+.sec_review{padding-bottom:90px;text-align:center}
+/* sec_movie */
+.sec_movie{text-align:center;padding-bottom:88px}
+.sec_movie ul{width:580px;margin:-50px auto 0}
+.sec_movie ul li{position:relative;margin-top:50px;padding-bottom:57px;background:#e6e7f4}
+.sec_movie ul li:first-child{padding-bottom:32px}
+.sec_movie span.notice{display:block;text-align:left}
+.sec_movie a.btn_vid{display:block}
+.sec_movie .layer_popup_video{display:none;position:absolute;top:200px;left:38px;padding:50px 10px 10px 10px;width:544px;height:306px;background:#000;z-index:1}
+.sec_movie .layer_popup_video .btn_close{position:absolute;top:8px;right:15px;color:#fff;font-weight:bold;font-size:20px}
+/* sec_plus */
+.sec_plus{background:#041689;padding-bottom:34px}
+.sec_plus span.icon_plus{position:absolute;left:50%;top:-40px;margin-left:-68px}
+/* sec_medal */
+.sec_medal{background:#0a0a0a}
+/* 유의사항 */
+.sec_note {padding:0;background:#ebebeb}
+.sec_note .btn {display:block;padding:2% 0;font-size:18px;font-weight:bold;color:#333;text-align:center;background:#adadad}
+.sec_note .cont_box {display:block;padding:2%;line-height:30px;text-align:left;font-size:18px;background:#ebebeb}
+.sec_note .cont_box dt{margin-top:14px;font-weight:bold}
+.sec_note .cont_box dt:first-child{margin-top:0px}
+.sec_note .cont_box dd{margin-top:8px}
+</style>
+
+<div class="event_20170721">
+	<div id="sec_countdown" class="sec_countdown">
+		<div class="cont_countdown">
+			<div class="clock_box">
+				<strong>판매 마감까지<br>남은 시간</strong>
+				<em class="day">06</em>
+				<em class="hour">13</em>
+				<em class="min">39</em>
+				<em class="sec">10</em>
+				<!-- <strong>남았습니다.</strong> -->
+			</div>
+		</div>
+	</div><!-- //sec_countdown -->
+
+	<div id="sec_visual" class="sec_visual">
+		<div class="cont_visual">
+			<h2><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_visual.gif" alt="왕초보라면 무조건! 첫걸음 0원 환급반"></h2>
+			<p><img src="<?=M_IMG_DIR?>/promotion/start_zero/cont_visual.gif" alt="중국어 인강 수강후기 1위, 왕초보 맞춤 중단기 전 강좌, 선생님과 직접 1:1 학습 문의, 출석만 하면 수강료 100% 환급"></p>
+			<div class="register_box">
+				<strong><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_refund_class.png" alt="첫걸음 0원 환급반"></strong>
+				<em><img src="<?=M_IMG_DIR?>/promotion/start_zero/cont_refund_class.png" alt="출석만 하면 229,000원이 0원"></em>
+				<a href="#sec_plus"><img src="<?=M_IMG_DIR?>/promotion/start_zero/btn_register.png" alt="지금 바로 수강 신청"></a>
+			</div> <!-- //register_box -->
+			<span><img src="<?=M_IMG_DIR?>/promotion/start_zero/txt_refund_class.png" alt="* 출석 미션 – 페이지 하단 유의사항 참고 ** 모든 환급금은 실 결제 금액에 대해서만 환급이 진행되며, 해당 금액에 대해 22% 제세공과금이 부과됩니다."></span>
+		</div>
+	</div><!-- sec_visual -->
+
+	<div id="sec_refund" class="sec_refund">
+		<div class="cont_refund">
+			<h3><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_refund.gif" alt="다른 조건은 없어요! 오직 출석만 하시면 100% 환급 해드려요."></h3>
+			<p><img src="<?=M_IMG_DIR?>/promotion/start_zero/cont_refund.gif" alt="성적 별 자동 환급 x, 성적표 제출 x, 0차시부터 완강 x, 수강기간 동안 출석만 하면 100% 환급 o"></p>
+			<span><img src="<?=M_IMG_DIR?>/promotion/start_zero/txt_refund.gif" alt="* 100일 연속 출석 시, 100% 현금 환급, 하루 1강 수강 시 출석 인정 ** 모든 환급금은 실 결제 금액에 대해서만 환급이 진행되며, 해당 금액에 대해 22% 제세공과금이 부과됩니다"></span>
+		</div>
+	</div><!-- sec_refund -->
+
+	<div id="sec_review" class="sec_review">
+		<div class="cont_review">
+			<h3><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_review.gif" alt="수강후기가 가장 많아요. 여러분이 할 수 있다는 증거예요."></h3>
+			<p><img src="<?=M_IMG_DIR?>/promotion/start_zero/cont_review.gif" alt="중단기 리얼 수강후기"></p>
+			<ul>
+				<li><img src="<?=M_IMG_DIR?>/promotion/start_zero/img_review_01.jpg" alt="중국어도 배우고 삶의 열정도 얻고"></li>
+				<li><img src="<?=M_IMG_DIR?>/promotion/start_zero/img_review_02.jpg" alt="중국어가 꿀잼인 것을 알게 해준 강의"></li>
+				<li><img src="<?=M_IMG_DIR?>/promotion/start_zero/img_review_03.jpg" alt="정말 제대로 된 유익한 강의"></li>
+			</ul>
+		</div>
+	</div><!-- sec_review -->
+
+	<div id="sec_movie" class="sec_movie">
+		<div class="cont_movie">
+			<h3><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_movie.gif" alt="그저 보기만 하세요. 왕초보 탈출하는 비법을 공유드려요."></h3>
+			<ul>
+				<li>
+					<p><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_movie_01.jpg" alt="대한민국 HSK의 기준"></p>
+					<a href="javascript:;" class="btn_vid" onclick="video_play(650,'FFDD789D6F1D31041F64A670DB606C83BC45&outKey=V125c5c92177ca3328a5e0af7884589909a7fb47227194eb89cee0af7884589909a7f');return false;"><img src="<?=M_IMG_DIR?>/promotion/start_zero/vod_movie_01.jpg" alt="20만이 선택한 중단기 대표강사 남미숙"></a>
+					<span class="notice"><img src="<?=M_IMG_DIR?>/promotion/start_zero/txt_movie_01.gif" alt="*新HSK 한권으로 끝내기 누적 판매량"></span>
+				</li>
+				<li>
+					<p><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_movie_02.gif" alt="왕초보 눈높이에 딱 맞춘 학습법"></p>
+					<a href="javascript:;" class="btn_vid" onclick="video_play(1500,'366719696D726D5445FBF4FDCA7D037A2C7E&outKey=V1298ff31bb82d08458d92110a47682ed43d4ed0c346f8d4e4d9c2110a47682ed43d4');return false;"><img src="<?=M_IMG_DIR?>/promotion/start_zero/vod_movie_02.jpg" alt="누구나 쉽게 배울 수 밖에 없는 왕초보 강의"></a>
+				</li>
+				<li>
+					<p><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_movie_03.gif" alt="웃으며 쉽게 배우는 예능 강좌"></p>
+					<a href="javascript:;" class="btn_vid" onclick="video_play(2320,'3B296B89EA4586B5E49B98E5C1D3CB60BA26&outKey=V122a2f35bfa1a69600491ab575d276bef723a9017025ce98ee991ab575d276bef723');return false;"><img src="<?=M_IMG_DIR?>/promotion/start_zero/vod_movie_03.jpg" alt="서성영의 한국어로 입터는 중국어"></a>
+				</li>
+			</ul>
+			<div class="layer_popup_video">
+				<a class="btn_close" href="#" onclick="javascript:$('.layer_popup_video').fadeOut();$('.video iframe').remove();return false;">닫기 X</a>
+				<div class="video">
+					<!-- 영상 공간 -->
+				</div>
+			</div>
+		</div>
+	</div><!-- sec_movie -->
+
+	<div id="sec_plus" class="sec_plus">
+		<div class="cont_plus">
+			<span class="icon_plus"><img src="<?=M_IMG_DIR?>/promotion/start_zero/bul_plus.png" alt="플러스 아이콘"></span>
+			<h3><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_plus.jpg" alt="중단기만의 독보적 학습 시스템까지 모두 누리세요!"></h3>
+			<div class="register_box">
+				<strong><img src="<?=M_IMG_DIR?>/promotion/start_zero/tit_refund_class.png" alt="첫걸음 0원 환급반"></strong>
+				<em><img src="<?=M_IMG_DIR?>/promotion/start_zero/cont_refund_class.png" alt="출석만 하면 229,000원이 0원"></em>
+				<a href=""><img src="<?=M_IMG_DIR?>/promotion/start_zero/btn_register.png" alt="지금 바로 수강 신청"></a>
+			</div> <!-- //register_box -->
+			<span><img src="<?=M_IMG_DIR?>/promotion/start_zero/txt_refund_class.png" alt="* 출석 미션 – 페이지 하단 유의사항 참고 ** 모든 환급금은 실 결제 금액에 대해서만 환급이 진행되며, 해당 금액에 대해 22% 제세공과금이 부과됩니다."></span>
+		</div>
+	</div><!-- sec_plus -->
+
+	<div id="sec_medal" class="sec_medal">
+		<div class="cont_medal">
+			<p><img src="<?=M_IMG_DIR?>/promotion/start_zero/cont_medal.gif" alt="학습자가 인정한 중국어 1위는 확실히 다르다는 것을 중단기 첫걸음 0원 환급반이 약속 드리겠습니다!"></p>
+			<ul class="skip">
+				<li>*한국소비자브랜드위원회주최 소비자가 선정한, 2016 대한민국 올해의 브랜드 대상 수상 중국어학원부분</li>
+				<li>*디지털조선일보주최 2016 소비자가 가장 신뢰하는 브랜드 대상 수상 중국어 교육 부문</li>
+				<li>*디지털조선일보주최 소비자가 선정한 2015 대한민국 히트상품 대상 수상 어학 교육 부문</li>
+				<li>*한국소비자브랜드위원회주최 소비자가 선정한, 2015 대한민국 올해의 브랜드 대상 수상 중국어학원부분</li>
+				<li>*2015년 8월 10일 ~8월 16일 코리안클릭 UV 기준 /HSK 시험 전 가장 많이 찾는 사이트 1위</li>
+				<li>*중국어 인강 검색량 1위 (네이버 트렌드 검색 2016.12.19~25 기준)</li>
+				<li>*수강생 후기 1위 (2016년 08월 05일 M사,P사,H사 수강후기 게시판 글 합계 기준)</li>
+				<li>*중국어 강사 검색 1위 (2015년 8월 31일 코리안클릭 상위 3개 업체의 대표강사 검색량 비교 M사 문*아, P사 배*진, 중단기 남미숙)</li>
+			</ul>
+		</div>
+	</div><!-- sec_medal -->
+
+	<div id="sec_note" class="sec_note">
+		<div class="note_tit">
+			<a href="#" class="btn"><img src="http://china.dangi.co.kr/img//m/promotion/start/btn_off.jpg" alt="유의사항닫기"></a>
+		</div>
+		<div class="cont_box">
+		</div>
+	</div><!-- //유의사항 -->
+
+</div><!-- //event_20170721 -->
+
+<script type="text/javascript">
+//동영상 재생
+function video_play(top,vid){
+	$('.layer_popup_video').css('top',top).fadeIn();
+	$('.layer_popup_video .video').html("<iframe src='http://serviceapi.rmcnmv.naver.com/flash/outKeyPlayer.nhn?vid="+vid+"&controlBarMovable=true&jsCallable=true&isAutoPlay=true&skinName=tvcast_white' frameborder='no' scrolling='no' marginwidth='0' marginheight='0' WIDTH='544' HEIGHT='306' allowfullscreen></iframe>");
+};
+$(document).ready(function(){
+	//유의사항
+	notice_call('sec_note .cont_box', 'M');
+	$('.sec_note .btn').click(function(){
+		if( $('.sec_note .cont_box').css('display') == 'block' ){
+			$('.sec_note .btn').html('<img src="http://china.dangi.co.kr/img//m/promotion/start/btn_on.jpg" alt="">');
+			$('.sec_note .cont_box').slideUp('slow');
+		}else{
+			$('.sec_note .btn').html('<img src="http://china.dangi.co.kr/img//m/promotion/start/btn_off.jpg" alt="">');
+			$('.sec_note .cont_box').slideDown('slow');
+		};
+		return false;
+	});
+});
+</script>

@@ -1,0 +1,5 @@
+disallow: /adm
+disallow: /data
+disallow: /updata
+disallow: /files
+disallow: /img
