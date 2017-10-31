@@ -20,7 +20,6 @@ class Main extends CI_Controller {
             'is_footer' => TRUE, //footer 내용 표시 여부
             'js' => array(),
         );
-        // $this->load->model('banner/m_banner');
     }
 
     public function index()

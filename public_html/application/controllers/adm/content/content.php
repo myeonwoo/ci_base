@@ -5,8 +5,8 @@ class Content extends CI_Controller {
         $this->load->library('validate');
         $this->load->library('datastructure/hierarchy');
 
-        $this->load->model('banner/m_content_category');
-        $this->load->model('banner/m_content');
+        $this->load->model('content/m_content_category');
+        $this->load->model('content/m_content');
     }
 
     //배너관리자
