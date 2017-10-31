@@ -14,7 +14,6 @@ class CommonData {
 	public function get_adm_header_data($data = array())
 	{
 		$this->CI = & get_instance();
-		$this->CI->load->model('adm/adm_member/m_member');
 
 		$data['adm_mb_id'] = $this->CI->session->userdata('adm_mb_id');
 		$data['adm_name'] = $this->CI->session->userdata('adm_name');
