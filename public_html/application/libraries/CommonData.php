@@ -34,8 +34,6 @@ class CommonData {
 	public function setHeaderData($head){
 		
 		$CI =& get_instance();
-		$CI->load->library('vd');
-		$CI->load->model('main/m_main');
 		
 		if($head['is_top']){
 			// 회원 정보 필요하면 회원정보 세팅
@@ -68,14 +66,40 @@ class CommonData {
 
 		return $head;
 	}
-	//set data
-	public function setFooterData($tail){
+	public function setHeaderDataMobile($head){
+		
+		$CI =& get_instance();
+		
+		if($head['is_top']){
+			// 회원 정보 필요하면 회원정보 세팅
+			$head['mb_name'] = $CI->session->userdata('ss_mb_name');
+			$head['common_css_use'] = true;
 
-		$tail['tgnb_open_tab_call'] = "2";
-		$tail['tgnb_focus_name'] = "lan_etc";
-		$tail['tgnb_tab_open'] = "chia";
+			//SITE_NAME.' :: 회원가입 - 미래를 앞당기는 용기
+			if($head['title']){
+				$head['title'] = SITE_NAME.' :: 중국어 1위의 근거 있는 자신감 '.$head['title'];
+			}
+			else{
+				$head['title'] = SITE_NAME;
+			}
 
-		return $tail;
+			if($head['meta-keywords'] ==  '화면 keyword'){
+				unset($head['meta-keywords']);
+			}
+			if($head['meta-description'] == '화면 description'){
+				unset($head['meta-description']);
+			}
+
+			if($head['meta-keywords']){
+				$head['meta_keywords'] = $head['meta-keywords'];
+			}
+			if($head['meta-description']){
+				$head['meta_description'] = $head['meta-description'];
+			}
+	    
+		}
+
+		return $head;
 	}
 	
 	

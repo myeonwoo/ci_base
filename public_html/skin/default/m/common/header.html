@@ -1,3 +1,214 @@
 <?php
-include("../../codeigniter/st/skin/chinadangi/china_mobile_header.html");
+// include("../../codeigniter/st/skin/chinadangi/china_mobile_header.html");
+// include("../../codeigniter/st/skin/engdangi/eng_mobile_header.html");
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, user-scalable=yes">
+	<meta name="keywords" content='<?=$meta_keywords?>'>
+	<meta name="description" content='<?=$meta_description?>'>
+	<meta name="format-detection" content="telephone=no">
+	<title>[영단기] 미래를 앞당기는 용기  ::  영단기</title>
+
+	<link rel="apple-touch-icon" href="http://eng.dangi.co.kr/img/engdangi/m/m_speak_icon.png">
+
+
+    <link rel="apple-touch-icon" href="http://eng.dangi.co.kr/img/m/lecture_detail/apple-touch-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="http://eng.dangi.co.kr/img/engdangi/common/engdangi.ico">
+
+
+	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="http://eng.dangi.co.kr/css/m/common/common.css">
+	<link rel="stylesheet" type="text/css" href="http://eng.dangi.co.kr/css/m/main/main.css">
+	<!-- //css -->
+	<? if (count($css) > 0) : ?>
+    <? foreach ($css as $style): ?>
+    <link rel='stylesheet' href='/css/<?=$style?>' type='text/css'/>
+    <? endforeach; ?>
+    <? endif; ?>
+
+	<!-- js 섹션 -->
+	<script type="text/javascript" src="//s3.ap-northeast-2.amazonaws.com/st.dangidata/common/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="//s3.ap-northeast-2.amazonaws.com/st.dangidata/common/js/bxslider/jquery.bxslider.js"></script>
+	<!-- //js 섹션 -->
+	<script type="text/javascript" src="/js/common/common.js"></script>
+	<!-- //script -->
+</head>
+<body>
+
+	<!-- wrap -->
+	<div id="wrap">
+		<div id="left_menu" style="height:100%; background: #fff;">
+			<div class="top clear">
+				<p class="login">
+					<a href="https://member.dangi.co.kr/authorize/logout?redirect_url=http%3A%2F%2Feng.dangi.co.kr%2Fm">로그아웃</a>
+				</p>
+			</div>
+
+			<div class="menus">
+			<ul>
+				<li id="myClassRoom">
+					<!-- 로그인 전 -->
+					<!-- 로그인 후 -->
+					<a href="#" id="menu_myroom">내강의실</a>
+				</li>
+				<li>
+					<a href="#" class="down">영단기학원</a>
+					<ul>
+						<li><a href="http://offeng.dangi.co.kr/m">영단기 강남학원</a></li>
+						<li><a href="http://eng.dangi.co.kr/m/busan">영단기 부산학원</a></li>
+					</ul>
+				</li>
+				<li><a href="http://eng.conects.com/newtoeic_center">신토익센터</a></li>
+				<li><a href="http://eng.dangi.co.kr/m/teacher/teacher/lists">선생님</a></li>
+				<li>
+					<a href="#" class="down">초고속정답 서비스</a>
+					<ul>
+						<li><a href="http://eng.dangi.co.kr/m/newtoeic_score/score?type=force">정답 서비스</a></li>
+						<li><a href="http://eng.dangi.co.kr/m/newtoeic_score/live">실시간 LIVE강의</a></li>
+						<li><a href="http://eng.dangi.co.kr/m/newtoeic_score/board/main/lists?tab=on&type=force">토익 게시판</a></li>
+						<li><a href="http://eng.dangi.co.kr/m/newtoeic_score/event_board?type=force">이벤트</a></li>
+						<!-- <li><a href="http://eng.dangi.co.kr/m/newtoeic_score/score">채점서비스</a></li>
+						<li><a href="http://eng.dangi.co.kr/m/newtoeic_score/board/main/lists?tab=on">토익게시판</a></li> -->
+					</ul>
+				</li>
+				<li>
+					<a href="#" class="down">수강신청</a>
+					<ul>
+						<li><a href="http://offeng.dangi.co.kr/m/registration">영단기 강남학원 수강</a></li>
+						<li><a href="http://eng.dangi.co.kr/m/busan/registration/main/main_mobile">영단기 부산학원 수강</a></li>
+						<li><a href="http://eng.dangi.co.kr/m/course/">인강수강</a></li>
+					</ul>
+				</li>
+				<li><a href="http://eng.dangi.co.kr/m/freemovie/lists">무료강의</a></li>
+				<li>
+					<a href="#" class="down">특강</a>
+					<ul>
+						<li><a href="http://eng.dangi.co.kr/promotion/special_lecture/hit_lecture">적중특강</a></li>
+						<li><a href="http://eng.dangi.co.kr/promotion/ysy">마라톤특강</a></li>
+					</ul>
+				</li>
+				<li><a href="http://eng.dangi.co.kr/event">이벤트</a></li>
+				<li><a href="http://eng.dangi.co.kr/board/list_document/lists?mid=eng_community_review">수강후기</a></li>
+				<li><a href="http://eng.dangi.co.kr/m/customer/faq">FAQ</a></li>
+			</ul>
+			</div>
+
+			<!-- popup -->
+			<div class="popup_mobile_app">
+				<img src="/img/m/common/ic_launcher_web.png" width="126" alt="영단기">
+				<p>스마트영단기 모바일 앱으로<br/> 출석체크와 인강청취를 언제 어디서나 편리하게!</p>
+				<div class="btn_area">
+					<a href="https://itunes.apple.com/kr/app/dangiplayer/id1047047867?mt=8" id="launch_ios">아이폰/아이패드</a>
+					<a href="https://play.google.com/store/apps/details?id=com.stn.mobile_player" id="launch_android">안드로이드</a>
+				</div>
+				<a href="javascript:void(0);" onclick="$('.popup_mobile_app').fadeOut();" class="btn_close"><img src="/img/m/common/btn_close_popup.jpg" width="11" alt="닫기"></a>
+			</div>
+		</div>
+	
+
+		<!-- header -->
+		<header id="header" class="wrap_padding">
+			<div class="cont">
+				<!-- <h1><a href=""><img src="http://eng.dangi.co.kr/img/m//common/eng_logo.png" alt="영단기 로고"></a></h1> -->
+				<h1><a href="http://eng.dangi.co.kr/m"><img src="http://eng.dangi.co.kr/img/m//common/eng_logo.png" alt="영단기 로고"></a></h1>
+
+				<a href="#" class="btn_munu"><img src="http://eng.dangi.co.kr/img/m//common/btn/btn_menu.png" alt="메뉴 버튼"></a>
+				<ul class="util">
+					<li><a href="http://eng.dangi.co.kr/member.dangi.co.kr/member/join">간편가입</a></li>
+					<li><a href="https://member.dangi.co.kr/authorize/logout?redirect_url=http%3A%2F%2Feng.dangi.co.kr%2Fm">로그아웃</a></li>
+					<li id="util_menu_myroom"><a href="#none">내강의실</a></li>
+				</ul>
+			</div>
+		</header>
+		<!-- //header -->
+
+
+		<!-- contents -->
+		<div id="contents">
+
+<script type="text/javascript" >
+$(document).ready(function(){
+
+
+	//##### (#left_menu) 노출 스크립트 시작 #####
+	var open_num = 0;
+	$(".btn_munu").click(function(){
+		var height = $("window").height();
+		var left_munu_width = $("#left_menu").width()+30;
+
+		if(open_num == 0){ // #left_menu 노출
+			open_num = 1;
+			$(this).animate({left:left_munu_width });
+			$("#left_menu").animate({left:"0"});
+
+			$("#wrap").prepend('<div class="dim" style="width:100%;height:100%;position:fixed;top:0;left:0;z-index:45;background:#000;opacity:0.6;filter:alpha(opacity=60);"></div>');
+
+			window.scrollTo(0,1);
+			$('.dim').click(function(){
+				open_num = 0;
+				$('.btn_munu').animate({left:'30px' });
+				$("#left_menu").animate({left:-left_munu_width });
+				$('.dim').fadeOut('slow',function(){ $(this).remove(); });
+			});
+		}else{ // #left_menu 비노출
+			open_num = 0;
+			$(this).animate({left:'30px' });
+			$("#left_menu").animate({left:-left_munu_width });
+			$('.dim').fadeOut('slow',function(){ $(this).remove(); });
+
+			window.scrollTo(0,1);
+		};
+		return false;
+	});
+	//##### (#left_menu) 노출 스크립트 끝 #####
+	//##### (#left_menu)의 서브메뉴 열기 시작 #####
+	$('#left_menu .menus .down').click(function(){
+		if($(this).hasClass('up') == true ){
+			$(this).removeClass('up').siblings('ul').slideUp('fast');
+		}else{
+			$(this).addClass('up').siblings('ul').slideDown('fast');
+		};
+		return false;
+	});
+	//##### (#left_menu)의 서브메뉴 열기 끝 #####
+
+	$('#menu_myroom, #util_menu_myroom').click(function () {
+		var frame_id='__check_app__';
+		var clickedAt = +new Date;
+		var android_market_url = 'market://details?id=com.stn.mobile_player';
+		var ios_market_url = 'https://itunes.apple.com/kr/app/dangiplayer/id1047047867?mt=8';
+		var android_custom = 'stne://english.stn.com';
+		var ios_custom = 'stne://';
+
+		var ua = navigator.userAgent;
+		if(ua.match(/iPhone|iPad|iPod/i)){
+			setTimeout(function(){
+				if(+new Date - clickedAt < 2000){
+					$(".popup_mobile_app").fadeIn();
+					return;
+				};
+			}, 1000);
+			location.href = ios_custom;
+		}else if(ua.match(/Android/i)){
+			setTimeout( function () {
+				if(+new Date() - clickedAt < 2000){
+					$(".popup_mobile_app").fadeIn();
+					return;
+				};
+			}, 1000);
+			$iframe = $('<iframe id="'+frame_id+'" src='+ android_custom +' />').hide().appendTo('body');
+		}else{
+			alert("지원하는 OS가 아닙니다.");
+			console.log("지원하는 OS가 아닙니다.");
+		};
+	});
+
+});
+</script>
+
+			<div class="main">

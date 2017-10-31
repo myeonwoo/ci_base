@@ -46,15 +46,14 @@ class Main extends CI_Controller {
 
         $data['params'] = &$params;
 
-        $head = $this->commondata->setHeaderData($this->dataset['head']);
-        $tail = $this->commondata->setFooterData($this->dataset['tail']);
+        $data = $this->commondata->setHeaderData($this->dataset['head']);
 
         if ($params['type']=='json') {
             $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
         } else {
-            $this->load->view('common/header', $head);
+            $this->load->view('common/header', $data);
             $this->load->view('main/main', $data);
-            $this->load->view('common/footer', $tail);
+            $this->load->view('common/footer', $data);
         }
 
     }
@@ -66,7 +65,7 @@ class Main extends CI_Controller {
         );
 
         $head = $this->commondata->setHeaderData($this->dataset['head']);
-        $tail = $this->commondata->setFooterData($this->dataset['tail']);
+        // $tail = $this->commondata->setFooterData($this->dataset['tail']);
         
         $this->load->view('m/common/header', $head);
         $this->load->view('m/main/main', $data);
