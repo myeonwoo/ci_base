@@ -35,8 +35,6 @@ class Member extends CI_Controller {
         $data['user_id'] = $this->data['ss_mb_id'];
         $data['is_login'] = $this->data['is_login'];
 
-        /* header("Content-Type:application/json;");
-        echo json_encode($data); */
         $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
     }
 
@@ -66,8 +64,6 @@ class Member extends CI_Controller {
         if (isset($result['result']['total_amt'])) $data['total_amt'] = $result['result']['total_amt'];
         else $data['total_amt'] = 0;
 
-        /* header("Content-Type:application/json;");
-        echo json_encode($data); */
         $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
     }
 }
