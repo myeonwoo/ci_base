@@ -28,6 +28,8 @@ class Content extends CI_Controller {
 
         $data['content_categories'] = $this->m_content_category->get_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+        // $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id($data['banner']['content_category_id']);
+        $data['banner_category_path'] = array();
 
         $data['banners'] = $this->m_content->get_list(array(
             'like_subject'=>'환급반', 'yn_deleted'=>0

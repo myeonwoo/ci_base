@@ -17,14 +17,16 @@
                         <a class="btn btn-info" href="/adm/content/content/banner_write?content_category_id=&sub_content_category_id=&type=">등록</a>
                     </p>
                     <div class="col-lg-12">
-                        <select name="category_selection" id="select_category_1" class="btn" v-on:change="change_category_selection(1)">
-                            <option value="">전체</option>
-                            <option v-for="item in category.hierarchy" v-bind:value="item.content_category_id" >{{item.subject}}</option>
-                        </select>
-                        <select v-if="category_selection_2.length>0" name="category_selection" id="category_selection_2" class="btn" v-on:change="change_category_selection(2)">
-                            <option value="">전체</option>
-                            <option  v-for="item in category_selection_2" v-bind:value="item.content_category_id" >{{item.subject}}</option>
-                        </select>
+                        <div class="col-lg-8">
+                            <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
+                                <option value="">전체</option>
+                                <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                            </select>
+                            <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
+                                <option value="">전체</option>
+                                <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="panel-heading">
@@ -49,8 +51,9 @@
             params: <?=json_encode($params);?>
             , banners: <?=json_encode($banners);?>
             , category: <?=json_encode($category);?>
-            , category_selection_2: []
-            , category_selection_3: []
+            , category_selection_1_options: []
+            , category_selection_2_options: []
+            , banner_category_path: <?=json_encode($banner_category_path);?>
         }
         ,methods: {
             delete_content: function(tag) {
@@ -99,40 +102,85 @@
                     }
                 });
             }
+            , change_category_select_options: function(depth){
+                var data = {};
+                data.category_id = $('#category_selection_'+depth).val();
+                
+                this.set_category_selection(depth, data.category_id);
+            }
             , change_category_selection: function(depth){
                 var data = {};
                 data.content_category_id = $('#select_category_'+depth).val();
 
                 this.set_category_selection(depth, data.content_category_id);
             }
+            , update_category_select: function() {
+                setTimeout(function(){
+                    if (app.banner_category_path.length>0) {
+                        $('#category_selection_1').val(app.banner_category_path[0].content_category_id);
+                        app.change_category_select_options(1);
+                    }
+                }, 500);
+                
+                setTimeout(function(){
+                    if (app.banner_category_path.length>1) {
+                        $('#category_selection_2').val(app.banner_category_path[1].content_category_id);
+                        app.change_category_select_options(2);
+                    }
+                }, 1000);
+            }
             , set_category_selection: function(depth, content_category_id) {
                 if (depth==1) {
-                    this.category_selection_2 = this.category_selection_3 = [];
+                    this.category_selection_2_options = [];
                     if (content_category_id) {
-                        $('#category_selection_2').val('');
-                        this.category_selection_2 = this.category.lookup[content_category_id].children;
-
-                        // search
-                        // this.datatable.columns(1).search(content_category_id, true, true).draw();
-                        this.datatable.columns(1).search('^'+content_category_id+'$', true, true).draw();
+                        // 분류 경로 재설정
+                        this.banner_category_path = [this.category.lookup[content_category_id]];
+                        $('#category_selection_2_options').val('');
+                        this.category_selection_2_options = this.category.lookup[content_category_id].children;
                     } else {
-                        this.datatable.columns(1).search('', true, true).draw();
+                        // 분류 경로 재설정
+                        this.banner_category_path = [];
                     }
+
+                    // reset
+                    $('#category_selection_2').val('');
                 }
                 else if (depth==2) {
-                    this.category_selection_3 = [];
                     if (content_category_id) {
-                        this.category_selection_3 = this.category.lookup[content_category_id].children;
+                        // 분류 경로 재설정
+                        this.banner_category_path[1] = this.category.lookup[content_category_id];
+                    } else {
+                        // 분류 경로 재설정
+                        this.banner_category_path = [this.banner_category_path[0]];
                     }
                 }
+                // 리스트 조회
+                if (app.banner_category_path.length>0) {
+                    var tmp = this.get_all_content_content_category_id(app.banner_category_path[app.banner_category_path.length-1].content_category_id);
+                    var regex = '^('+tmp.join('|')+')$';
+                    app.datatable.columns(1).search(regex, true, true).draw();
+                } else {
+                    app.datatable.columns(1).search('', true, true).draw();
+                }
+
+            }
+            // 자식 노드 포함 
+            , get_all_content_content_category_id: function(content_category_id){
+                var myapp = this;
+                var data = [];
+                data.push(app.category.lookup[content_category_id].content_category_id);
+                _.each(app.category.lookup[content_category_id].children, function(item){
+                    data.push(item.content_category_id);
+                    if (item.children.length>0) {
+                        data = data.concat(myapp.get_all_content_content_category_id(item.content_category_id));
+                    }
+                });
+
+                return data;
             }
             , init: function(){
-                // var 
-                // _.each(app.category_list, function(item){
-                //     console.log(item);
-                // });
-
-                // app.set_category_selection(1,1);
+                app.category_selection_1_options = app.category.hierarchy;
+                // app.update_category_select();
             }
         }
     });
