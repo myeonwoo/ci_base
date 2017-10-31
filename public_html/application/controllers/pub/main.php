@@ -39,6 +39,7 @@ class Main extends CI_Controller {
 
     public function index()
     {
+        $data = $this->commondata->setHeaderData($this->head);
     	$exception = $this->input->get('exception', true);
     	$path = (uri_string() === 'pub' OR uri_string() === 'pub/m')?'pub/tutorial':uri_string();
     	if (( ! empty($exception) && ($exception === 'head' OR $exception === 'all')) OR $path === 'pub/tutorial')
@@ -46,9 +47,8 @@ class Main extends CI_Controller {
     		// do not include the header file.
     	}
     	else
-    	{
-	    	$head = $this->commondata->setHeaderData($this->head);
-	    	$this->load->view('common/header', $head);
+    	{	    	
+	    	$this->load->view('common/header', $data);
     	}
 
     	if ($path){$this->load->view($path);}
@@ -59,13 +59,14 @@ class Main extends CI_Controller {
     	}
     	else
     	{
-	    	$tail = $this->commondata->setFooterData($this->tail);
-	    	$this->load->view('common/footer', $tail);
+	    	$this->load->view('common/footer', $data);
     	}
     }
 
     public function m()
     {
+        $data = $this->commondata->setHeaderData($this->head);
+
     	$exception = $this->input->get('exception', true);
     	$path = uri_string();
     	if (( ! empty($exception) && ($exception === 'head' OR $exception === 'all')) OR $path === 'pub/tutorial')
@@ -73,8 +74,9 @@ class Main extends CI_Controller {
     		// do not include the header file.
     	}
     	else
-    	{
-	    	widget::run('m/common/header');
+    	{            
+            // widget::run('m/common/header');
+            $this->load->view('m/common/header', $data);
     	}
 
     	if ($path){$this->load->view($path);}
@@ -85,7 +87,8 @@ class Main extends CI_Controller {
     	}
     	else
     	{
-	    	widget::run('m/common/footer');
+	    	// widget::run('m/common/footer');
+            $this->load->view('m/common/footer', $data);
     	}
     }
 }

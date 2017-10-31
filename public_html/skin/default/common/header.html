@@ -25,25 +25,11 @@
 <link rel="stylesheet" type="text/css" href="<?=CONECTS_STATIC_HOST?>/common/css/st-comm-v3/st-comm-v3.1.0.css?<?=date('YmdHi')?>">
 <!-- 전체 개별용 -수정은 사업부 자체 처리 -->
 <link rel="stylesheet" href="/css/chinadangi/common/common.css?<?=date("Ymdh",time())?>" type="text/css" media="all" >
-<?if($main_yn):?>
-<!-- ***** ALL메인용 -->
-<!-- 메인 공통용 -수정은 UI개발팀에 요청 -->
-<link rel="stylesheet" type="text/css" href="<?=CONECTS_STATIC_HOST?>/common/css/st-main-v3/st-main-v3.0.0.css?<?=date('YmdHi')?>">
-<!-- 메인 개별용 -수정은 사업부 자체 처리 -->
-<link rel="stylesheet" href="<?=CSS_DIR?>/main/main.css?<?=date("Ymdh",time())?>" type="text/css" media="all" >
-<?endif;?>
 
 <!-- CSS (publishing) -->
 <? if($css): ?>
 <? foreach($css as $each_css) :?>
-<link rel="stylesheet" type="text/css" href="<?=CSS_DIR?>/<?=$each_css?>?<?=date("Ymdh",time())?>" />
-<? endforeach; ?>
-<? endif; ?>
-<? if($common_css_use): ?>
-<?endif;?>
-<? if($css_direct): ?>
-<? foreach($css_direct as $each_css) :?>
-<link rel="stylesheet" type="text/css" href="//<?=DANGI_HOST?>/<?=$each_css?>?<?=date("Ymdh",time())?>" />
+<link rel="stylesheet" type="text/css" href="<?=$each_css?>?<?=date("Ymdh",time())?>" />
 <? endforeach; ?>
 <? endif; ?>
 
@@ -70,119 +56,9 @@
 <!-- JS(develop)-->
 <? if($js): ?>
 <? foreach($js as $each_js) :?>
-<script type="text/javascript" src="<?=JS_DIR?>/<?=$each_js?>?<?=date("Ymdh",time())?>"></script>
+<script type="text/javascript" src="<?=$each_js?>?<?=date("Ymdh",time())?>"></script>
 <? endforeach; ?>
 <? endif; ?>
-
-<script type="text/javascript">
-<?//랜딩페이지 관리자 등록 정보 호출?>
-/* $(function(){
-    var url_info = document.location.href;
-    $.post("/landing_information/main",{url:url_info},function(data){
-		$.each(data,function(idx,val){
-			$.each(val, function (s_idx, s_val){
-				if(s_val.info_type == "b"){
-					if(s_val.link){
-						$html_node = '<a href="'+s_val.link+'"><img src="'+s_val.file_url+'" alt="'+s_val.banner_name+'"></a>';
-					}else if(s_val.img_map){
-						$html_node = '<img src="'+s_val.file_url+'" alt="'+s_val.banner_name+'" usemap="#landing_'+s_val.no_ba_id+'">'+
-						'<map name="#landing_'+s_val.no_ba_id+'" id="#landing_'+s_val.no_ba_id+'">'+
-				    		s_val.img_map+
-						'</map>';
-					}else{
-						$html_node = '<img src="'+s_val.file_url+'" alt="'+s_val.banner_name+'">';
-					}
-					$("#"+s_val.class_name).html($html_node);
-					$("."+s_val.class_name).html($html_node);
-				}
-				if(s_val.info_type == "n"){
-					$("#"+s_val.class_name).html(s_val.notice_txt);
-					$("."+s_val.class_name).html(s_val.notice_txt);
-				}
-			});
-		});
-    },"json");
-}) */
-</script>
-<!-- 마케팅 요청 트래킹 -->
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-30529619-1', 'auto');
-	ga('send', 'pageview');
-</script>
-
-<? if( preg_match("/eng.dangi.co.kr/i", $_SERVER['HTTP_HOST'] )){ ?>
-	<script>
-		(function() {
-			var _fbq = window._fbq || (window._fbq = []);
-			if (!_fbq.loaded) {
-			var fbds = document.createElement('script');
-			fbds.async = true;
-			fbds.src = '//connect.facebook.net/en_US/fbds.js';
-			var s = document.getElementsByTagName('script')[0];
-			s.parentNode.insertBefore(fbds, s);
-			_fbq.loaded = true;
-			}
-			_fbq.push(['addPixelId', '1668509753382952']);
-		})();
-		window._fbq = window._fbq || [];
-		window._fbq.push(['track', 'PixelInitialized', {}]);
-	</script>
-	<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=1668509753382952&amp;ev=PixelInitialized" /></noscript>
-
-	<!-- 마케팅 요청 2015-09-04 -->
-	<script type="text/javascript">
-	    var roosevelt_params = {
-	        retargeting_id:'IlrpHcaVv4eB55ou9swxZA00',
-	        tag_label:'FXqsi0sUTaC3MB7Eth_U_A'
-	    };
-	</script>
-	<script type="text/javascript" src="//adimg.daumcdn.net/rt/roosevelt.js" async></script>
-<? } ?>
-
-<? if( preg_match("/member.dangi.co.kr\/member\/welcome_v2/i",$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] )){ ?>
-	<!-- Facebook Conversion Code for 영단기 RCLC 회원가입 - PC -->
-	<script>
-		(function() {
-			var _fbq = window._fbq || (window._fbq = []);
-			if (!_fbq.loaded) {
-				var fbds = document.createElement('script');
-				fbds.async = true;
-				fbds.src = '//connect.facebook.net/en_US/fbds.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(fbds, s);
-				_fbq.loaded = true;
-			}
-		})();
-		window._fbq = window._fbq || [];
-		window._fbq.push(['track', '6027315111212', {'value':'0.00','currency':'KRW'}]);
-	</script>
-	<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6027315111212&amp;cd[value]=0.00&amp;cd[currency]=KRW&amp;noscript=1" /></noscript>
-<? } ?>
-
-<script type="text/javascript">
-var tab_select = "<?=$tab_select?>";
-<? if($is_top){ ?>
-// $(document).ready(function(){
-// 	$.ajax({
-// 		url: "//<?=MYCLASS_HOST?>/api/event/count",
-// 		dataType : "jsonp",
-// 		cache : false,
-// 		success : function(data){
-// 			if(data.resultCode == '0000' && data.totalCount>0){
-// 				$('#header_event').find('.alarm').remove();
-// 				$('#header_event').append('<div class="alarm">'+data.totalCount+'</div>');
-// 			}
-// 		}
-// 	});
-// });
-<? } ?>
-</script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -255,12 +131,7 @@ $(document).ready(function(){
 		$('.top_random_title .top_line_title').eq(0).css('display','block');
 	};
 });
-<?if($heatmap_yn){?>
-(function(h,e,a,t,m,p) {
-m=e.createElement(a);m.async=!0;m.src=t;
-p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
-})(window,document,'script','https://u.heatmap.it/log.js');
-<?}?>
+
 </script>
 </head>
 
@@ -273,7 +144,6 @@ p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
 	include("../../codeigniter/st/skin/common/common_conects.html");
 ?>
 
-<? if($is_top) : ?>
 <!-- wrap -->
 <div id="wrap">
 
@@ -525,17 +395,6 @@ p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
 
 	<!-- container -->
 	<div id="container">
-		<!-- pr배너 -->
-		<?if(date('YmdHis') < '20170721210500'):?>
-			<div style="position:relative;width:100%;background:#fffde5;text-align:center;">
-				<a href="http://china.dangi.co.kr/promotion/hsk_secret" target="_blank">
-					<img src="<?=IMG_DIR?>common/header/ban/ban_top_pr_10502.png" alt="">
-				</a>
-			</div>
-		<?endif;?>
-		<!-- //pr배너 -->
-
 		<!-- contents -->
 		<div id="contents">
 
-		<?endif;?>
