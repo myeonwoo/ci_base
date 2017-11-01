@@ -4,13 +4,32 @@ class M_content extends CI_Model{
 		parent::__construct();
 		$this->db = $this->load->database("global", TRUE);
 	}
+	//컨텐츠 카테고리 리스트 전체
+	public function get_category_list_all($config=array()){
+
+		if (isset($config['yn_used'])) $this->db->where('yn_used', $config['yn_used']);
+
+		$query = $this->db->get('CONTENT_CATEGORY');
+		$data = $query->result_array();
+
+		$return = array();
+		foreach($data as $k => $v){
+			$return[$v['content_category_id']] = $v;
+		}
+		
+		return $return;
+	}
+
 
 	public function get($content_id){
 		$now = date('Y-m-d H:i:s');
 
+		$this->db->select('A.*, B.subject as content_category_subject');
 		$this->db->where('content_id',$content_id);
+		$this->db->from('CONTENT A');
+		$this->db->join('CONTENT_CATEGORY B', 'A.content_category_id = B.content_category_id');
 
-		$query = $this->db->get('CONTENT');
+		$query = $this->db->get();
 
 		if ($query->num_rows() < 1) {
 			return null;
@@ -25,8 +44,8 @@ class M_content extends CI_Model{
 		$now = date('Y-m-d H:i:s');
 
 		if (isset($options['yn_used'])) $this->db->where('yn_used', $options['yn_used']);
-		if (isset($options['content_category_id'])) $this->db->where('content_category_id', $options['content_category_id']);
-		if (isset($options['in_content_category_id'])) $this->db->where_in('content_category_id', $options['in_content_category_id']);
+		if (isset($options['content_category_id'])) $this->db->where('A.content_category_id', $options['content_category_id']);
+		if (isset($options['in_content_category_id'])) $this->db->where_in('A.content_category_id', $options['in_content_category_id']);
 		if (isset($options['like_subject'])) $this->db->like('subject', $options['like_subject']);
 		if (isset($options['yn_deleted'])) $this->db->where('yn_deleted', $options['yn_deleted']);
 
@@ -34,8 +53,13 @@ class M_content extends CI_Model{
 		else $this->db->where('dt_start <',$now);
 		if (isset($options['dt_end'])) $this->db->where('dt_end >', $options['dt_end']); 
 		$this->db->where('dt_end >',$now);
+		$this->db->from('CONTENT A');
 
-		$query = $this->db->get('CONTENT');
+		$this->db->select('A.*, B.subject as content_category_subject');
+		$this->db->join('CONTENT_CATEGORY B', 'A.content_category_id = B.content_category_id');
+
+		$query = $this->db->get();
+		// $query = $this->db->get('CONTENT');
 		$data = $query->result_array();
 
 		return $data;

@@ -2,7 +2,7 @@
 <div id="app">
     <div class="row">
         <div class="col-lg-12">
-            <h2>사이트 관리</h2>
+            <h2>배너 등록</h2>
         </div>
     </div>
     <hr/>
@@ -67,11 +67,11 @@
                         			<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
                         		</div>
                         		<div class="col-lg-12" style="margin-bottom: 20px;">
-                        			<input type="input" name="img_main" class="form-control" v-model="banner.img_main">
+                        			<input type="input" name="img1_url" class="form-control" v-model="banner.img1_url">
                         		</div>
                                 <div class="col-lg-12" style="margin-bottom: 20px;">
-                                	<a v-bind:href="banner.link_main" target="_blank">
-                                    	<img v-bind:src="banner.img_main" width="100" alt="">
+                                	<a v-bind:href="banner.img1_link" target="_blank">
+                                    	<img v-bind:src="banner.img1_url" width="100" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -81,23 +81,23 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 사이즈</label>
                             <div class="col-lg-8">
-                        		<input type="text" name="width_main" class="btn" v-model="banner.width_main">
+                        		<input type="text" name="img1_width" class="btn" v-model="banner.img1_width">
                             </div>
                         </div>
                         <div class="form-group" id="link_type_link">
                             <label for="text1" class="control-label col-lg-2">이미지 링크</label>
                             <div class="col-lg-10">
-                                 <input type="text" name="link_main" class="form-control" v-model="banner.link_main">
+                                 <input type="text" name="img1_link" class="form-control" v-model="banner.img1_link">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 링크 타겟</label>
                             <div class="col-lg-10">
-                        		<label><input class="uniform" type="radio" name="img_link_target" value="1" v-model="banner.img_link_target" /> 새창</label>
-                        		<label><input class="uniform" type="radio" name="img_link_target" value="0" v-model="banner.img_link_target" /> 이동</label>
+                        		<label><input class="uniform" type="radio" name="img1_link_type" value="1" v-model="banner.img1_link_type" /> 새창</label>
+                        		<label><input class="uniform" type="radio" name="img1_link_type" value="0" v-model="banner.img1_link_type" /> 이동</label>
                             </div>
                         </div>
-                        <div class="form-group" id="link_type_imagemap" v-show="banner.img_link_target === 'imagemap'">
+                        <div class="form-group" id="link_type_imagemap" v-show="banner.img1_link_type === 'imagemap'">
                             <label for="text1" class="control-label col-lg-2">ImageMap</label>
                             <div class="col-lg-10">
                             	<textarea name="img_html" class="btn col-lg-12" style="text-align: left;height:150px" v-model="banner.img_html"></textarea>
@@ -109,10 +109,10 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">배너 스타일</label>
                             <div class="col-lg-10">
-                                 <label><input type="radio" name="img_link_type" value="1" v-model="banner.img_link_type"> 단일링크 </label>
-                                 <label><input type="radio" name="img_link_type" value="2" v-model="banner.img_link_type"> ImageMap </label>
-                                 <!-- <label><input type="radio" name="img_link_type" value="floating" v-model="banner.img_link_type"> 플로팅 </label>
-                                 <label><input type="radio" name="img_link_type" value="notehtml" v-model="banner.img_link_type"> 유의사항 </label> -->
+                                 <label><input type="radio" name="img1_link_type" value="1" v-model="banner.img1_link_type"> 단일링크 </label>
+                                 <label><input type="radio" name="img1_link_type" value="2" v-model="banner.img1_link_type"> ImageMap </label>
+                                 <!-- <label><input type="radio" name="img1_link_type" value="floating" v-model="banner.img1_link_type"> 플로팅 </label>
+                                 <label><input type="radio" name="img1_link_type" value="notehtml" v-model="banner.img1_link_type"> 유의사항 </label> -->
                             </div>
                         </div>
 
@@ -138,18 +138,19 @@
                         <div class="form-group " >
                         	<label for="text1" class="control-label col-lg-2"></label>
                         	<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
+                            <!-- <input type="input" value="취소" class="btn btn-info col-lg-2" onclick="window.close();"> -->
                         	<input type="submit" value="저장" class="btn btn-danger col-lg-2">
                         </div>
                         <div class="form-group">
                         	<label for="text1" class="control-label col-lg-2">미리보기</label>
                         	<div class="col-lg-8">
-                        		<div v-show="banner.img_link_type == 1">
-                        			<a v-bind:href="banner.link_main">
-                        				<img v-bind:src="banner.img_main" v-bind:width="banner.width_main" alt="">
+                        		<div v-show="banner.img1_link_type == 1">
+                        			<a v-bind:href="banner.img1_link">
+                        				<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="">
                         			</a>
                         		</div>
-                        		<div v-show="banner.img_link_type == 2">
-                        			<img v-bind:src="banner.img_main" v-bind:width="banner.width_main" alt="" usemap="#banner_">
+                        		<div v-show="banner.img1_link_type == 2">
+                        			<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="" usemap="#banner_">
                                 	<map name="banner_" v-html="banner.img_html">
                                 	</map>
                         		</div>
@@ -252,7 +253,7 @@ function remove(array, element) {
                 });
             }
             , init: function(){
-                app.category_selection_1_options = app.category.hierarchy;
+                app.category_selection_1_options = app.category.hierarchy_tree;
                 app.update_category_select();
             }
         }
@@ -272,7 +273,7 @@ $(document).ready(function(){
 
 	app.set_upload_file('upload_file', 'img_file', function(data){
 		console.log(data.result.file);
-		app.banner.img_main = data.result.file;
+		app.banner.img1_url = data.result.file;
 	});
 
 	return;

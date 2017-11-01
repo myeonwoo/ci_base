@@ -124,6 +124,28 @@ class Hierarchy {
 
 		return array();
 	}
+	public function find_path_on_parent_id_wo_super_parent($target_id)
+	{
+		$loop_limit = 10;
+		$cnt = 0;
+		$path = array();
+
+		while ($cnt < $loop_limit) {
+			if (!self::$lookup[$target_id]) return array();
+			
+			$item = self::$lookup[$target_id];
+			
+			if ($item->parent_id != 0){
+				array_unshift($path, $item);
+			}
+			$target_id = $item->parent_id;
+
+			if (!$target_id) return $path;
+			$cnt++;
+		}
+
+		return array();
+	}
 	// 모든 자식 노드 찾기
 	public function get_all_childs($target_id)
 	{
