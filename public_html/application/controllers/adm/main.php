@@ -16,7 +16,26 @@ class Main extends CI_Controller {
         $this->load->view(ADM_F.'/tail', $data);
         return;
 	}
+    /**
+     * [info description]
+     1.     GIT
+     - A.     Repo :  git@git.st-company.net:global_dangicokr.git
+       - B.     Develop 브랜치 생성 완료
+       - C.     QA서버로 post-update 설정 완료
 
+     2.     QA-WEB
+       - A.     IP : 61.255.238.197
+       - B.     DocumentRoot : /var/www/global_dangicokr/public_html
+     - /img의 경우 design 계정의 sftproot/global_dangicokr 로 alias.url 설정
+       - C.     DNS : qa-global.dangi.co.kr, qa-global.conects.com
+
+     3.     QA-DB
+       - A.     IP : 61.255.238.203
+       - B.     Port : 14521
+       - C.     DB명 : global_dangicokr
+       - D.     계정 : dangicokr
+       - E.     패스워드 : 기존과 같음.
+     */
 	public function info()
 	{
 		$this->vd->dump($_SERVER);

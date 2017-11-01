@@ -191,14 +191,15 @@ $(document).ready(function(){
 
     app.datatable = $('#table_dataset').DataTable( {
         data: app.banners
+        ,pageLength: 20
         ,columns: [
             { title: "#", data:"content_id", width:"30px"}
             , { title: "content_category_id", data:"content_category_id", width:"30px"}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
                 return '<a target="_blank" href="/adm/content/content/banner_write?content_id='+ row.content_id + '&type=">' + row.subject + '</a>';
             }}
-            ,{ title: "이미지", data:"img_main", width: "50px", render:function(data, type, row, meta){
-                return '<a target="_blank" href="' + row.img_main + '" class="preview" title="">' + '<img src="' + row.img_main + '" alt="" style="width:100%;" alt="Smiley face">' + '</a>';
+            ,{ title: "이미지", data:"img1_url", width: "50px", render:function(data, type, row, meta){
+                return '<a target="_blank" href="' + row.img1_url + '" class="preview" title="">' + '<img src="' + row.img1_url + '" alt="" style="width:100%;" alt="Smiley face">' + '</a>';
             }}
             , { title: "기간", data:"dt_start", render:function(data, type, row, meta){
                 var tmp = new Date(row.dt_start);

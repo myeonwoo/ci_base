@@ -2,15 +2,15 @@
 class M_content_category extends CI_Model{
 	function __construct(){
 		parent::__construct();
-		$this->china_db = $this->load->database("eng", TRUE);
+		$this->db = $this->load->database("global", TRUE);
 	}
 
 	//컨텐츠 카테고리 리스트 전체
 	public function get_list_all($config=array()){
 
-		if (isset($config['yn_used'])) $this->china_db->where('yn_used', $config['yn_used']);
+		if (isset($config['yn_used'])) $this->db->where('yn_used', $config['yn_used']);
 
-		$query = $this->china_db->get('CONTENT_CATEGORY_NEW');
+		$query = $this->db->get('CONTENT_CATEGORY');
 		$data = $query->result_array();
 
 		$return = array();
@@ -24,17 +24,17 @@ class M_content_category extends CI_Model{
 	//배너 카테고리 리스트
 	public function get_list($parent_category_id=null, $type=null){
 		if($parent_category_id){
-			$this->china_db->where('parent_category_id', $parent_category_id);
+			$this->db->where('parent_category_id', $parent_category_id);
 		}else{
-			$this->china_db->where('parent_category_id = "" || parent_category_id IS  NULL');
+			$this->db->where('parent_category_id = "" || parent_category_id IS  NULL');
 		}	
 		if($type){
-			$this->china_db->where('category_type', $type);
+			$this->db->where('category_type', $type);
 		}	
 
-		$this->china_db->where('use_yn','1');
+		$this->db->where('use_yn','1');
 
-		$cursor = $this->china_db->get('BANNER_CATEGORY');
+		$cursor = $this->db->get('BANNER_CATEGORY');
 		$data = $cursor->result_array();
 
 		if($data){
