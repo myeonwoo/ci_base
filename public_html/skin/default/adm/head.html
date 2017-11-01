@@ -77,6 +77,12 @@
 <?if (!$nomenu):?>
 	<div id="left-menu" class="col-sm-2 sidenav" >
 		<div id="menu" calss="">
+			<div id="lev1_site_info" class="panel list-group">
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_site_info" shape="rect">사이트 정보</a>
+				<div class="collapse" id="tree_lev1_site_info" style="height: auto;">
+					<li class="list-group-item"><a href="/adm/main/info_constant" data-ptag-target="lev1_site_info" target="_self">Constant Info</a></li>
+				</div>
+			</div>
 			<div id="lev1_site_management" class="panel list-group">
 				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_site_management" shape="rect">사이트 관리</a>
 				<div class="collapse" id="tree_lev1_site_management" style="height: auto;">

@@ -15,16 +15,15 @@ define('IMG_ROOT', SITE_DOMAIN.'/img/');
 
 define('SKIN_PATH', $_SERVER['DOCUMENT_ROOT'].'/skin/default/');
 define('JS_DIR',  SITE_DOMAIN.'/js/');
-define('CSS_DIR', SITE_DOMAIN.'/css/default/');
-define('DATA_DIR', SITE_DOMAIN.'/data/default/');
+define('CSS_DIR', SITE_DOMAIN.'/css/');
+define('DATA_DIR', SITE_DOMAIN.'/data/');
 define('DATA_PATH', $_SERVER['DOCUMENT_ROOT']);
 define('FILE_IMG_DIR', SITE_DOMAIN.'/data/file');   // 업로드 이미지 파일 경로
 
 
 define('DANGI', 'eng_dangicokr');
-define('SITE_NAME', '커넥츠 중단기');
-define('BIZ_CODE', 'CHINADANGI');
-define('ADMIN', 'admin'); // 최고관리자
+define('SITE_NAME', '미정');
+define('BIZ_CODE', '미정');
 define('ADM_F', 'adm'); // 관리자폴더
 
 if(_IS_DEV || _IS_QA){ 
