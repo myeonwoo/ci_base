@@ -24,6 +24,14 @@ class Test extends CI_Controller {
 
     }
 
+    public function constant()
+    {
+        $data = array();
+        $data['DANGI'] = DANGI;
+
+        $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+    }
+
     public function baduser()
     {
         $this->load->library('lapi/ST_lapi_common', array('encode'=>'UTF-8'));

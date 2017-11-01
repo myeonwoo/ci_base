@@ -27,7 +27,7 @@ define("_IS_DEV", (strstr($_SERVER["SERVER_ADDR"], "192.168.56")) ? TRUE : FALSE
 define("_IS_QA", ($_SERVER["SERVER_ADDR"] == "61.255.238.197") ? TRUE : FALSE);
 define("_IS_DEV_QA", (_IS_DEV or _IS_QA)? TRUE : FALSE);
 define("_COOKIE_DOMAIN", preg_replace('/^(?:[^.]+\.)*([^.]+)\.(co\.kr|com)(:\d+)*$/','.\\1.\\2\\3',$_SERVER['HTTP_HOST']));
-define("_SUB_DOMAIN", array_shift((explode(".",preg_replace('/^dev./','',$_SERVER['HTTP_HOST'])))));
+// define("_SUB_DOMAIN", array_shift((explode(".",preg_replace('/^dev./','',$_SERVER['HTTP_HOST'])))));
 define('ENVIRONMENT', (_IS_DEV_QA)? 'development' : 'production');
 
 session_set_cookie_params(0,'/','.dangi.co.kr');
@@ -54,8 +54,8 @@ if (defined('ENVIRONMENT'))
 		case 'testing':
 		case 'production':
 			error_reporting(0);
-//            error_reporting(E_ALL ^E_NOTICE);
-//            ini_set("display_errors", 1);
+			// error_reporting(E_ALL ^E_NOTICE);
+			// ini_set("display_errors", 1);
 
         break;
 

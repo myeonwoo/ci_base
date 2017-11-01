@@ -21,7 +21,6 @@ class Data_file {
 			$data['path_prefix'] = '/var/www/'.DANGI.'/public_html';
         }
         else{
-			// $data['path_prefix'] = 'data/NFS/e
 			$data['path_prefix'] = '/data/NFS/'.DANGI;
         }
 
