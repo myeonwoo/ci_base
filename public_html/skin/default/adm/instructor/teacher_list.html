@@ -42,11 +42,11 @@
                 		,{ title: "이름", data:"teacher_name", render:function(data, type, row, meta){
                 			return '<a href="/adm/instructor/teacher/write?teacher_id='+row.teacher_id+'">'+ row.teacher_name + '</a>';
                 		}}
-                		,{ title: "이미지", data:"img_reg", render:function(data, type, row, meta){
-                			return '<a href="' + row.img_reg + '" target="_blank">이미지</a>';
-                		}}
-                		, { title: "사용여부", data:"yn_use" }
-                		, { title: "등록일", data:"created_time" }
+                        ,{ title: "이미지", data:"img1_url", width: "50px", render:function(data, type, row, meta){
+                            return '<a href="' + row.img1_url + '" class="preview" title="">' + '<img src="' + row.img1_url + '" alt="" style="width:100%;" alt="Smiley face">' + '</a>';
+                        }}
+                		, { title: "사용여부", data:"yn_used" }
+                		, { title: "등록일", data:"dt_created" }
                 	]
                 } );
             }

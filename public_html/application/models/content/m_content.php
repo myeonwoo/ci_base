@@ -94,7 +94,49 @@ class M_content extends CI_Model{
 		return $this->db->insert('CONTENT', $data);
 	}
 
+	/** data structure
+	CREATE TABLE `CONTENT_CATEGORY` (
+	  `content_category_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	  `parent_id` int(11) DEFAULT NULL COMMENT '부모 content_category_id',
+	  `order` int(10) DEFAULT NULL COMMENT '정렬순서',
+	  `subject` varchar(150) NOT NULL DEFAULT '',
+	  `yn_used` tinyint(4) NOT NULL COMMENT '사용여부 (1: Y,  0: N)',
+	  `dt_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+	  PRIMARY KEY (`content_category_id`)
+	) COMMENT='여러 컨텐츠 카테고리 관련 테이블';
+	
+	CREATE TABLE `CONTENT` (
+	  `content_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	  `content_category_id` int(11) NOT NULL COMMENT '카테고리 아이디',
+	  `teacher_id` int(11) DEFAULT NULL COMMENT '선생님 아이디',
+	  `subject` varchar(255) DEFAULT '미정' COMMENT '제목',
+	  `desc_main` text  COMMENT '설명: 메인',
+	  `img1_url` varchar(255) DEFAULT NULL COMMENT '1번 이미지',
+	  `img1_link` varchar(255) DEFAULT NULL COMMENT '1번 이미지 링크: 메인',
+	  `img1_link_type` int(4) DEFAULT 1 COMMENT '1번 이미지 속성 (1 link_url, 2 image_map)',
+	  `img1_link_html` text DEFAULT '' COMMENT '1번 이미지 속성 참고하는 html',
+	  `img1_link_target` tinyint(4) DEFAULT 0 COMMENT '1번 이미지 속성 타겟 (1: _blank,  0: self)',
+	  `img2_url` varchar(255) DEFAULT NULL COMMENT '이미지: 추가1',
+	  `img2_link` varchar(255) DEFAULT NULL COMMENT '2번 이미지 링크: 메인',
+	  `img2_link_type` int(4) DEFAULT 1 COMMENT '2번 이미지 속성 (1 link_url, 2 image_map)',
+	  `img2_link_html` text DEFAULT '' COMMENT '2번 이미지 속성 참고하는 html',
+	  `img2_link_target` tinyint(4) DEFAULT 0 COMMENT '2번 이미지 속성 타겟 (1: _blank,  0: self)',
+	  `img3_url` varchar(255) DEFAULT NULL COMMENT '이미지: 추가3',
+	  `img3_link` varchar(255) DEFAULT NULL COMMENT '3번 이미지 링크: 메인',
+	  `img3_link_type` int(4) DEFAULT 1 COMMENT '3번 이미지 속성 (1 link_url, 2 image_map)',
+	  `img3_link_html` text DEFAULT '' COMMENT '3번 이미지 속성 참고하는 html',
+	  `img3_link_target` tinyint(4) DEFAULT 0 COMMENT '3번 이미지 속성 타겟 (1: _blank,  0: self)',
+	  `order` int(11) NOT NULL DEFAULT 100 COMMENT '정렬순서',
+	  `yn_used` tinyint(4) NOT NULL COMMENT '사용여부 (1: Y,  0: N)',
+	  `yn_deleted` tinyint(4) NOT NULL COMMENT '삭제여부 (1: Y,  0: N)',
+	  `dt_dday` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+	  `dt_start` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+	  `dt_end` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+	  `dt_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+	  PRIMARY KEY (`content_id`)
+	) COMMENT='여러 컨텐츠 관련 테이블';
 
+	 */
 
 
 

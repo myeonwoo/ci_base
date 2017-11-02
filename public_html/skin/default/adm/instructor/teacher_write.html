@@ -13,6 +13,7 @@
                 </div>
                 <div class="panel-body">
                     <form name="frm1" id="frm1" action="/adm/instructor/teacher/submit_teacher" method="post" enctype="multipart/form-data">
+                    	<input type="hidden" name="id" v-bind:value="teacher.id" >
 						<div class="form-group col-lg-12">
 						       <label for="text1" class="control-label col-lg-2">teacher_id</label>
 						       <div class="col-lg-10">
@@ -26,33 +27,48 @@
 							</div>
 						</div>
 						<div class="form-group col-lg-12">
-							<label for="text1" class="control-label col-lg-2">이미지: 썸네일</label>
-							<div class="col-lg-10">
-								<input id="img_thumbnail" type="file" name="img_thumbnail" class="" > 
-								<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
-								<input type="input" name="img_main" class="form-control" v-model="teacher.img_main">
-
-								<div class="col-lg-12">
-									<img v-bind:src="teacher.img_thumbnail" width="100" alt="">
+						    <label for="text1" class="control-label col-lg-2">이미지 1번:</label>
+						    <div class="row col-lg-10">
+						    	
+								<div style="margin-bottom: 20px;">
+									<input id="img_file1" type="file" name="img_file1" class="col-lg-3" >
+									<div class="btn btn-sm btn-info" v-on:click="upload_file('upload_file1')">이미지 올리기</div>
+									<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
 								</div>
-							</div>
+								<div class="col-lg-12" style="margin-bottom: 20px;">
+									<input type="input" name="img1_url" class="form-control" v-model="teacher.img1_url">
+								</div>
+						        <div class="col-lg-12" style="margin-bottom: 20px;">
+						        	<a v-bind:href="teacher.img1_link" target="_blank">
+						            	<img v-bind:src="teacher.img1_url" width="100" alt="">
+						            </a>
+						        </div>
+						    </div>
 						</div>
 						<div class="form-group col-lg-12">
-							<label for="text1" class="control-label col-lg-2">이미지: 썸네일</label>
-							<div class="col-lg-10">
-								<input id="img_main" type="file" name="img_main" class="" > 
-								<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
-								<input type="input" name="img_main" class="form-control" v-model="teacher.img_main">
-
-								<div class="col-lg-12">
-									<img v-bind:src="teacher.img_main" width="100" alt="">
+						    <label for="text1" class="control-label col-lg-2">이미지 2번:</label>
+						    <div class="row col-lg-10">
+						    	
+								<div style="margin-bottom: 20px;">
+									<input id="img_file2" type="file" name="img_file2" class="col-lg-3" >
+									<div class="btn btn-sm btn-info" v-on:click="upload_file('upload_file2')">이미지 올리기</div>
+									<strong style="color:#ff3333">업로드 파일 크기는 200KB 로 제한됩니다.</strong>
 								</div>
-							</div>
+								<div class="col-lg-12" style="margin-bottom: 20px;">
+									<input type="input" name="img2_url" class="form-control" v-model="teacher.img2_url">
+								</div>
+						        <div class="col-lg-12" style="margin-bottom: 20px;">
+						        	<a v-bind:href="teacher.img1_link" target="_blank">
+						            	<img v-bind:src="teacher.img2_url" width="100" alt="">
+						            </a>
+						        </div>
+						    </div>
 						</div>
+
 						<div class="form-group col-lg-12">
 						       <label for="text1" class="control-label col-lg-2">설명: 약력</label>
 						       <div class="col-lg-10">
-						       		<textarea name="desc_profile" style="width: 100%" v-model="teacher.teacher_name"></textarea>
+						       		<textarea name="desc_history" style="width: 100%" v-model="teacher.desc_history"></textarea>
 						       		<!-- <textarea name="img_html" class="btn col-lg-12" style="text-align: left;height:150px" v-model="banner.img_html"></textarea> -->
 						            <!-- <datetime-picker name="desc_profile" class="btn date_picker" date-format="yy-mm-dd H:i" v-bind:value="occasion.desc_profile"></datetime-picker> -->
 						       </div>
@@ -79,68 +95,68 @@
 
 </div>
 
+<!-- 이미지 업로드용 -->
+<form id="upload_file1" action="/adm/content/content/upload_file" method="post" enctype="multipart/form-data"></form>
+<form id="upload_file2" action="/adm/content/content/upload_file" method="post" enctype="multipart/form-data"></form>
+
 <script>
 (function(){
     window.app = new Vue({
         el: '#app',
         data: {
             params: <?=json_encode($params);?>
-            , teachers: <?=json_encode($teachers);?>
             , teacher: <?=json_encode($teacher);?>
         }
         ,methods: {
-            init: function(){
+        	upload_file: function(id){
+        		console.log(id);
+            	$('#'+id).submit();
+            }
+            , set_upload_file: function (target_form, target_input, callback) {
+                $('#'+target_form).submit(function () {
+                    var formdata = new FormData();
+                    var fileObj = document.getElementById(target_input).files;
+                    for (var i = 0; i < fileObj.length; i++) {
+                        formdata.append("file", fileObj[i]);
+                    }
+                    $.ajax({
+                        type: 'POST', 
+                        url: '/adm/content/content/upload_file',
+                        data: formdata,
+                        contentType: false,
+                        processData: false
+                    }).then(function (data) {
+                        callback(data);
+                    }, function () {
+                        //failCal
+                    });
+                    return false;
+                });
+            }
+            , init: function(){
             }
         }
     });
 })();
 $(document).ready(function(){
 	app.init();
+	app.set_upload_file('upload_file1', 'img_file1', function(data){
+		console.log(data.result.file);
+		app.teacher.img1_url = data.result.file;
+	});
+	app.set_upload_file('upload_file2', 'img_file2', function(data){
+		console.log(data.result.file);
+		app.teacher.img2_url = data.result.file;
+	});
+
+	tinymce.init({
+	    selector: "textarea",
+	    plugins: [
+	        "advlist autolink lists link image charmap print preview anchor",
+	        "searchreplace visualblocks code fullscreen",
+	        "insertdatetime media table contextmenu paste"
+	    ],
+	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+	});
 });
-</script>
-
-
-<script type="text/javascript">
-tinymce.init({
-    selector: "textarea",
-    plugins: [
-        "advlist autolink lists link image charmap print preview anchor",
-        "searchreplace visualblocks code fullscreen",
-        "insertdatetime media table contextmenu paste"
-    ],
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-});
-
-//이미지 라디오박스 선택시 
-function setContentsType(type){
-	var id = $("#contents_type_"+type);
-	$("#contents_type_image").hide();
-	$("#contents_type_link").hide();
-
-	id.show();
-}
-
-//특별 이유 행 추가
-function addRowSpecailReason(){
-	//alert("addRowSpecailReason");
-	var target_list = $("#special_reason_list");
-	var add_input = $(target_list).find("input").eq(0).clone();
-
-	$(add_input).attr("value", "");
-	$(target_list).append($(add_input));
-
-}
-
-function formSubmit(){
-	var frm = $("#frm1");
-
-	 //validation check
-    if(!null_check(frm)){
-        return;
-    }
-
-
-	$(frm).submit();
-}
-
 </script>
