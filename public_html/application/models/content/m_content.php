@@ -19,6 +19,28 @@ class M_content extends CI_Model{
 		
 		return $return;
 	}
+	public function get_category($options=array()){
+
+		// $this->db->select('A.*, B.subject as content_category_subject');
+		// if (isset($options['content_id'])) $this->db->where('A.content_id', $options['content_id']);
+		if (isset($options['subject'])) $this->db->where('subject', $options['subject']);
+		$this->db->from('CONTENT_CATEGORY');
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() < 1) {
+			return null;
+		} else {
+			return $query->row_array();
+		}
+
+		return $data;
+	}
+	public function add_category($data)
+	{
+		return $this->db->insert('CONTENT_CATEGORY', $data);
+	}
+
 
 
 	public function get($content_id){
@@ -45,7 +67,7 @@ class M_content extends CI_Model{
 
 		if (isset($options['yn_used'])) $this->db->where('yn_used', $options['yn_used']);
 		if (isset($options['content_category_id'])) $this->db->where('A.content_category_id', $options['content_category_id']);
-		if (isset($options['in_content_category_id'])) $this->db->where_in('A.content_category_id', $options['in_content_category_id']);
+		if (isset($options['in_content_category_id']) && sizeof($options['in_content_category_id'])>0) $this->db->where_in('A.content_category_id', $options['in_content_category_id']);
 		if (isset($options['like_subject'])) $this->db->like('subject', $options['like_subject']);
 		if (isset($options['yn_deleted'])) $this->db->where('yn_deleted', $options['yn_deleted']);
 

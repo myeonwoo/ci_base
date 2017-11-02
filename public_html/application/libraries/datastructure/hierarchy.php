@@ -151,10 +151,12 @@ class Hierarchy {
 	{
 		$data = array();
 
-		$data = array_merge($data, self::$lookup[$target_id]->children);
-		// return $data;
-		foreach (self::$lookup[$target_id]->children as $key => $item) {
-			$data = array_merge($data, $item->children);
+		if (isset(self::$lookup[$target_id])){
+			$data = array_merge($data, self::$lookup[$target_id]->children);
+			// return $data;
+			foreach (self::$lookup[$target_id]->children as $key => $item) {
+				$data = array_merge($data, $item->children);
+			}
 		}
 		return $data;
 	}

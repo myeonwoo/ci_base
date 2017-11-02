@@ -1,0 +1,381 @@
+<style type="text/css">
+  ul.tree {
+    overflow-x: auto;
+    white-space: nowrap;  
+  }
+  ul.tree,
+  ul.tree ul {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  ul.tree li {
+    display: block;
+    width: auto;
+    float: left;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+  }
+  ul.tree ul li {
+    background-image: url(data:image/gif;base64,R0lGODdhAQABAIABAAAAAP///ywAAAAAAQABAAACAkQBADs=);
+    background-repeat: repeat-x;
+    background-position: left top;
+  }
+  ul.tree li span {
+    display: block;
+    width: 5em;
+    /*
+      uncomment to fix levels
+      height: 1.5em;
+    */
+    margin: 0 auto;
+    text-align: center;
+    white-space: normal;
+    letter-spacing: normal;
+  }
+</style>
+<!--[if IE gt 8]> IE 9+ and not IE -->
+<style type="text/css">
+  ul.tree ul li:last-child {
+    background-repeat: no-repeat;
+    background-size:50% 1px;
+    background-position: left top;
+  }
+  ul.tree ul li:first-child {
+    background-repeat: no-repeat;
+    background-size: 50% 1px;
+    background-position: right top;
+  }
+  ul.tree ul li:first-child:last-child {
+    background: none;
+  }
+  ul.tree ul li span {
+    background: url(data:image/gif;base64,R0lGODdhAQABAIABAAAAAP///ywAAAAAAQABAAACAkQBADs=) no-repeat 50% top;
+    background-size: 1px 0.8em;
+    padding-top: 1.2em;
+  }
+  ul.tree ul {
+    background: url(data:image/gif;base64,R0lGODdhAQABAIABAAAAAP///ywAAAAAAQABAAACAkQBADs=) no-repeat 50% top;
+    background-size: 1px 0.8em;
+    margin-top: 0.2ex;
+    padding-top: 0.8em;
+  }
+</style>
+
+
+<!-- page presentation -->
+<style type="text/css">
+  div.custom *{
+    font-family:sans-serif;
+    color: #666;
+    text-align: center;
+  }
+  div.custom > a, > a:visited, > a:active {
+    color: #c00;
+    text-decoration: none;
+  }
+  div.custom A:hover {
+    text-decoration: underline;
+  }
+  ul.tree,
+  #wrapper {
+    width: 960px;
+    margin: 0 auto;
+  }
+  ul.tree {
+    width: 650px;
+  }
+  .clearer {
+    clear: both;
+  }
+  p {
+    margin-top: 2em;
+  }
+</style>
+<div id="wrap">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2></h2>
+        </div>
+    </div>
+    <hr/>
+    <div id="app">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    배너 검색/등록
+                </div>
+                <div id="" class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="col-lg-8">
+                            <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
+                                <option value="">전체</option>
+                                <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                            </select>
+                            <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
+                                <option value="">전체</option>
+                                <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                            </select>
+                            <select v-if="category_selection_3_options.length>0" name="" id="category_selection_3" class="btn" v-on:change="change_category_select_options(3)">
+                                <option value="">전체</option>
+                                <option  v-for="item in category_selection_3_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                            </select>
+                            <input id="add_category" type="text" class="btn">
+                            <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div>
+                            <div class="btn btn-warning" v-on:click="delete_category()">분류 삭제하기</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-heading">
+                    현재 구조
+                </div>
+                <div id="" class="panel-body custom">
+                    <div id="wrapper">
+                        <ul class="tree">
+                            <li>
+                                <span>Root</span>
+                                <ul>
+                                <li>
+                                    <span>Uncle</span>
+                                </li>
+                                <li>
+                                    <span>Parent</span>
+                                    <ul>
+                                        <li>
+                                            <span>This</span>
+                                            <ul>
+                                                <li>
+                                                <span>Child</span>
+                                                </li>
+                                                <li>
+                                                    <span>Child</span>
+                                                    <ul>
+                                                        <li>
+                                                        <span>Grandchild</span>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span>Brother</span>
+                                        </li>
+                                        <li>
+                                            <span>Sister with a really long name</span>
+                                            <ul>
+                                                <li>
+                                                    <span>Niece</span>
+                                                </li>
+                                                <li>
+                                                    <span>Nephew</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>Aunt</span>
+                                    <ul>
+                                        <li>
+                                            <span>Cousin</span>
+                                        </li>
+                                        <li>
+                                            <span>Cousin</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="clearer"></div>
+                        <p><a href="https://gist.github.com/1321264">Gist on github</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<script>
+
+(function(){
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , category: <?=json_encode($category);?>
+            , category_selection_1_options: []
+            , category_selection_2_options: []
+            , category_selection_3_options: []
+            , banner_category_path: <?=json_encode($banner_category_path);?>
+        }
+        ,methods: {
+            change_category_select_options: function(depth){
+                var data = {};
+                data.category_id = $('#category_selection_'+depth).val();
+                
+                this.set_category_selection(depth, data.category_id);
+            }
+            , change_category_selection: function(depth){
+                var data = {};
+                data.content_category_id = $('#select_category_'+depth).val();
+
+                this.set_category_selection(depth, data.content_category_id);
+            }
+            , update_category_select: function() {
+                setTimeout(function(){
+                    if (app.banner_category_path.length>0) {
+                        $('#category_selection_1').val(app.banner_category_path[0].content_category_id);
+                        app.change_category_select_options(1);
+                    }
+                }, 500);
+                
+                setTimeout(function(){
+                    if (app.banner_category_path.length>1) {
+                        $('#category_selection_2').val(app.banner_category_path[1].content_category_id);
+                        app.change_category_select_options(2);
+                    }
+                }, 1000);
+            }
+            , set_category_selection: function(depth, content_category_id) {
+                console.log([depth,content_category_id]);
+                if (depth==1) {
+                    this.category_selection_2_options = [];
+                    if (content_category_id) {
+                        // 분류 경로 재설정
+                        this.banner_category_path = [this.category.lookup[content_category_id]];
+                        $('#category_selection_2_options').val('');
+                        this.category_selection_2_options = this.category.lookup[content_category_id].children;
+                    } else {
+                        // 분류 경로 재설정
+                        this.banner_category_path = [];
+                    }
+
+                    // reset
+                    $('#category_selection_2').val('');
+                }
+                else if (depth==2) {
+                    if (content_category_id) {
+                        // 분류 경로 재설정
+                        this.banner_category_path[1] = this.category.lookup[content_category_id];
+                        $('#category_selection_3_options').val('');
+                        this.category_selection_3_options = this.category.lookup[content_category_id].children;
+                    } else {
+                        // 분류 경로 재설정
+                        this.banner_category_path = [this.banner_category_path[0]];
+                    }
+                }
+                else if (depth==3) {
+                    if (content_category_id) {
+                        // 분류 경로 재설정
+                        this.banner_category_path[2] = this.category.lookup[content_category_id];
+                    } else {
+                        // 분류 경로 재설정
+                        this.banner_category_path = [this.banner_category_path[0], this.banner_category_path[1]];
+                    }
+                }
+            }
+            // 자식 노드 포함 
+            , get_all_content_content_category_id: function(content_category_id){
+                var myapp = this;
+                var data = [];
+                data.push(app.category.lookup[content_category_id].content_category_id);
+                _.each(app.category.lookup[content_category_id].children, function(item){
+                    data.push(item.content_category_id);
+                    if (item.children.length>0) {
+                        data = data.concat(myapp.get_all_content_content_category_id(item.content_category_id));
+                    }
+                });
+
+                return data;
+            }
+            , add_category: function(){
+                var data = {};
+                data.parent_id = 0;
+                if (app.banner_category_path.length>2){
+                    alert('분류 설정은 3레벨 이상 지원하지 않습니다.');
+                    return;
+                }
+                else if (app.banner_category_path.length<1){
+                    alert('분류 1레벨은 지원하지 않습니다.');
+                    return;
+                }
+                else {
+                    data.parent_id = app.banner_category_path[app.banner_category_path.length-1].content_category_id;
+                }
+                data.subject = $('#add_category').val();
+                data.order = 10;
+                data.yn_used = 1;
+
+                $.ajax({
+                    url: '/adm/content/content/add_category',
+                    type: 'post',
+                    data: data,
+                    success: function (data) {
+                        if (data.check) {
+                            alert('이미 등록된 분류값입니다.');
+                        }
+                        if (data.result) {
+                            $('#add_category').val('');
+                        }
+                    }
+                });
+            }
+            , html_node: function(node){
+                var html = "<span>Aunt</span>";
+                html += '<ul>';
+                html += '<li>';
+                html += '<span>Cousin</span>';
+                html += '</li>';
+                html += '<li>';
+                html += '<span>Cousin</span>';
+                html += '</li>';
+                html += '</ul>';
+
+                html = "<span>"+ node.subject +"</span>";
+                if (node.children.length>0) {
+                    html += '<ul>';
+                    _.each(node.children, function(item){
+                        html += '<li>' + app.html_node(item) + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                return html;
+            }
+            , html_tree: function(){
+                var html = '';
+                // html += '<div id="wrapper">';
+                html += '<ul class="tree">';
+                html += '<li>';
+                html += '<span>Root</span>';
+                html += '<ul>';
+                _.each(app.category.hierarchy_tree, function(item){
+                    html += '<li>';
+                    html += app.html_node(item);
+                    html += '</li>';
+                });
+                html += '</ul>';
+                html += '</li>';
+                html += '</ul>';
+                html += '<div class="clearer"></div>';
+                // html += '</div>';
+                $('#wrapper').html(html);
+            }
+            , init: function(){
+                app.category_selection_1_options = app.category.hierarchy_tree;
+
+                app.html_tree();
+            }
+        }
+    });
+})();
+
+$(document).ready(function(){
+    app.init();
+});
+
+</script>
