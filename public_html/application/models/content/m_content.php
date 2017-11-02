@@ -72,12 +72,9 @@ class M_content extends CI_Model{
 		if (isset($options['yn_deleted'])) $this->db->where('yn_deleted', $options['yn_deleted']);
 
 		if (isset($options['dt_start'])) $this->db->where('dt_start <', $options['dt_start']); 
-		else $this->db->where('dt_start <',$now);
 		if (isset($options['dt_end'])) $this->db->where('dt_end >', $options['dt_end']); 
-		$this->db->where('dt_end >',$now);
-		$this->db->from('CONTENT A');
-
 		$this->db->select('A.*, B.subject as content_category_subject');
+		$this->db->from('CONTENT A');
 		$this->db->join('CONTENT_CATEGORY B', 'A.content_category_id = B.content_category_id');
 
 		$query = $this->db->get();
@@ -92,6 +89,13 @@ class M_content extends CI_Model{
 		$this->db->where('content_id', $content_id);
 		return $this->db->update('CONTENT', $data);
 	}
+	public function insert($data)
+	{
+		return $this->db->insert('CONTENT', $data);
+	}
+
+
+
 
 
 

@@ -93,14 +93,14 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 링크 타겟</label>
                             <div class="col-lg-10">
-                        		<label><input class="uniform" type="radio" name="img1_link_type" value="1" v-model="banner.img1_link_type" /> 새창</label>
-                        		<label><input class="uniform" type="radio" name="img1_link_type" value="0" v-model="banner.img1_link_type" /> 이동</label>
+                        		<label><input class="uniform" type="radio" name="img1_link_target" value="1" v-model="banner.img1_link_target" /> 새창</label>
+                        		<label><input class="uniform" type="radio" name="img1_link_target" value="0" v-model="banner.img1_link_target" /> 이동</label>
                             </div>
                         </div>
                         <div class="form-group" id="link_type_imagemap" v-show="banner.img1_link_type === 'imagemap'">
                             <label for="text1" class="control-label col-lg-2">ImageMap</label>
                             <div class="col-lg-10">
-                            	<textarea name="img_html" class="btn col-lg-12" style="text-align: left;height:150px" v-model="banner.img_html"></textarea>
+                            	<textarea name="img1_link_html" class="btn col-lg-12" style="text-align: left;height:150px" v-model="banner.img1_link_html"></textarea>
                             	<br /><strong style="color:#ff3333">&lt;map&gt; 태그 안쪽의 내용만 입력해주세요.</strong> 
                             	ex) &lt;area shape="rect" coords="10,20,30,40" href="http://eng.dangi.co.kr"/&gt;
                             </div>
@@ -151,7 +151,7 @@
                         		</div>
                         		<div v-show="banner.img1_link_type == 2">
                         			<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="" usemap="#banner_">
-                                	<map name="banner_" v-html="banner.img_html">
+                                	<map name="banner_" v-html="banner.img1_link_html">
                                 	</map>
                         		</div>
                         		

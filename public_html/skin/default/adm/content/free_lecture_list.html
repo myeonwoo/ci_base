@@ -14,7 +14,7 @@
                 </div>
                 <div id="" class="panel-body">
                     <p class="col-lg-12">
-                        <a class="btn btn-info" href="/adm/content/content/free_lecture_write?content_category_id=&sub_content_category_id=&type=">등록</a>
+                        
                     </p>
                     <div class="col-lg-12">
                         <div class="col-lg-8">
@@ -27,7 +27,8 @@
                                 <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
                             </select>
                             <input id="add_category" type="text" class="btn">
-                            <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div>
+                            <a class="btn btn-info" href="/adm/content/content/free_lecture_write?content_category_id=&sub_content_category_id=&type=">등록</a>
+                            <!-- <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div> -->
                         </div>
                     </div>
                 </div>
@@ -187,9 +188,6 @@
                 if (app.banner_category_path.length>0){
                     data.parent_id = app.banner_category_path[app.banner_category_path.length-1].content_category_id;
                 }
-
-                console.log(data);
-                console.log('add_category');
             }
             , init: function(){
                 app.category_selection_1_options = app.category.hierarchy_tree;

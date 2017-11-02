@@ -49,19 +49,21 @@ class Content extends CI_Controller {
 
         $params['super_content_category_id'] = 1;
         $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
-        // $params['category_selection_1'] = $this->validate->int($this->input->get_post('category_selection_1', true), false);
-        $params['sub_category_id'] = $this->validate->int($this->input->get_post('sub_category_id', true), false);
+        $params['content_category_id'] = $this->validate->int($this->input->get_post('content_category_id', true), false);
         $params['type'] = 'banner';
-
 
         $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
         $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
+
+        $data['banner_category_path'] = array();
+        if ($params['content_category_id']) {
+            $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id_wo_super_parent($params['content_category_id']);
+        }
         $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
         $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
         $data['ids_concerned'][] = $params['super_content_category_id'];
 
-        $data['banner_category_path'] = array();
         $data['banners'] = array();
         $data['banners'] = $this->m_content->get_list(array(
             'yn_deleted'=>0
@@ -86,7 +88,7 @@ class Content extends CI_Controller {
         $params['super_content_category_id'] = 1;
         $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
         $params['content_id'] = $this->validate->int($this->input->get_post('content_id', true), false);
-        $params['category_id'] = $this->validate->int($this->input->get_post('category_id', true), false);
+        $params['content_category_id'] = $this->validate->int($this->input->get_post('content_category_id', true), false);
         $params['type'] = $this->validate->string($this->input->get_post('type', true), 'pc');
 
 
@@ -95,11 +97,14 @@ class Content extends CI_Controller {
         $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
 
         $data['banner'] = array();
+        $data['banner_category_path'] = array();
         if($params['content_id']){
             $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
+            $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id_wo_super_parent($data['banner']['content_category_id']);
+        } 
+        if ($params['content_category_id']) {
+            $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id_wo_super_parent($params['content_category_id']);
         }
-        $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id_wo_super_parent($data['banner']['content_category_id']);
-
         
         if ($params['render_type']=='json') {
             $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
@@ -330,27 +335,37 @@ class Content extends CI_Controller {
      */
     //배너 등록&수정
     public function submit_banner() {
-        $now = date('YmdH');
-
+        $data = array();
         $data['_post'] = $_POST;
+        $params = array();
+        $data['params'] = &$params;
+
         $data['content_id'] = $this->validate->int($this->input->get_post('content_id', true), null);
-        $data['content_category_id'] = $this->validate->int($this->input->get_post('content_category_id', true), null);
-        $data['subject'] = $this->validate->string($this->input->get_post('subject', false), null);
-        $data['desc_main'] = $this->validate->string($this->input->get_post('desc_main', false), null);
-        $data['dt_start'] = $this->validate->string($this->input->get_post('dt_start', true), null);
-        $data['dt_end'] = $this->validate->string($this->input->get_post('dt_end', true), null);
-        $data['dt_dday'] = $this->validate->string($this->input->get_post('dt_dday', true), null);
-        $data['img_width'] = $this->validate->int($this->input->get_post('img_width', true), null);
-        $data['banner_type'] = $this->validate->string($this->input->get_post('banner_type', true), null);
-        $data['img_link_target'] = $this->validate->string($this->input->get_post('img_link_target', true), null);
-        $data['img_link'] = $this->validate->string($this->input->get_post('img_link', true), null);
-        $data['img_url'] = $this->validate->string($this->input->get_post('img_url', true), null);
-        $data['img_html'] = $this->validate->string($this->input->get_post('img_html', true), null);
-        $data['order'] = $this->validate->int($this->input->get_post('order', true), null);
-        $data['yn_use'] = $this->validate->int($this->input->get_post('yn_use', true), 1);
 
+        $params['content_category_id'] = $this->validate->int($this->input->get_post('content_category_id', true), null);
+        $params['subject'] = $this->validate->string($this->input->get_post('subject', false), null);
+        $params['desc_main'] = $this->validate->string($this->input->get_post('desc_main', false), null);
+        $params['dt_start'] = $this->validate->string($this->input->get_post('dt_start', true), null);
+        $params['dt_end'] = $this->validate->string($this->input->get_post('dt_end', true), null);
+        $params['dt_dday'] = $this->validate->string($this->input->get_post('dt_dday', true), null);
+        $params['img1_url'] = $this->validate->string($this->input->get_post('img1_url', true), null);
+        $params['img1_width'] = $this->validate->string($this->input->get_post('img1_width', true), null);
+        $params['img1_link'] = $this->validate->string($this->input->get_post('img1_link', true), null);
+        $params['img1_link_html'] = $this->validate->string($this->input->get_post('img1_link_html', true), '');
+        $params['img1_link_target'] = $this->validate->string($this->input->get_post('img1_link_target', true), '');
+        $params['img1_link_type'] = $this->validate->string($this->input->get_post('img1_link_type', true), '');
+        $params['order'] = $this->validate->int($this->input->get_post('order', true), null);
 
-        $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        // $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+
+        if ($data['content_id']) {
+            $this->m_content->update($data['content_id'], $params);
+            alert("수정되었습니다.","/adm/content/content/banner_list?content_category_id={$params['content_category_id']}");
+        } else {
+            $this->m_content->insert($params);
+            alert("입력되었습니다.","/adm/content/content/banner_list?content_category_id={$params['content_category_id']}");
+        }
+        return;
 
         $data['target'] = $this->input->post('target', false);  //새창열기
         $data['display_order'] = $this->input->post('display_order', true);
