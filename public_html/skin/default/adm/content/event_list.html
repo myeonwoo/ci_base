@@ -10,11 +10,11 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    무료자료 검색/등록
+                    배너 검색/등록
                 </div>
                 <div id="" class="panel-body">
                     <p class="col-lg-12">
-                        <a class="btn btn-info" href="/adm/content/content/free_lecture_write?content_category_id=&sub_content_category_id=&type=">등록</a>
+                        <a class="btn btn-info" href="/adm/content/content/event_write?content_category_id=&sub_content_category_id=&type=">등록</a>
                     </p>
                     <div class="col-lg-12">
                         <div class="col-lg-8">
@@ -210,8 +210,8 @@ $(document).ready(function(){
             , { title: "content_category_id", data:"content_category_id", width:"30px"}
             , { title: "분류명", data:"content_category_subject"}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
-                return '<a  href="/adm/content/content/free_lecture_write?content_id='+ row.content_id + '&type=">' + row.subject + '</a>';
-                // var str = '/adm/content/content/free_lecture_write?content_id='+ row.content_id + '&type=';
+                return '<a  href="/adm/content/content/event_write?content_id='+ row.content_id + '&type=">' + row.subject + '</a>';
+                // var str = '/adm/content/content/event_write?content_id='+ row.content_id + '&type=';
                 // return '<a target="_blank" href=>' + row.subject + '</a>';
             }}
             ,{ title: "이미지", data:"img1_url", width: "50px", render:function(data, type, row, meta){

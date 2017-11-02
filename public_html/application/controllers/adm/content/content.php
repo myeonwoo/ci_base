@@ -5,7 +5,6 @@ class Content extends CI_Controller {
         $this->load->library('validate');
         $this->load->library('datastructure/hierarchy');
 
-        $this->load->model('content/m_content_category');
         $this->load->model('content/m_content');
     }
 
@@ -90,6 +89,41 @@ class Content extends CI_Controller {
         $params = array();
         $data['params'] = &$params;
 
+        $params['super_content_category_id'] = 2;
+        $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
+        // $params['category_selection_1'] = $this->validate->int($this->input->get_post('category_selection_1', true), false);
+        $params['sub_category_id'] = $this->validate->int($this->input->get_post('sub_category_id', true), false);
+        $params['type'] = 'banner';
+
+
+        $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
+        $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+        $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
+        $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
+        $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
+
+        $data['banner_category_path'] = array();
+        $data['banners'] = array();
+        $data['banners'] = $this->m_content->get_list(array(
+            'yn_deleted'=>0
+            , 'in_content_category_id'=> $data['ids_concerned']
+        ));
+
+        if ($params['render_type']=='json') {
+            $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        } else {
+            $data = $this->commondata->get_adm_header_data($data);
+            $this->load->view(ADM_F.'/head', $data);
+            $this->load->view(ADM_F.'/content/free_lecture_list', $data);
+            $this->load->view(ADM_F.'/tail', $data);
+        }
+    }
+    public function free_lecture_list_()
+    {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
         $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
         $params['category_selection_1'] = $this->validate->int($this->input->get_post('category_selection_1', true), false);
         $params['sub_category_id'] = $this->validate->int($this->input->get_post('sub_category_id', true), false);
@@ -147,7 +181,42 @@ class Content extends CI_Controller {
             $this->load->view(ADM_F.'/tail', $data);
         }
     }
-    public function event_list()
+     public function event_list()
+    {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
+        $params['super_content_category_id'] = 10;
+        $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
+        // $params['category_selection_1'] = $this->validate->int($this->input->get_post('category_selection_1', true), false);
+        $params['sub_category_id'] = $this->validate->int($this->input->get_post('sub_category_id', true), false);
+        $params['type'] = 'banner';
+
+
+        $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
+        $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+        $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
+        $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
+        $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
+
+        $data['banner_category_path'] = array();
+        $data['banners'] = array();
+        $data['banners'] = $this->m_content->get_list(array(
+            'yn_deleted'=>0
+            , 'in_content_category_id'=> $data['ids_concerned']
+        ));
+
+        if ($params['render_type']=='json') {
+            $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        } else {
+            $data = $this->commondata->get_adm_header_data($data);
+            $this->load->view(ADM_F.'/head', $data);
+            $this->load->view(ADM_F.'/content/event_list', $data);
+            $this->load->view(ADM_F.'/tail', $data);
+        }
+    }
+    public function event_list_()
     {
         $data = &$this->data;
         $params = array();
