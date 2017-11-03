@@ -100,8 +100,6 @@ class Hierarchy {
 		$this->buildTree($rawdata_to_build);
 
 		return $this->get_data();
-
-		return $data;
 	}
 	// 경로 노드 찾기
 	public function find_path_on_parent_id($target_id)

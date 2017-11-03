@@ -48,6 +48,15 @@ var create_lib_st = function() {
         else return false;
     }
 
+    that.removeItemInArray = function(array, element) {
+        const index = array.indexOf(element);
+
+        if (index !== -1) {
+            array.splice(index, 1);
+        }
+        return array;
+    }
+
     /* Regex Validation : email */
     that.validateEmail = function (s) {
         s = String(s);

@@ -25,7 +25,6 @@
 
 	<script src="/js/common/underscore.js"></script>
 	<script src="/js/common/common.js"></script>
-	<script src="/js/common/site.js"></script>
 	<script type="text/javascript" src="/js/tinymce/tinymce/tinymce.min.js"></script>
 	<script src="/js/vue/vue.js"></script>
 	<script src="/js/vue/vue_extend.js"></script>
@@ -54,6 +53,11 @@
       color: white;
       padding: 15px;
     }
+
+    .form-horizontal .control-label{
+		text-align:left;
+		background-color:#F3EFEF;
+	}
 </style>
 
 </head>
@@ -90,12 +94,20 @@
 					<li class="list-group-item"><a href="/adm/content/content/banner_list" data-ptag-target="lev1_content_management" target="_self">배너 관리</a></li>
 					<li class="list-group-item"><a href="/adm/content/content/free_lecture_list" data-ptag-target="lev1_content_management" target="_self">무료자료 관리</a></li>
 					<li class="list-group-item"><a href="/adm/content/content/event_list" data-ptag-target="lev1_content_management" target="_self">이벤트 관리</a></li>
+					<li class="list-group-item"><a href="/adm/content/content/event_list" data-ptag-target="lev1_content_management" target="_self">HTML-Injector(유의사항)</a></li>
 				</div>
 			</div>
 			<div id="lev1_instructor_management" class="panel list-group">
 				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_instructor_management" shape="rect">Instructor 관리</a>
 				<div class="collapse" id="tree_lev1_instructor_management" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/instructor/teacher" data-ptag-target="lev1_instructor_management" target="_self">선생님 관리</a></li>
+				</div>
+			</div>
+
+			<div id="lev1_community_management" class="panel list-group">
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_community_management" shape="rect">커뮤니티</a>
+				<div class="collapse" id="tree_lev1_community_management" style="height: auto;">
+					<li class="list-group-item"><a href="/adm/community/oneline/main" data-ptag-target="lev1_community_management" target="_self">한줄 댓글 게시판</a></li>
 				</div>
 			</div>
 			<div id="lev1_stat_management" class="panel list-group">

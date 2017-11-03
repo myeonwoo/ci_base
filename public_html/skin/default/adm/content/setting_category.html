@@ -112,15 +112,15 @@
                         <div class="col-lg-8">
                             <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
                                 <option value="">전체</option>
-                                <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                                <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
                             </select>
                             <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
                                 <option value="">전체</option>
-                                <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                                <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
                             </select>
                             <select v-if="category_selection_3_options.length>0" name="" id="category_selection_3" class="btn" v-on:change="change_category_select_options(3)">
                                 <option value="">전체</option>
-                                <option  v-for="item in category_selection_3_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                                <option  v-for="item in category_selection_3_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
                             </select>
                             <input id="add_category" type="text" class="btn">
                             <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div>
@@ -336,7 +336,7 @@
                 html += '</li>';
                 html += '</ul>';
 
-                html = "<span>"+ node.subject +"</span>";
+                html = "<span>"+ node.subject +"(" + node.content_category_id + ")" +"</span>";
                 if (node.children.length>0) {
                     html += '<ul>';
                     _.each(node.children, function(item){
