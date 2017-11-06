@@ -4,7 +4,6 @@
  * 
  */
 class CommonData {
-	//private $widget_skin = '';
 
 	//construct
 	public function __construct($params=null){
@@ -33,74 +32,39 @@ class CommonData {
 	public function setHeaderData($head){
 		
 		$CI =& get_instance();
-		
-		if($head['is_top']){
-			// 회원 정보 필요하면 회원정보 세팅
-			$head['mb_name'] = $CI->session->userdata('ss_mb_name');
-			$head['common_css_use'] = true;
+		$CI->load->library('validate');
 
-			//SITE_NAME.' :: 회원가입 - 미래를 앞당기는 용기
-			if($head['title']){
-				$head['title'] = SITE_NAME.' :: 중국어 1위의 근거 있는 자신감 '.$head['title'];
-			}
-			else{
-				$head['title'] = SITE_NAME;
-			}
+		$user = array();
+		$user['user_id'] = $CI->session->userdata('ss_mb_id');
+        $user['user_name'] = $CI->session->userdata('ss_mb_name');
+        $user['user_level'] = $CI->session->userdata('ss_mb_level');
+        $user['is_login'] = $this->data['user_level'];
+        $head['user'] = $user;
 
-			if($head['meta-keywords'] ==  '화면 keyword'){
-				unset($head['meta-keywords']);
-			}
-			if($head['meta-description'] == '화면 description'){
-				unset($head['meta-description']);
-			}
-
-			if($head['meta-keywords']){
-				$head['meta_keywords'] = $head['meta-keywords'];
-			}
-			if($head['meta-description']){
-				$head['meta_description'] = $head['meta-description'];
-			}
-	    
-		}
+		$head['title'] = "{SITE_NAME} :: {MSG_TITLE} ".$head['title'];
+		$head['meta_keywords'] = $CI->validate->string($head['meta_keywords'], null);
+		$head['meta_description'] = $CI->validate->string($head['meta_description'], null);
 
 		return $head;
 	}
 	public function setHeaderDataMobile($head){
 		
 		$CI =& get_instance();
+		$CI->load->library('validate');
 		
-		if($head['is_top']){
-			// 회원 정보 필요하면 회원정보 세팅
-			$head['mb_name'] = $CI->session->userdata('ss_mb_name');
-			$head['common_css_use'] = true;
+		$user = array();
+		$user['user_id'] = $CI->session->userdata('ss_mb_id');
+        $user['user_name'] = $CI->session->userdata('ss_mb_name');
+        $user['user_level'] = $CI->session->userdata('ss_mb_level');
+        $user['is_login'] = $this->data['user_level'];
+        $head['user'] = $user;
 
-			//SITE_NAME.' :: 회원가입 - 미래를 앞당기는 용기
-			if($head['title']){
-				$head['title'] = SITE_NAME.' :: 중국어 1위의 근거 있는 자신감 '.$head['title'];
-			}
-			else{
-				$head['title'] = SITE_NAME;
-			}
-
-			if($head['meta-keywords'] ==  '화면 keyword'){
-				unset($head['meta-keywords']);
-			}
-			if($head['meta-description'] == '화면 description'){
-				unset($head['meta-description']);
-			}
-
-			if($head['meta-keywords']){
-				$head['meta_keywords'] = $head['meta-keywords'];
-			}
-			if($head['meta-description']){
-				$head['meta_description'] = $head['meta-description'];
-			}
-	    
-		}
+		$head['title'] = "{SITE_NAME} :: {MSG_TITLE} ".$head['title'];
+		$head['meta_keywords'] = $CI->validate->string($head['meta_keywords'], null);
+		$head['meta_description'] = $CI->validate->string($head['meta_description'], null);
 
 		return $head;
 	}
 	
 	
 }
-?>

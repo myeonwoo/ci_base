@@ -33,33 +33,33 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">선생님</label>
                             <div class="col-lg-8">
-                                <input type="input" name="teacher_id" class="form-control"  v-bind:value="banner.teacher_id" >
+                                <input type="input" name="teacher_id" class="form-control"  v-model="banner.teacher_id" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">제목: 이름</label>
                             <div class="col-lg-8">
-                                <input type="text" name="subject" class="form-control" v-bind:value="banner.subject">
+                                <input type="text" name="subject" class="form-control" v-model="banner.subject">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">설명: 메인</label>
-                            <div class="col-lg-8">
-                                <input type="input" name="desc_main" class="form-control"  v-bind:value="banner.desc_main" >
+                            <div class="col-lg-10">
+                                <textarea name="desc_main" class="tinymce col-lg-12" v-model="banner.desc_main"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">설명: 소개</label>
                             <div class="col-lg-8">
-                                <input type="input" name="desc_intro" class="form-control"  v-bind:value="banner.desc_intro" >
+                                <input type="input" name="desc_intro" class="form-control"  v-model="banner.desc_intro" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">페이지 경로: 주용하는 페이지 경로</label>
                             <div class="col-lg-8">
-                                <input type="input" name="url_main_page" class="form-control"  v-bind:value="banner.url_main_page" >
+                                <input type="input" name="url_main_page" class="form-control"  v-model="banner.url_main_page" >
                                 <p>
-                                    <b>예제)gmat.dangi.co.kr/promotion/freepass => promotion/freepass 로 설정</b>
+                                    <strong style="color:#ff3333">예제) xxx.dangi.co.kr/promotion/freepass => /promotion/freepass 로 설정</strong>
                                 </p>
                             </div>
                         </div>
@@ -93,8 +93,8 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 1번: 타겟</label>
                             <div class="col-lg-10">
-                                <label><input class="uniform" type="radio" name="img1_link_target" value="1" v-model="banner.img1_link_target" /> 새창</label>
-                                <label><input class="uniform" type="radio" name="img1_link_target" value="0" v-model="banner.img1_link_target" /> 이동</label>
+                                <label><input class="uniform" type="radio" name="img1_link_target" value="self" v-model="banner.img1_link_target" /> 새창</label>
+                                <label><input class="uniform" type="radio" name="img1_link_target" value="_blank" v-model="banner.img1_link_target" /> 이동</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -151,8 +151,8 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 2번: 타겟</label>
                             <div class="col-lg-10">
-                                <label><input class="uniform" type="radio" name="img2_link_target" value="1" v-model="banner.img2_link_target" /> 새창</label>
-                                <label><input class="uniform" type="radio" name="img2_link_target" value="0" v-model="banner.img2_link_target" /> 이동</label>
+                                <label><input class="uniform" type="radio" name="img2_link_target" value="self" v-model="banner.img2_link_target" /> 새창</label>
+                                <label><input class="uniform" type="radio" name="img2_link_target" value="_blank" v-model="banner.img2_link_target" /> 이동</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -206,8 +206,8 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 3번: 타겟</label>
                             <div class="col-lg-10">
-                                <label><input class="uniform" type="radio" name="img3_link_target" value="1" v-model="banner.img3_link_target" /> 새창</label>
-                                <label><input class="uniform" type="radio" name="img3_link_target" value="0" v-model="banner.img3_link_target" /> 이동</label>
+                                <label><input class="uniform" type="radio" name="img3_link_target" value="self" v-model="banner.img3_link_target" /> 새창</label>
+                                <label><input class="uniform" type="radio" name="img3_link_target" value="_blank" v-model="banner.img3_link_target" /> 이동</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -233,20 +233,21 @@
                         </div>                        
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">영상 1: key</label>
-                            <div class="col-lg-8">
-                                <input type="input" name="movie1_key" class="form-control"  v-bind:value="banner.movie1_key" >
+                            <div class="col-lg-4">
+                                <input type="input" name="movie1_key" class="form-control"  v-model="banner.movie1_key" >
                             </div>
+                            <div class="col-lg-2 btn btn-warning" v-on:click="convert_playable_url()">무료 영상 변환</div>
                         </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">영상 1: url</label>
                             <div class="col-lg-8">
-                                <input type="input" name="movie1_url" class="form-control"  v-bind:value="banner.movie1_url" >
+                                <input type="input" name="movie1_url" class="form-control"  v-model="banner.movie1_url" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">조회수: </label>
                             <div class="col-lg-8">
-                                <input type="input" name="cnt_view" class="form-control"  v-bind:value="banner.cnt_view" >
+                                <input type="input" name="cnt_view" class="form-control"  v-model="banner.cnt_view" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -334,11 +335,32 @@
             , banner_category_path: <?=json_encode($banner_category_path);?>
         }
         ,methods: {
+            convert_playable_url: function(){
+                var data = {};
+                data.media_content_key = $('input[name=movie1_key]').val();
+
+                $.ajax({
+                    url: '/adm/content/content/convert_playable_url',
+                    type: 'post',
+                    data: data,
+                    success: function (data) {
+                        app.banner.movie1_url = data.url_play_flash;
+
+                        var el = $('input[name=movie1_url]');
+
+                        el.fadeOut(550).promise().done(function () {
+                            el.toggleClass("blink-class").fadeIn(550);
+                        });
+
+                    }
+                });
+
+            }
+
             //  카테고리 변경 change_category_select_options
-            change_category_select_options: function(depth){
+            , change_category_select_options: function(depth){
                 var data = {};
                 data.category_id = $('#category_selection_'+depth).val();
-console.log(data);
                 this.set_category_selection(depth, data.category_id);
             }
             , set_category_selection: function(depth, content_category_id) {
@@ -431,30 +453,18 @@ $(document).ready(function(){
         app.banner.img3_url = data.result.file;
     });
 
-	return;
-
-	tinymce.init({
-	    selector: "textarea.tinymce",
-	    plugins: [
-	        "advlist autolink lists link image charmap preview anchor",
-	        "searchreplace visualblocks code fullscreen",
-	        "insertdatetime table textcolor contextmenu paste"
-	    ],
-	    toolbar: " undo redo | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | source code",
-	    language: "ko_KR",
-	    width : 828,
-	    height: 392,
-	    menubar: false,
-	    fields: {
-	        content: {
-	            validators: {
-	                notEmpty: {
-	                    message: '내용을 입력하세요.'
-	                }
-	            }
-	        }
-	    }
-	});
+    tinymce.init({
+        forced_root_block : "" ,
+        force_br_newlines : true,
+        force_p_newlines : false,
+        selector: "textarea.tinymce",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste textcolor"
+        ],
+        toolbar: "insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    });
   
 });
 

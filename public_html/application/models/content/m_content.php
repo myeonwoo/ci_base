@@ -65,7 +65,8 @@ class M_content extends CI_Model{
 	public function get_list($options=array()){
 		$now = date('Y-m-d H:i:s');
 
-		if (isset($options['yn_used'])) $this->db->where('yn_used', $options['yn_used']);
+		if (isset($options['url_main_page'])) $this->db->where('A.url_main_page', $options['url_main_page']);
+		if (isset($options['yn_used'])) $this->db->where('A.yn_used', $options['yn_used']);
 		if (isset($options['content_category_id'])) $this->db->where('A.content_category_id', $options['content_category_id']);
 		if (isset($options['in_content_category_id']) && sizeof($options['in_content_category_id'])>0) $this->db->where_in('A.content_category_id', $options['in_content_category_id']);
 		if (isset($options['like_subject'])) $this->db->like('subject', $options['like_subject']);
@@ -82,6 +83,32 @@ class M_content extends CI_Model{
 		$data = $query->result_array();
 
 		return $data;
+	}
+	public function get_list_groupby_content_category_id($options=array()){
+		$now = date('Y-m-d H:i:s');
+
+		if (isset($options['url_main_page'])) $this->db->where('A.url_main_page', $options['url_main_page']);
+		if (isset($options['yn_used'])) $this->db->where('A.yn_used', $options['yn_used']);
+		if (isset($options['content_category_id'])) $this->db->where('A.content_category_id', $options['content_category_id']);
+		if (isset($options['in_content_category_id']) && sizeof($options['in_content_category_id'])>0) $this->db->where_in('A.content_category_id', $options['in_content_category_id']);
+		if (isset($options['like_subject'])) $this->db->like('subject', $options['like_subject']);
+		if (isset($options['yn_deleted'])) $this->db->where('yn_deleted', $options['yn_deleted']);
+
+		if (isset($options['dt_start'])) $this->db->where('dt_start <', $options['dt_start']); 
+		if (isset($options['dt_end'])) $this->db->where('dt_end >', $options['dt_end']); 
+		$this->db->select('A.*, B.subject as content_category_subject');
+		$this->db->from('CONTENT A');
+		$this->db->join('CONTENT_CATEGORY B', 'A.content_category_id = B.content_category_id');
+
+		$query = $this->db->get();
+		// $query = $this->db->get('CONTENT');
+		$data = $query->result_array();
+		$tmp = array();
+		foreach ($data as $key => $item) {
+			$tmp[$item['content_category_id']][] = $item;
+		}
+
+		return $tmp;
 	}
 	//컨텐츠 수정
 	public function update($content_id, $data){

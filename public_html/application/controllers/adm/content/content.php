@@ -53,14 +53,13 @@ class Content extends CI_Controller {
 
         $data['content_categories'] = $this->m_content->get_category_list_all(array('use_yn'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+        $data['category']['hierarchy_tree'] = $data['category']['lookup']; // 해당 카테고리 구조 설정
 
         $data['banner'] = array();
         if($params['content_id']){
             $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
         }
         $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id($data['banner']['content_category_id']);
-        // $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id(102121212);
-
         
         if ($params['render_type']=='json') {
             $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
@@ -457,5 +456,55 @@ class Content extends CI_Controller {
             alert("입력되었습니다.","/adm/content/content/banner_list?content_category_id={$params['content_category_id']}");
         }
         return;
+    }
+
+    /**
+     * API: 카테노이드 미디어 키로 플레이 가능한 미디어 키값 제생
+     * @return [type] [description]
+     */
+    public function convert_playable_url()
+    {
+        $this->load->library('jwt/JWT');
+        $this->load->library('validate');
+
+        $data = array();
+
+        $params = array();
+        $data['params'] = &$params;
+        $params['type'] = $this->validate->in_array($this->input->get_post('type', true), array('live','live'), 'live');
+        $params['media_content_key'] = $this->validate->string($this->input->get_post('media_content_key', true), null);
+
+        // SET values
+        if ($params['type']=='qa') {
+            $params['KOLLUS_SECURITY_KEY'] = "stc-kollus-dev";
+            $params['custom_key'] = 'f1b98e936f333b55f84dc1de0c82ee87676598bb10aae6321eeb2240fd6fe6ce';   // qa 사용자 키(kollus CMS 설정 페이지에서 확인 할 수 있습니다.)
+        } else {
+            $params['KOLLUS_SECURITY_KEY'] = "stc-kollus";
+            $params['custom_key'] = 'a7822fc2f3dc8e8d0ccd4d08e11742fd5a3e0615426afee4f41350276f7d0dba';   // live 사용자 키(kollus CMS 설정 페이지에서 확인 할 수 있습니다.)
+        }
+        $params['media_profile_key'] = '';                      // media_profile 선택 (ex : catenoid-pc1-high, catenoid-tablet2-high, catenoid-mobile1-normal ...)
+        $params['client_user_id'] = '';    // 사이트 USER ID
+        $params['expire_time'] = time() + 10*365*24*60*60;                   // media_token 만료 시간 초단위
+
+        // set paylaod
+        $data['payload_a'] = array(
+            'cuid'  => $params['client_user_id'],   // 옵션: 회원아이디
+            'expt'  => $params['expire_time'],      // 필수 : 
+            'awtc'  => $awt_code,                   // 옵션
+            'mc'    => array(
+                array(
+                    'mckey' => $params['media_content_key'], // 미디어 키: 필수
+                    'mcpf'  => $params['media_profile_key'] // 화질: 옵션
+                )
+            )
+        );
+
+        // create jwt
+        $data['JWTstr'] = $this->jwt->encode($data['payload_a'], $params['KOLLUS_SECURITY_KEY'], 'HS256');
+
+        $data['url_play_flash'] = "http://v.kr.kollus.com/sr/media.mp4?jwt={$data['JWTstr']}&custom_key={$params['custom_key']}";
+        $data['url_play_native'] = "http://v.kr.kollus.com/s?jwt={$data['JWTstr']}&custom_key={$params['custom_key']}";
+
+        $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
     }
 }

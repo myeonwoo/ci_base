@@ -40,7 +40,7 @@ var create_lib_st = function() {
     };
 
     /* Regex Validation : Day (yyyy-mm-dd) */
-    that.isDay = function (s) {
+    that.validateDay = function (s) {
         s = String(s);
         var re = /^[0-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]$/;
         var ret = re.exec(s);
@@ -66,7 +66,7 @@ var create_lib_st = function() {
             return false;
     }
 
-    /* Regex Validation : Day (xxx-xxxx-xxxx) */
+    /* Regex Validation : Phone (xxx-xxxx-xxxx) */
     that.validatePhoneNumber = function (s) {
         s = String(s);
         var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
@@ -150,9 +150,7 @@ var create_lib_st = function() {
     that.deleteCookie = function(cookieName) {
         try {
             var expireDate = new Date();
-            // expireDate.setDate(expireDate.getDate() - 1);
             expireDate.setFullYear(expireDate.getFullYear() - 2);
-            // var c_value = "" + ((expireDate==null) ? "":";expires="+expireDate.toGMTString());
             var c_value = "" + ((expireDate==null) ? "":";expires="+expireDate.toUTCString() + ";domain=.dangi.co.kr;path=/");
             document.cookie = cookieName + "=" + c_value;
         } catch(e){
@@ -373,8 +371,8 @@ var create_lib_st = function() {
         }
         if (prefix=='dev-') prefix ='dev.';
         var data = {};
-        data.host = "http://" + prefix + "myclass.dangi.co.kr/";
-        data.shost = "https://" + prefix + "myclass.dangi.co.kr/";
+        data.host = "http://" + prefix + "my.conects.com//";
+        data.shost = "https://" + prefix + "my.conects.com//";
         return data;
     }
     // 멤버단기 url
@@ -449,33 +447,6 @@ var create_lib_st = function() {
         a.click();
     }
     // 영상 플레이
-    that.play_movie = function (freemovie_id, movie_url){
-        // view count up
-        if (freemovie_id) {
-            $.ajax({
-                url: '/api/free_content/lecture/inc_freemovie_view_count?freemovie_id=' + freemovie_id,
-                type: 'post',
-                data: {},
-                success: function (data) {
-                }
-            });
-        }
-
-        if (movie_url.indexOf('myclass.dangi.co.kr/player/kollus/open') >= 0) {
-            open_win(movie_url, "play_movie", 1400, 800);
-        } else {
-            var url = that.get_host_myclass()['host'] + "player/free/common/product?full_movie_url="+ movie_url;
-            open_win(url, "play_movie", 1400, 800);
-        }
-    }
-    that.play_movie_wiframe_onmyclass = function (tag_id, movie_url, playimg){
-        target = $('#' + tag_id);
-        width = target.width();
-        height = target.height();
-
-        url = that.get_host_myclass()['host'] + "player/free/iframe/product?full_movie_url="+ movie_url +"&autoplay=Y&playimg="+playimg+"&width="+width+"&height="+height;
-        $('#'+ tag_id).html("<iframe width='"+width+"' height='"+height+"' src='"+url+"' border='0' frameborder='0' scrolling='no'></iframe>");
-    }
     that.play_movie_wiframe = function (tag_id, movie_url){
         target = $('#'+tag_id);
         var ifrm = document.createElement("iframe");
@@ -484,14 +455,6 @@ var create_lib_st = function() {
         ifrm.style.height = target.height() + "px";
         target.html(ifrm);
         return;
-    }
-    //유의사항 호출 함수
-    that.notice_call = function (class_name,device_type){
-        var url_info = document.location.href.split("://");
-        
-        $.post("/notice_information/main",{url:url_info[1],device_type:device_type},function(data){
-            $("."+class_name).html(data);
-        });
     }
     // 상품 주문 : 예제 order_products([9275,4618]) 
     that.order_products = function (saleinfo_ids) {
@@ -672,8 +635,67 @@ var create_lib_st = function() {
     that.toggle_me = function(tag_id){
         $('#' + tag_id).toggleClass('on');
     }
-    that.test1 = function(){
-        return 'test1';
+
+    //유의사항 호출 함수
+    that.notice_call = function (class_name,device_type){
+        var url_info = document.location.href.split("://");
+        var data = {};
+        data.pagepath = url_info[1];
+        $.ajax({
+            url: '/api/content/main/html_injector',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                if (data.contents.length>0) {
+                    // inject html
+                    $("."+class_name).html(data.contents[0].desc_main);
+                }
+            }
+        });
+        return;
+
+        var url_info = document.location.href.split("://");
+        
+        $.post("/notice_information/main",{url:url_info[1],device_type:device_type},function(data){
+            $("."+class_name).html(data);
+        });
+    }
+    that.post_hook = function(){
+        var data = {};
+        data.pagepath = window.location.pathname;
+        $.ajax({
+            url: '/api/content/main/html_injector',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                if (data.contents.length>0) {
+                    // inject html
+                    $('div[st-html="inject"]').html(data.contents[0].desc_main);
+                }
+            }
+        });
+    }
+     /**
+     * 한줄 게시판 삽입
+     * @param  {int} tag_id   태그 아이디
+     * @param  {int} group_id 그룹 아이디
+     * @return {void}          html 삽입
+     */
+    that.snippet_comment_list = function(tag_id, group_id, options) {
+        var data = {};
+        data.group_id = group_id;
+        data.type = 'json';
+        
+        Object.keys(options).forEach(function(key) { data[key] = options[key]; });
+
+        $.ajax({
+            url: '/comment/bbs/oneline_comment',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                $('#'+tag_id).html(data.html);
+            }
+        });
     }
     
     return that;

@@ -7,11 +7,6 @@ class Main extends CI_Controller {
     }
 
     function index() {
-        $data = array (
-            'meta_keywords' => '',
-            'meta_description' => '',
-        );
-
         $data = $this->commondata->setHeaderData($data);
         
         $this->load->view('m/common/header', $data);

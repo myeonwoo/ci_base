@@ -43,7 +43,7 @@ class Main extends CI_Controller {
         $dataset['SITE_DOMAIN'] = SITE_DOMAIN;
         $dataset['SERVER_DOMAIN'] = SERVER_DOMAIN;
         $dataset['SITE_DIR'] = SITE_DIR;
-        $dataset['RT_PATH'] = RT_PATH;
+        $dataset['MSG_TITLE'] = MSG_TITLE;
         $dataset['SKIN_ROOT'] = SKIN_ROOT;
         $dataset['JS_ROOT'] = JS_ROOT;
         $dataset['CSS_ROOT'] = CSS_ROOT;
