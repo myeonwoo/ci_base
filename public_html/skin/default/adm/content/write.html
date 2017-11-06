@@ -90,17 +90,26 @@
                                 <input type="text" name="img1_width" class="btn" v-model="banner.img1_width">
                             </div>
                         </div>
-                        <div class="form-group" id="link_type_link">
-                            <label for="text1" class="control-label col-lg-2">이미지 1번: 링크</label>
-                            <div class="col-lg-10">
-                                 <input type="text" name="img1_link" class="form-control" v-model="banner.img1_link">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 1번: 타겟</label>
                             <div class="col-lg-10">
                                 <label><input class="uniform" type="radio" name="img1_link_target" value="1" v-model="banner.img1_link_target" /> 새창</label>
                                 <label><input class="uniform" type="radio" name="img1_link_target" value="0" v-model="banner.img1_link_target" /> 이동</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번: 스타일</label>
+                            <div class="col-lg-10">
+                                 <label><input type="radio" name="img1_link_type" value="link" v-model="banner.img1_link_type"> 단일링크 </label>
+                                 <label><input type="radio" name="img1_link_type" value="imagemap" v-model="banner.img1_link_type"> ImageMap </label>
+                                 <!-- <label><input type="radio" name="img1_link_type" value="floating" v-model="banner.img1_link_type"> 플로팅 </label>
+                                 <label><input type="radio" name="img1_link_type" value="notehtml" v-model="banner.img1_link_type"> 유의사항 </label> -->
+                            </div>
+                        </div>
+                        <div class="form-group" id="link_type_link" v-show="banner.img1_link_type === 'link'">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번: 링크</label>
+                            <div class="col-lg-10">
+                                 <input type="text" name="img1_link" class="form-control" v-model="banner.img1_link">
                             </div>
                         </div>
                         <div class="form-group" id="link_type_imagemap" v-show="banner.img1_link_type === 'imagemap'">
@@ -111,15 +120,6 @@
                                 ex) &lt;area shape="rect" coords="10,20,30,40" href="http://eng.dangi.co.kr"/&gt;
                             </div>
                         </div>                        
-                        <div class="form-group">
-                            <label for="text1" class="control-label col-lg-2">이미지 1번: 스타일</label>
-                            <div class="col-lg-10">
-                                 <label><input type="radio" name="img1_link_type" value="1" v-model="banner.img1_link_type"> 단일링크 </label>
-                                 <label><input type="radio" name="img1_link_type" value="2" v-model="banner.img1_link_type"> ImageMap </label>
-                                 <!-- <label><input type="radio" name="img1_link_type" value="floating" v-model="banner.img1_link_type"> 플로팅 </label>
-                                 <label><input type="radio" name="img1_link_type" value="notehtml" v-model="banner.img1_link_type"> 유의사항 </label> -->
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 2번: </label>
@@ -148,17 +148,24 @@
                                 <input type="text" name="img2_width" class="btn" v-model="banner.img2_width">
                             </div>
                         </div>
-                        <div class="form-group" id="link_type_link">
-                            <label for="text1" class="control-label col-lg-2">이미지 2번: 링크</label>
-                            <div class="col-lg-10">
-                                 <input type="text" name="img2_link" class="form-control" v-model="banner.img2_link">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 2번: 타겟</label>
                             <div class="col-lg-10">
                                 <label><input class="uniform" type="radio" name="img2_link_target" value="1" v-model="banner.img2_link_target" /> 새창</label>
                                 <label><input class="uniform" type="radio" name="img2_link_target" value="0" v-model="banner.img2_link_target" /> 이동</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 2번: 스타일</label>
+                            <div class="col-lg-10">
+                                 <label><input type="radio" name="img2_link_type" value="link" v-model="banner.img2_link_type"> 단일링크 </label>
+                                 <label><input type="radio" name="img2_link_type" value="imagemap" v-model="banner.img2_link_type"> ImageMap </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="link_type_link" v-show="banner.img2_link_type === 'link'">
+                            <label for="text1" class="control-label col-lg-2">이미지 2번: 링크</label>
+                            <div class="col-lg-10">
+                                 <input type="text" name="img2_link" class="form-control" v-model="banner.img2_link">
                             </div>
                         </div>
                         <div class="form-group" id="link_type_imagemap" v-show="banner.img2_link_type === 'imagemap'">
@@ -169,13 +176,6 @@
                                 ex) &lt;area shape="rect" coords="10,20,30,40" href="http://eng.dangi.co.kr"/&gt;
                             </div>
                         </div>                        
-                        <div class="form-group">
-                            <label for="text1" class="control-label col-lg-2">이미지 2번: 스타일</label>
-                            <div class="col-lg-10">
-                                 <label><input type="radio" name="img2_link_type" value="1" v-model="banner.img2_link_type"> 단일링크 </label>
-                                 <label><input type="radio" name="img2_link_type" value="2" v-model="banner.img2_link_type"> ImageMap </label>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 3번: </label>
                             <div class="row col-lg-10">
@@ -203,17 +203,24 @@
                                 <input type="text" name="img3_width" class="btn" v-model="banner.img3_width">
                             </div>
                         </div>
-                        <div class="form-group" id="link_type_link">
-                            <label for="text1" class="control-label col-lg-2">이미지 3번: 링크</label>
-                            <div class="col-lg-10">
-                                 <input type="text" name="img3_link" class="form-control" v-model="banner.img3_link">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">이미지 3번: 타겟</label>
                             <div class="col-lg-10">
                                 <label><input class="uniform" type="radio" name="img3_link_target" value="1" v-model="banner.img3_link_target" /> 새창</label>
                                 <label><input class="uniform" type="radio" name="img3_link_target" value="0" v-model="banner.img3_link_target" /> 이동</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 3번: 스타일</label>
+                            <div class="col-lg-10">
+                                 <label><input type="radio" name="img3_link_type" value="link" v-model="banner.img3_link_type"> 단일링크 </label>
+                                 <label><input type="radio" name="img3_link_type" value="imagemap" v-model="banner.img3_link_type"> ImageMap </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="link_type_link" v-show="banner.img3_link_type === 'link'">
+                            <label for="text1" class="control-label col-lg-2">이미지 3번: 링크</label>
+                            <div class="col-lg-10">
+                                 <input type="text" name="img3_link" class="form-control" v-model="banner.img3_link">
                             </div>
                         </div>
                         <div class="form-group" id="link_type_imagemap" v-show="banner.img3_link_type === 'imagemap'">
@@ -224,13 +231,6 @@
                                 ex) &lt;area shape="rect" coords="10,20,30,40" href="http://eng.dangi.co.kr"/&gt;
                             </div>
                         </div>                        
-                        <div class="form-group">
-                            <label for="text1" class="control-label col-lg-2">이미지 3번: 스타일</label>
-                            <div class="col-lg-10">
-                                 <label><input type="radio" name="img3_link_type" value="1" v-model="banner.img3_link_type"> 단일링크 </label>
-                                 <label><input type="radio" name="img3_link_type" value="2" v-model="banner.img3_link_type"> ImageMap </label>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">영상 1: key</label>
                             <div class="col-lg-8">
@@ -338,7 +338,7 @@
             change_category_select_options: function(depth){
                 var data = {};
                 data.category_id = $('#category_selection_'+depth).val();
-
+console.log(data);
                 this.set_category_selection(depth, data.category_id);
             }
             , set_category_selection: function(depth, content_category_id) {
@@ -355,8 +355,11 @@
                 else if (depth==2) {
 
                 }
+
                 // reset
-                this.banner.content_category_id = this.category.lookup[content_category_id].content_category_id;
+                if (content_category_id) {
+                    this.banner.content_category_id = this.category.lookup[content_category_id].content_category_id;
+                }
             }
             // banner_category_path 기준으로 select 설정
             , update_category_select: function() {
