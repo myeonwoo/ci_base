@@ -15,7 +15,7 @@
                 <div id="" class="panel-body">
                     <div class="col-lg-12">
                         <div class="col-lg-8">
-                            <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
+                            <!-- <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
                                 <option value="">전체</option>
                                 <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
                             </select>
@@ -23,7 +23,7 @@
                                 <option value="">전체</option>
                                 <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
                             </select>
-                            <input id="add_category" type="text" class="btn">
+                            <input id="add_category" type="text" class="btn"> -->
                             <div class="btn btn-info" v-on:click="goto_write_page()" >등록</div>
                             <!-- <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div> -->
                         </div>
@@ -187,7 +187,7 @@
                 }
             }
             , goto_write_page: function(){
-                var url = "/adm/content/content/banner_write?content_category_id=";
+                var url = "/adm/content/content/html_injector_write?content_category_id=";
                 if (app.banner_category_path.length>0) {
                     url += app.banner_category_path[app.banner_category_path.length-1].content_category_id;
                 }
@@ -213,13 +213,11 @@ $(document).ready(function(){
             , { title: "content_category_id", data:"content_category_id", width:"30px"}
             , { title: "분류명", data:"content_category_subject"}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
-                return '<a href="/adm/content/content/banner_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
-                // var str = '/adm/content/content/banner_write?content_id='+ row.content_id + '&type=';
+                return '<a href="/adm/content/content/html_injector_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
+                // var str = '/adm/content/content/html_injector_write?content_id='+ row.content_id + '&type=';
                 // return '<a target="_blank" href=>' + row.subject + '</a>';
             }}
-            ,{ title: "이미지", data:"img1_url", width: "50px", render:function(data, type, row, meta){
-                return '<a target="_blank" href="' + row.img1_url + '" class="preview" title="">' + '<img src="' + row.img1_url + '" alt="" style="width:100%;" alt="Smiley face">' + '</a>';
-            }}
+            , { title: "사용페이지", data:"url_main_page"}
             , { title: "기간", data:"dt_start", render:function(data, type, row, meta){
                 var tmp = new Date(row.dt_start);
                 var str = ''+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();

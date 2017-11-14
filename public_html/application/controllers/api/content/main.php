@@ -17,7 +17,7 @@ class Main extends CI_Controller {
         $this->data['user_level'] = $this->session->userdata('ss_mb_level');
         $this->data['is_login'] = $this->data['user_level'];
     }
-
+    // html injecting 데이타 조회
     public function html_injector()
     {
         $data = &$this->data;

@@ -1,0 +1,55 @@
+							<div class="a_name">
+								<div class="b_who">
+									<div><strong class="name">
+										<?=$item['nickname'];?>
+									</strong></div>
+								</div>
+								<div class="review">
+									<div>
+										<?=$item['desc_content'];?>
+										<em class="date"><?=$item['created_at'];?></em>
+										<?if (in_array($user['user_id'], $admin_list) || $item['author_id'] == $user['user_id']):?>
+										<a href="javascript:void(0);" onclick="javascript:app_comment.delete_oneline_comment(<?=$item['comment_id'];?>);" class="btn_del_board">삭제</a>
+										<?endif;?>
+									</div>
+								</div>
+								<div class="b_btn" >
+									<div>
+										<a href="javascript:void(0);" onclick="javascript:app_comment.creat_comment_input(this);" data-comment_id="<?=$item['comment_id'];?>"  class="btn_board commentToggleBtn">
+											<span class="reply_off"></span>
+											<em class="reply_num"><?=count($comments_replies[$item['comment_id']]);?></em>
+										</a>
+									</div>
+								</div>
+							</div>
+							<!-- //댓글 : 1개 이상 -->
+							<?if (isset($comments_replies[$item['comment_id']])): foreach ($comments_replies[$item['comment_id']] as $key => $reply):?>
+							<div class="a_comment">
+								<div class="b_who">
+									<div>
+										<strong class="name">
+											<?if (in_array($user['user_id'], $admin_list)):?>
+											<?=$reply['nickname'].'('.$reply['author_id'].')';?>
+											<?elseif (in_array($reply['author_id'], $admin_list)):?>
+											<img src="/img/offengdangi/comment/reply_type01/engdangi_h.png" alt="스콜레">
+											<?else:?>
+											<?=$reply['nickname'];?>
+											<?endif;?>
+										</strong>
+									</div>
+								</div>
+								<div class="b_answer">
+									<div>
+										<?=$reply['content'];?>
+										<em class="date"><?=$reply['created_at'];?></em>
+										<?if (in_array($user['user_id'], $admin_list) || $reply['author_id'] == $user['user_id']):?>
+										<a data-comment_reply_id=<?=$reply['comment_reply_id'];?> data-comment_id=<?=$item['comment_id'];?>  href="javascript:void(0);" onclick="javascript:app_comment.delete_oneline_comment_reply(this);" class="btn_del_board">삭제</a>
+										<?endif;?>
+									</div>
+								</div>
+								<div class="b_btn" >
+									<div>
+									</div>
+								</div>
+							</div>
+							<?endforeach;endif;?>

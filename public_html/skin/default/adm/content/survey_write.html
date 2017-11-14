@@ -1,0 +1,201 @@
+<div id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>데이타 수집 설정</h3>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    설정
+                </div>
+                <div class="panel-body">
+            		<form class="form-horizontal" name ="form1" id="form1"  method="post"  action="/adm/userdata/survey/submit_survey_config" >
+                        <input type="hidden" name="data_survey_config_id" v-bind:value="data_survey_config.data_survey_config_id" >
+
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이벤트 명</label>
+                            <div class="col-lg-8">
+                            	<input type="text" name="title" class="form-control" v-model="data_survey_config.title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">멤버수집코드</label>
+                            <div class="col-lg-8">
+								<input type="text" name="gather_id" class="form-control" v-model="data_survey_config.gather_id">
+								<div style="color:#DD5D5D;">(개인정보 수집시 필수 설정)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+            				<label for="text1" class="control-label col-lg-2">추가 설명</label>
+            				<div class="col-lg-8">
+            					<textarea name="desc" class="tinymce col-lg-12" v-model="data_survey_config.desc"></textarea>
+            				</div>
+            			</div>
+            			<div class="form-group">
+            				<label for="text1" class="control-label col-lg-2">note</label>
+            				<div class="col-lg-8">
+            					<textarea name="note" class="tinymce col-lg-12" v-model="data_survey_config.note"></textarea>
+            				</div>
+            			</div>
+                        <div class="form-group">
+                        	<label for="text1" class="control-label col-lg-2">예약기간</label>
+                            <div class="col-lg-10">
+                            	<input type="text" id="dt_start" name="dt_start" class="btn date_picker"  style="width:180px;"  v-bind:value="data_survey_config.dt_start" > ~
+                            	<input type="text" id="dt_end" name="dt_end" class="btn date_picker"  style="width:180px;"  v-bind:value="data_survey_config.dt_end" >
+                            </div>
+            			</div>			
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이름 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_name" value="1" v-model="data_survey_config.yn_name" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_name" value="0" v-model="data_survey_config.yn_name" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">전화번호 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_phone" value="1" v-model="data_survey_config.yn_phone" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_phone" value="0" v-model="data_survey_config.yn_phone" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">주소 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_address" value="1" v-model="data_survey_config.yn_address" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_address" value="0" v-model="data_survey_config.yn_address" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이메일 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_email" value="1" v-model="data_survey_config.yn_email" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_email" value="0" v-model="data_survey_config.yn_email" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">은행명 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_bank_name" value="1" v-model="data_survey_config.yn_bank_name" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_bank_name" value="0" v-model="data_survey_config.yn_bank_name" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">은행계좌명 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_bank_account" value="1" v-model="data_survey_config.yn_bank_account" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_bank_account" value="0" v-model="data_survey_config.yn_bank_account" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">은행계좌명의 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_bank_owner" value="1" v-model="data_survey_config.yn_bank_owner" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_bank_owner" value="0" v-model="data_survey_config.yn_bank_owner" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">추가 코멘트 입력받기</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_user_comment" value="1" v-model="data_survey_config.yn_user_comment" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_user_comment" value="0" v-model="data_survey_config.yn_user_comment" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">파일업로드 사용</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_file" value="1" v-model="data_survey_config.yn_file" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_file" value="0" v-model="data_survey_config.yn_file" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">로그인 여부</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_login" value="1" v-model="data_survey_config.yn_login" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_login" value="0" v-model="data_survey_config.yn_login" /> N</label>
+                                <div style="color:#DD5D5D;">(개인정보 수집시 필수 설정)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">모집인원</label>
+                            <div class="col-lg-1">
+                            	<input type="text" name="cnt_limit" class="form-control" v-model="data_survey_config.cnt_limit">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">좋아요 수</label>
+                            <div class="col-lg-1">
+                            	<input type="text" name="cnt_like" class="form-control" v-model="data_survey_config.cnt_like">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">사용 여부</label>
+                            <div class="col-lg-10">
+                            	<label><input class="uniform" type="radio" name="yn_use" value="1" v-model="data_survey_config.yn_use" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_use" value="0" v-model="data_survey_config.yn_use" /> N</label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions no-margin-bottom" style="text-align:center;">
+							<div class=" col-lg-2"></div>
+							<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
+							<input type="input" value="저장" class="btn btn-danger col-lg-2" v-on:click="submit_form();">
+                       	</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<script>
+(function(){
+    window.app=new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , data_survey_config: <?=json_encode($data_survey_config);?>
+        }
+        ,methods: {
+            init: function(){
+                // app.category_selection_1_options=app.category.hierarchy_tree;
+                // app.update_category_select();
+            }
+            , submit_form: function(){
+                $('form#form1').submit();
+            }
+        }
+    });
+
+})();
+
+
+
+$(document).ready(function(){
+    app.init();
+
+	$(".date_picker").datetimepicker({
+	     lang:'ko',
+	     format:'Y-m-d H:i'
+	});
+
+    tinymce.init({
+        forced_root_block : "" ,
+        force_br_newlines : true,
+        force_p_newlines : false,
+        selector: "textarea.tinymce",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste textcolor"
+        ],
+        toolbar: "insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    });
+  
+});
+
+</script>

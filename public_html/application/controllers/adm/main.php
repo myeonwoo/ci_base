@@ -61,6 +61,10 @@ class Main extends CI_Controller {
         $dataset['IMG_DIR'] = IMG_DIR;
         $dataset['M_IMG_DIR'] = M_IMG_DIR;
         $dataset['UPDATE_ROOT_PATH'] = UPDATE_ROOT_PATH;
+        $dataset['AWS_S3_ACCESS_KEY'] = AWS_S3_ACCESS_KEY;
+        $dataset['AWS_S3_ACCESS_SECRET_KEY'] = AWS_S3_ACCESS_SECRET_KEY;
+        $dataset['AWS_S3_HOST_URL'] = AWS_S3_HOST_URL;
+        $dataset['AWS_S3_BUCKET'] = AWS_S3_BUCKET;
 
         $data = $this->commondata->get_adm_header_data($data);
         $data['dataset'] = $dataset;

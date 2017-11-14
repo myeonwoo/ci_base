@@ -109,23 +109,22 @@
                 </div>
                 <div id="" class="panel-body">
                     <div class="col-lg-12">
-                        <div class="col-lg-8">
-                            <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
-                                <option value="">전체</option>
-                                <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
-                            </select>
-                            <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
-                                <option value="">전체</option>
-                                <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
-                            </select>
-                            <select v-if="category_selection_3_options.length>0" name="" id="category_selection_3" class="btn" v-on:change="change_category_select_options(3)">
-                                <option value="">전체</option>
-                                <option  v-for="item in category_selection_3_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
-                            </select>
-                            <input id="add_category" type="text" class="btn">
-                            <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div>
-                            <div class="btn btn-warning" v-on:click="delete_category()">분류 삭제하기</div>
-                        </div>
+                        <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
+                            <option value="">전체</option>
+                            <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
+                        </select>
+                        <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
+                            <option value="">전체</option>
+                            <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
+                        </select>
+                        <select v-if="category_selection_3_options.length>0" name="" id="category_selection_3" class="btn" v-on:change="change_category_select_options(3)">
+                            <option value="">전체</option>
+                            <option  v-for="item in category_selection_3_options" v-bind:value="item.content_category_id" >{{item.subject}}({{item.content_category_id}})</option>
+                        </select>
+                        <input id="add_category" type="text" class="btn">
+                        <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div>
+                        <div class="btn btn-info" v-on:click="display_category()">자식분류 조회</div>
+                        <div class="btn btn-danger" v-on:click="delete_category()">분류 삭제하기</div>
                     </div>
                 </div>
                 <div class="panel-heading">
@@ -242,9 +241,9 @@
                 }, 1000);
             }
             , set_category_selection: function(depth, content_category_id) {
-                console.log([depth,content_category_id]);
                 if (depth==1) {
                     this.category_selection_2_options = [];
+                    this.category_selection_3_options = [];
                     if (content_category_id) {
                         // 분류 경로 재설정
                         this.banner_category_path = [this.category.lookup[content_category_id]];
@@ -259,6 +258,7 @@
                     $('#category_selection_2').val('');
                 }
                 else if (depth==2) {
+                    this.category_selection_3_options = [];
                     if (content_category_id) {
                         // 분류 경로 재설정
                         this.banner_category_path[1] = this.category.lookup[content_category_id];
@@ -301,8 +301,8 @@
                     return;
                 }
                 else if (app.banner_category_path.length<1){
-                    alert('분류 1레벨은 지원하지 않습니다.');
-                    return;
+                    // alert('분류 1레벨은 지원하지 않습니다.');
+                    // return;
                 }
                 else {
                     data.parent_id = app.banner_category_path[app.banner_category_path.length-1].content_category_id;
@@ -319,11 +319,25 @@
                         if (data.check) {
                             alert('이미 등록된 분류값입니다.');
                         }
-                        if (data.result) {
+                        else if (data.result) {
                             $('#add_category').val('');
+                            lib_st.refresh_page();
                         }
                     }
                 });
+            }
+            , get_children: function(node){
+                var data = node.children;
+                _.each(node.children, function(item){
+                    data = data.concat(app.get_children(item));
+                });
+                return data;
+            }
+            , display_category: function(){
+                if (app.banner_category_path.length>0){
+                    var data = app.get_children(app.banner_category_path[app.banner_category_path.length-1]);
+                    console.log(data);
+                }
             }
             , html_node: function(node){
                 var html = "<span>Aunt</span>";

@@ -9,17 +9,25 @@ class _Common {
 		$data['segment1'] = $CI->uri->segment(1);
 		$data['segment2'] = $CI->uri->segment(2);
 
-		$is_member = $CI->session->userdata('ss_mb_id');
-		$ssl = false;
+		$data['is_member'] = $CI->session->userdata('ss_mb_id');
+		$data['ssl'] = false;
 	    if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-	         $ssl = true;
+	         $data['ssl'] = true;
 	    } else if (!empty($_SERVER['HTTP_X_FORWARDED_CONNECTION']) && $_SERVER['HTTP_X_FORWARDED_CONNECTION'] == "SSL") {
-	         $ssl = true;
+	         $data['ssl'] = true;
 	    }
+	    $data['flag_dangi_host'] = strpos($CI->config->config['base_url'], 'global.dangi.co.kr');
+		$data['flag_aws_dangi_host'] = strpos($CI->config->config['base_url'], 'st-event-global.dangi.co.kr');
+
+		// st-event 호스트 아니며 dangi 호스트 인경우
+		if ($data['flag_aws_dangi_host'] === false && $data['flag_dangi_host']) {
+			$CI->config->config['base_url'] = str_replace("global.dangi.co.kr","global.conects.com", $CI->config->config['base_url']);
+			redirect($_SERVER['REQUEST_URI']);
+		}
         // 관리자 영역이면 https 로
-		if($data['segment1'] === 'adm'){ // 관리자
+		elseif($data['segment1'] === 'adm'){ // 관리자
 	        // https가 아니면
-	        if (!$ssl) {
+	        if (!$data['ssl']) {
 	        	$CI->config->config['base_url'] = str_replace('http://', 'https://', $CI->config->config['base_url']);
 	        	redirect($_SERVER['REQUEST_URI']);
 	        }
@@ -28,19 +36,19 @@ class _Common {
 				goto_url($CI->config->item('base_url')."/adm/login");
 			}
 			else{
-				$is_member =  $data['adm_mb_id'];
+				$data['is_member'] =  $data['adm_mb_id'];
 			}
 		}
 		// 회원 영역이면 http 로
 		else{
 			// https 이면
-			if ($ssl) {
+			if ($data['ssl']) {
 				$CI->config->config['base_url'] = str_replace('https://', 'http://', $CI->config->config['base_url']);
 				redirect($_SERVER['REQUEST_URI']);
 			}
 		}
 
-		define('IS_MEMBER', $is_member);
+		define('IS_MEMBER', $data['is_member']);
 
 	}
 }

@@ -10,9 +10,37 @@ class M_survey extends CI_Model{
 		$this->db = $this->load->database("global", TRUE);
 	}
 
+	/**
+	 * data_survey config 리스트
+	 */
 	public function get_config_list($options=array())
 	{
-		# code...
+		if(isset($options['search_word'])) $this->db->like('title',$options['search_word']);
+		$this->db->order_by("data_survey_config_id", "DESC");
+		$this->db->from('DATA_SURVEY_CONFIG');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	public function get_config($data_survey_config_id)
+	{
+		$this->db->where('data_survey_config_id',$data_survey_config_id);
+		$this->db->from('DATA_SURVEY_CONFIG');
+		$query = $this->db->get();
+
+		if ($query->num_rows() < 1) {
+			return null;
+		} else {
+			return $query->row_array();
+		}
+	}
+
+	public function insert_config($data){
+		return $this->db->insert('DATA_SURVEY_CONFIG', $data);
+	}
+	
+	public function update_config($data_survey_config_id, $data){
+		$this->db->where('data_survey_config_id', $data_survey_config_id);
+		return $this->db->update('DATA_SURVEY_CONFIG', $data);
 	}
 
 	/**
@@ -41,7 +69,7 @@ class M_survey extends CI_Model{
 	 	  `desc` text COMMENT '이벤트 설명',
 	 	  `note` text COMMENT '유의사항',
 	 	  PRIMARY KEY (`data_survey_config_id`)
-	 	) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf8 COMMENT='설문 정보 설정';
+	 	) COMMENT='설문 정보 설정';
 
 	 	CREATE TABLE `DATA_SURVEY` (
 	 	  `data_survey_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -66,6 +94,6 @@ class M_survey extends CI_Model{
 	 	  `quiz_time` datetime DEFAULT CURRENT_TIMESTAMP,
 	 	  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
 	 	  PRIMARY KEY (`data_survey_id`)
-	 	) ENGINE=InnoDB AUTO_INCREMENT=75950 DEFAULT CHARSET=utf8 COMMENT='설문 정보';
+	 	) COMMENT='설문 정보';
 	 */
 }

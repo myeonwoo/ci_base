@@ -11,10 +11,10 @@ class Login extends CI_Controller
 	function index()
 	{
 		if(_IS_DEV_QA){
-			$url = 'http://qa-billadm.dangi.co.kr/admin/login?redirect_url=';
+			$url = 'https://qa-my.conects.com/admin/login?redirect_url=';
 		}
 		else{
-			$url = 'http://billadm.dangi.co.kr/admin/login?redirect_url=';
+			$url = 'https://my.conects.com/admin/login?redirect_url=';
 		}
 		$url .= urlencode('http://'.$_SERVER['HTTP_HOST'].'/adm/login/in');
 		goto_url($url);

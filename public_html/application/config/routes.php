@@ -38,7 +38,11 @@
 |
 */
 $route['default_controller'] = 'main';
-$route['pub/m/(:any)'] = "pub/main/m/$1";
+/* 서브단기 추가 */
+$route['france/pub/m/(:any)'] = "france/pub/main/m/index/$1";
+$route['france/pub/(:any)'] = "france/pub/main/index/$1";
+/* //서브단기 추가 */
+$route['pub/m/(:any)'] = "pub/main/m/index/$1";
 $route['pub/(:any)'] = "pub/main/index/$1";
 $route['404_override'] = '';
 

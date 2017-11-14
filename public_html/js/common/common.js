@@ -2,7 +2,7 @@ var create_lib_st = function() {
     var that = { };
     var url = null;
     
-    days_of_week = {
+    that.days_of_week = {
         sunday: 0,
         monday: 1,
         tuesday: 2,
@@ -12,7 +12,7 @@ var create_lib_st = function() {
         saturday: 6
     };
 
-    days_of_week_txt = {
+    that.days_of_week_txt = {
         0: 'Su',
         1: 'M',
         2: 'Tu',
@@ -48,15 +48,6 @@ var create_lib_st = function() {
         else return false;
     }
 
-    that.removeItemInArray = function(array, element) {
-        const index = array.indexOf(element);
-
-        if (index !== -1) {
-            array.splice(index, 1);
-        }
-        return array;
-    }
-
     /* Regex Validation : email */
     that.validateEmail = function (s) {
         s = String(s);
@@ -65,6 +56,7 @@ var create_lib_st = function() {
         } else 
             return false;
     }
+
 
     /* Regex Validation : Phone (xxx-xxxx-xxxx) */
     that.validatePhoneNumber = function (s) {
@@ -96,6 +88,15 @@ var create_lib_st = function() {
     that.validateNumeric = function (input)
     {
         return (input - 0) == input && (''+input).trim().length > 0;
+    }
+
+    that.removeItemInArray = function(array, element) {
+        const index = array.indexOf(element);
+
+        if (index !== -1) {
+            array.splice(index, 1);
+        }
+        return array;
     }
 
     that.mobilecheck = function() {
@@ -253,24 +254,20 @@ var create_lib_st = function() {
         var now = new Date();
 
         if(now.getMonth()+1 ==4 && now.getDate() == 4){
-        	now = new Date("April 5, 2017");
+            now = new Date("April 5, 2017");
         }
         info = {};
 
         // 화요일이면
         if (now.getDay() == 2) {
-        	
             info.next_tuesday = that.getNextWendseday(now);
             info.next_tuesday = new Date(info.next_tuesday.setDate(info.next_tuesday.getDate() - 1));
-        	
         } 
         else {
             info.next_tuesday = that.getNextTuesday(now);
         }
         var days = 6;
-        
-        	info.this_wednesday = new Date(info.next_tuesday.getTime() - (days * 24 * 60 * 60 * 1000));
-      
+        info.this_wednesday = new Date(info.next_tuesday.getTime() - (days * 24 * 60 * 60 * 1000));
         return info;
     }
     // 시간 대비 횟수 계산
@@ -350,54 +347,56 @@ var create_lib_st = function() {
     that.goBack = function () {
         window.history.back();
     }
+    // 구매페이지 이동전 동의받기
     that.confirm_to_purchase = function (saleinfo_id, msg){
-		url = that.get_host_myclass()['shost'] + "payment/order/add/"+ saleinfo_id;
-		if (confirm(msg)) {
-			window.location = url;
-		}
-	}
+        url = that.get_host_myclass()['shost'] + "payment/order/add/"+ saleinfo_id;
+        if (confirm(msg)) {
+            window.location = url;
+        }
+    }
+    // 로그인 이동전 동의받기
     that.confirm_to_login = function (msg){
-		if (confirm(msg)) {
-			window.location = that.get_host_member()['shost'] + 'member/login?redirect_url=' + window.location.href;
-		}
-	}
-    //내강의실 url
+        if (confirm(msg)) {
+            window.location = that.get_host_member()['shost'] + 'member/login?redirect_url=' + window.location.href;
+        }
+    }
+    //내강의실 url : Needs to chang on site
     that.get_host_myclass = function (){
         var s = document.URL;
-        s = s.match("//(.*)china.dangi");
+        s = s.match("//(.*)global");
         prefix = '';
         if (s && s.length>1) {
             prefix = s[1];
         }
-        if (prefix=='dev-') prefix ='dev.';
+        if (['qa-','dev-','dev.'].indexOf(prefix)>=0) prefix="qa-";
         var data = {};
-        data.host = "http://" + prefix + "my.conects.com//";
-        data.shost = "https://" + prefix + "my.conects.com//";
+        data.host = "http://" + prefix + "my.conects.com/";
+        data.shost = "https://" + prefix + "my.conects.com/";
         return data;
     }
-    // 멤버단기 url
+    // 멤버단기 urll : Needs to chang on site
     that.get_host_member = function (){
         var s = document.URL;
-        s = s.match("//(.*)china.dangi");
+        s = s.match("//(.*)global");
         prefix = '';
         if (s && s.length>1) {
             prefix = s[1];
         }
-        if (prefix=='dev-') prefix ='dev.';
+        if (['qa-','dev-','dev.'].indexOf(prefix)>=0) prefix="qa-";
         var data = {};
         data.host = "http://" + prefix + "member.conects.com/";
         data.shost = "https://" + prefix + "member.conects.com/";
         return data;
     }
-    // 커넥츠 url
+    // 커넥츠 urll : Needs to chang on site
     that.get_host_conects = function (){
         var s = document.URL;
-        s = s.match("//(.*)china.dangi");
+        s = s.match("//(.*)global");
         prefix = '';
         if (s && s.length>1) {
             prefix = s[1];
         }
-        if (prefix=='dev-') prefix ='qa-';
+        if (['qa-','dev-','dev.'].indexOf(prefix)>=0) prefix="qa-";
         var data = {};
         data.host = "http://" + prefix + "my.conects.com/";
         data.shost = "https://" + prefix + "my.conects.com/";
@@ -422,28 +421,29 @@ var create_lib_st = function() {
          popupWins[name].focus();
     }
     that.onlyNumber = function(event){
-		event = event || window.event;
-		var keyID = (event.which) ? event.which : event.keyCode;
-		if((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 || keyID == 9 || keyID == 86 || keyID == 67){
-			return;
-		}else{
-			return false;
-		}
-	}
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        if((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 || keyID == 9 || keyID == 86 || keyID == 67){
+            return;
+        }else{
+            return false;
+        }
+    }
     that.removeChar = function(event) {
-		event = event || window.event;
-		var keyID = (event.which) ? event.which : event.keyCode;
-		if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
-			return;
-		else
-			event.target.value = event.target.value.replace(/[^0-9]/g, "");
-	}
-	that.open_saleinfo_detail = function(saleinfo_id){
-    	var url = that.get_host_conects()['host'] + "course/lecture/detail?sale_info_id="+saleinfo_id+'&return_url='+window.location.href;
-    	var a = document.createElement('a');
-    	a.id = 'tmp';
-    	a.href = url;
-    	a.target = '_blank';
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+            return;
+        else
+            event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    }
+    // 상품 상세: Needs to chang on site
+    that.open_saleinfo_detail = function(saleinfo_id){
+        var url = that.get_host_conects()['host'] + "course/lecture/detail?sale_info_id="+saleinfo_id+'&return_url='+window.location.href;
+        var a = document.createElement('a');
+        a.id = 'tmp';
+        a.href = url;
+        a.target = '_blank';
         a.click();
     }
     // 영상 플레이
@@ -454,7 +454,6 @@ var create_lib_st = function() {
         ifrm.style.width = target.width() + "px";
         ifrm.style.height = target.height() + "px";
         target.html(ifrm);
-        return;
     }
     // 상품 주문 : 예제 order_products([9275,4618]) 
     that.order_products = function (saleinfo_ids) {
@@ -488,7 +487,7 @@ var create_lib_st = function() {
             }
         });
     }
-    
+    // 상품 주문 (모든 name=saleinfo_id INPUT 태그)
     that.order_products_bytag = function (){
         $.ajax({
             url: '/api/member/whoami',
@@ -632,12 +631,20 @@ var create_lib_st = function() {
     that.hide_me = function(tag_id){
         $('#' + tag_id).hide();
     }
-    that.toggle_me = function(tag_id){
-        $('#' + tag_id).toggleClass('on');
+    that.toggle_me = function(tag_id, target_class){
+        target_class = target_class || 'on';
+        $('#' + tag_id).toggleClass(target_class);
+    }
+    that.click_atag = function(url, target){
+        target_class = target_class || '_self'; // _blank, _self
+        var a = document.createElement("a");
+        a.setAttribute("target",  target);
+        a.setAttribute("href", url);
+        a.click();
     }
 
-    //유의사항 호출 함수
-    that.notice_call = function (class_name,device_type){
+    //유의사항 호출 함수: Needs to chang on site
+    that.notice_call = function (class_name, device_type){
         var url_info = document.location.href.split("://");
         var data = {};
         data.pagepath = url_info[1];
@@ -660,6 +667,23 @@ var create_lib_st = function() {
             $("."+class_name).html(data);
         });
     }
+    // HTML 삽입(유의사항): Needs to chang on site
+    that.snippet_html = function (class_name){
+        var url_info = document.location.href.split("://");
+        var data = {};
+        data.pagepath = url_info[1];
+        $.ajax({
+            url: '/api/content/main/html_injector',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                if (data.contents.length>0) {
+                    // inject html
+                    $("."+class_name).html(data.contents[0].desc_main);
+                }
+            }
+        });
+    }
     that.post_hook = function(){
         var data = {};
         data.pagepath = window.location.pathname;
@@ -676,20 +700,21 @@ var create_lib_st = function() {
         });
     }
      /**
-     * 한줄 게시판 삽입
+     * 한줄 게시판 삽입: Needs to chang on site
      * @param  {int} tag_id   태그 아이디
-     * @param  {int} group_id 그룹 아이디
+     * @param  {int} comment_config_id 그룹 아이디
+     * @param  {array} options 추가 변수
      * @return {void}          html 삽입
      */
-    that.snippet_comment_list = function(tag_id, group_id, options) {
+    that.snippet_comment_list = function(tag_id, comment_config_id, options) {
         var data = {};
-        data.group_id = group_id;
-        data.type = 'json';
+        data.comment_config_id = comment_config_id;
+        data.render_type = 'json';
         
         Object.keys(options).forEach(function(key) { data[key] = options[key]; });
 
         $.ajax({
-            url: '/comment/bbs/oneline_comment',
+            url: '/comment/oneline/page',
             type: 'post',
             data: data,
             success: function (data) {

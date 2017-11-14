@@ -38,12 +38,12 @@ class CommonData {
 		$user['user_id'] = $CI->session->userdata('ss_mb_id');
         $user['user_name'] = $CI->session->userdata('ss_mb_name');
         $user['user_level'] = $CI->session->userdata('ss_mb_level');
-        $user['is_login'] = $this->data['user_level'];
+        $user['is_login'] = $user['user_level'];
         $head['user'] = $user;
 
 		$head['title'] = "{SITE_NAME} :: {MSG_TITLE} ".$head['title'];
-		$head['meta_keywords'] = $CI->validate->string($head['meta_keywords'], null);
-		$head['meta_description'] = $CI->validate->string($head['meta_description'], null);
+		$head['meta_keywords'] = $CI->validate->string($head['meta_keywords'], '커넥츠');
+		$head['meta_description'] = $CI->validate->string($head['meta_description'], '커넥츠');
 
 		return $head;
 	}
@@ -60,8 +60,8 @@ class CommonData {
         $head['user'] = $user;
 
 		$head['title'] = "{SITE_NAME} :: {MSG_TITLE} ".$head['title'];
-		$head['meta_keywords'] = $CI->validate->string($head['meta_keywords'], null);
-		$head['meta_description'] = $CI->validate->string($head['meta_description'], null);
+		$head['meta_keywords'] = $CI->validate->string($head['meta_keywords'], '커넥츠');
+		$head['meta_description'] = $CI->validate->string($head['meta_description'], '커넥츠');
 
 		return $head;
 	}

@@ -1,0 +1,81 @@
+<div id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>한줄 댓글 게시판 등록</h2>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <div class="col-lg-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    ST Unitas eng.dangi.co.kr BACKOFFICE SYSTEM
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form1" id = "form1"  method = "post"  action = "/adm/comment/oneline/submit_comment_config" enctype="multipart/form-data" >
+                        <input type="hidden" name="comment_config_id" v-bind:value="config.comment_config_id" >
+
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">제목: 이름</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="desc_title" class="form-control" v-model="config.desc_title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">로그인 여부</label>
+                            <div class="col-lg-10">
+                                <label><input class="uniform" type="radio" name="yn_login" value="1" v-model="config.yn_login" />Y</label>
+                                <label><input class="uniform" type="radio" name="yn_login" value="0" v-model="config.yn_login" />N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">설명: 유의사항</label>
+                            <div class="col-lg-10">
+                                <textarea name="desc_note" class="tinymce col-lg-12" v-model="config.desc_note"></textarea>
+                            </div>
+                        </div>                       
+
+                        <div class="form-group " >
+                        	<label for="text1" class="control-label col-lg-2"></label>
+                        	<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
+                            <input type="submit" value="저장" class="btn btn-danger col-lg-2" >
+                        </div>
+        	        </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<script>
+(function(){
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , config: <?=json_encode($config);?>
+        }
+        ,methods: {
+        }
+    });
+})();
+
+$(document).ready(function(){
+
+    tinymce.init({
+        forced_root_block : "" ,
+        force_br_newlines : true,
+        force_p_newlines : false,
+        selector: "textarea.tinymce",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste textcolor"
+        ],
+        toolbar: "insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    });
+});
+
+</script>

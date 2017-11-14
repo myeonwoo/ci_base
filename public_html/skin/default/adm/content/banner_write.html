@@ -109,8 +109,8 @@
                         <div class="form-group">
                             <label for="text1" class="control-label col-lg-2">배너 스타일</label>
                             <div class="col-lg-10">
-                                 <label><input type="radio" name="img1_link_type" value="1" v-model="banner.img1_link_type"> 단일링크 </label>
-                                 <label><input type="radio" name="img1_link_type" value="2" v-model="banner.img1_link_type"> ImageMap </label>
+                                <label><input type="radio" name="img1_link_type" value="link" v-model="banner.img1_link_type"> 단일링크 </label>
+                                <label><input type="radio" name="img1_link_type" value="imagemap" v-model="banner.img1_link_type"> ImageMap </label>
                                  <!-- <label><input type="radio" name="img1_link_type" value="floating" v-model="banner.img1_link_type"> 플로팅 </label>
                                  <label><input type="radio" name="img1_link_type" value="notehtml" v-model="banner.img1_link_type"> 유의사항 </label> -->
                             </div>
@@ -136,7 +136,7 @@
                             </div>
                         </div>
                         <div class="form-group " >
-                        	<label for="text1" class="control-label col-lg-2"></label>
+                        	<div class="col-lg-2"></div>
                         	<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
                             <!-- <input type="input" value="취소" class="btn btn-info col-lg-2" onclick="window.close();"> -->
                         	<input type="submit" value="저장" class="btn btn-danger col-lg-2">
@@ -144,12 +144,12 @@
                         <div class="form-group">
                         	<label for="text1" class="control-label col-lg-2">미리보기</label>
                         	<div class="col-lg-8">
-                        		<div v-show="banner.img1_link_type == 1">
+                        		<div v-show="banner.img1_link_type == 'link'">
                         			<a v-bind:href="banner.img1_link">
                         				<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="">
                         			</a>
                         		</div>
-                        		<div v-show="banner.img1_link_type == 2">
+                        		<div v-show="banner.img1_link_type == 'imagemap'">
                         			<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="" usemap="#banner_">
                                 	<map name="banner_" v-html="banner.img1_link_html">
                                 	</map>

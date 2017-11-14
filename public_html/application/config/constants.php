@@ -26,13 +26,28 @@ define('SITE_NAME', '미정');
 define('BIZ_CODE', '미정');
 define('ADM_F', 'adm'); // 관리자폴더
 
+// 라이브 | QA 분기 설정
 if(_IS_DEV || _IS_QA){
     define('IMG_DIR', '//qa-global.dangi.co.kr/img/');
-    define('M_IMG_DIR', '//qa-global.dangi.co.kr/img/m');
+    define('M_IMG_DIR', '//qa-global.dangi.co.kr/img/');
     define('UPDATE_ROOT_PATH', $_SERVER["DOCUMENT_ROOT"]);
+
+    // AWS S3정보
+    define('AWS_S3_ACCESS_KEY', 'AKIAIR2WUDODEMERF3IQ');
+    define('AWS_S3_ACCESS_SECRET_KEY', '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');
+	define('AWS_S3_HOST_PATH', 'https://s3.ap-northeast-2.amazonaws.com/st.dev.dangidata/global_dangicokr');
+	define('AWS_S3_BUCKET', 'st.dev.dangidata');
+    // define('AWS_S3_REGION', 'ap-northeast-2');
 }
 else{
     define('IMG_DIR', '//qa-global.dangi.co.kr/img/');
     define('M_IMG_DIR', SITE_DOMAIN.'/img/m/');
     define('UPDATE_ROOT_PATH', "/data/NFS/global_dangicokr");
+
+    // AWS S3정보
+    define('AWS_S3_ACCESS_KEY', 'AKIAIR2WUDODEMERF3IQ');
+    define('AWS_S3_ACCESS_SECRET_KEY', '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');
+    define('AWS_S3_HOST_PATH', 'https://s3.ap-northeast-2.amazonaws.com/st.dangidata/global_dangicokr');
+    define('AWS_S3_BUCKET', 'st.dangidata');
+    // define('AWS_S3_REGION', 'ap-northeast-2');
 }

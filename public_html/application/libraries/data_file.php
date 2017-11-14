@@ -34,6 +34,13 @@ class Data_file {
     	$data['config']['encrypt_name']  = 'TRUE';
 
     	$this->data = $data;
+
+    	$aws_s3_config = array(
+			'accessKey' => AWS_S3_ACCESS_KEY,
+			'secretKey' => AWS_S3_ACCESS_SECRET_KEY,
+			'bucket' 	=> AWS_S3_BUCKET
+		);
+		$this->CI->load->library('aws_s3/AWS_s3_client_new_biz', $aws_s3_config);
 	}
 	/****
 		* @Desc 	form에서 제출된 field_name 으로 파일 업로드
@@ -130,5 +137,39 @@ class Data_file {
 		}
 
 		return $data;
+	}
+
+	private function generateRandomString() {
+        $length = rand(2,4);
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    
+    /**
+     * AWS 로 파일 업로드 : global_dangicokr/admin 폴더 아래 저장
+     * @param  string $field_name  제출된 form 파일 이름
+     * @return string              파일 경로
+     */
+	public function upload_aws_file_to_admin($field_name) {
+		$data = array();
+
+		if ($_FILES[$field_name]['name']) {
+			$data['field_name'] = $field_name;
+			$data['folder'] = '/global_dangicokr';
+			$data['target_url'] = "/admin/".date('Y-m-d')."/" . $this->generateRandomString() . $_FILES[$field_name]['name'];
+			$data['upload_url'] = $data['folder'] . $data['target_url'] ;
+			$data['AWS_S3_HOST_PATH'] = AWS_S3_HOST_PATH . $data['target_url'] ;
+
+			$data['aws_result'] = $this->CI->aws_s3_client_new_biz->uploadFiles($_FILES[$field_name], $data['upload_url']);
+
+			return $data['AWS_S3_HOST_PATH'];
+		}
+
+		return null;
 	}
 }

@@ -76,7 +76,7 @@
                         			<input type="input" name="img1_url" class="form-control" v-model="banner.img1_url">
                         		</div>
                                 <div class="col-lg-12" style="margin-bottom: 20px;">
-                                	<a v-bind:href="banner.img1_link" target="_blank">
+                                	<a v-bind:href="banner.img1_url" target="_blank">
                                     	<img v-bind:src="banner.img1_url" width="100" alt="">
                                     </a>
                                 </div>
@@ -134,7 +134,7 @@
                                     <input type="input" name="img2_url" class="form-control" v-model="banner.img2_url">
                                 </div>
                                 <div class="col-lg-12" style="margin-bottom: 20px;">
-                                    <a v-bind:href="banner.img2_link" target="_blank">
+                                    <a v-bind:href="banner.img2_url" target="_blank">
                                         <img v-bind:src="banner.img2_url" width="100" alt="">
                                     </a>
                                 </div>
@@ -189,7 +189,7 @@
                                     <input type="input" name="img3_url" class="form-control" v-model="banner.img3_url">
                                 </div>
                                 <div class="col-lg-12" style="margin-bottom: 20px;">
-                                    <a v-bind:href="banner.img3_link" target="_blank">
+                                    <a v-bind:href="banner.img3_url" target="_blank">
                                         <img v-bind:src="banner.img3_url" width="100" alt="">
                                     </a>
                                 </div>
@@ -288,20 +288,21 @@
                         </div>
 
                         <div class="form-group " >
-                        	<label for="text1" class="control-label col-lg-2"></label>
+                        	<div class="col-lg-2"></div>
                         	<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
                             <!-- <input type="input" value="취소" class="btn btn-info col-lg-2" onclick="window.close();"> -->
-                        	<input type="submit" value="저장" class="btn btn-danger col-lg-2">
+                            <!-- <input type="submit" value="저장" class="btn btn-danger col-lg-2"> -->
+                            <input type="input" value="저장" class="btn btn-danger col-lg-2" v-on:click="submit_form();">
                         </div>
                         <div class="form-group">
                         	<label for="text1" class="control-label col-lg-2">미리보기</label>
                         	<div class="col-lg-8">
-                        		<div v-show="banner.img1_link_type == 1">
+                        		<div v-show="banner.img1_link_type == 'link'">
                         			<a v-bind:href="banner.img1_link">
                         				<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="">
                         			</a>
                         		</div>
-                        		<div v-show="banner.img1_link_type == 2">
+                        		<div v-show="banner.img1_link_type == 'imagemap'">
                         			<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="" usemap="#banner_">
                                 	<map name="banner_" v-html="banner.img1_link_html">
                                 	</map>
@@ -335,6 +336,7 @@
             , banner_category_path: <?=json_encode($banner_category_path);?>
         }
         ,methods: {
+            // 무료 영상 경로 생성
             convert_playable_url: function(){
                 var data = {};
                 data.media_content_key = $('input[name=movie1_key]').val();
@@ -351,10 +353,8 @@
                         el.fadeOut(550).promise().done(function () {
                             el.toggleClass("blink-class").fadeIn(550);
                         });
-
                     }
                 });
-
             }
 
             //  카테고리 변경 change_category_select_options
@@ -377,10 +377,15 @@
                 else if (depth==2) {
 
                 }
-
-                // reset
+                // content_category_id 재설정
                 if (content_category_id) {
                     this.banner.content_category_id = this.category.lookup[content_category_id].content_category_id;
+                } else if ($('#category_selection_2').val()) {
+                    this.banner.content_category_id = $('#category_selection_2').val();
+                } else if ($('#category_selection_1').val()) {
+                    this.banner.content_category_id = $('#category_selection_1').val();
+                } else {
+                    this.banner.content_category_id = '';
                 }
             }
             // banner_category_path 기준으로 select 설정
@@ -423,6 +428,13 @@
                     });
                     return false;
                 });
+            }
+            , submit_form: function(){
+                if (!app.banner.content_category_id) {
+                    alert('분류값을 설정해주세요.');
+                } else {
+                    $('form#form1').submit();
+                }
             }
             , init: function(){
                 app.category_selection_1_options = app.category.hierarchy_tree;

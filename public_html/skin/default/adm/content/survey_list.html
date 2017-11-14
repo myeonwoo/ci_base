@@ -1,7 +1,7 @@
-<div id="wrap">
+<div id="app">
     <div class="row">
         <div class="col-lg-12">
-            <h2></h2>
+            <h2>데이타 수집</h2>
         </div>
     </div>
     <hr/>
@@ -23,11 +23,33 @@
 
 <script>
 (function(){
-    window.app = {};
+    window.app = new Vue({
+        el:'#app'
+        ,data: {
+            params: <?=json_encode($params);?>
+            , surveys: <?=json_encode($surveys);?>
+        }
+        ,methods: {
+
+        }
+    })
 })();
 
 $(document).ready(function(){
-    
+    app.datatable = $('#table_dataset').DataTable( {
+        data: app.surveys
+        ,pageLength: 25
+        ,columns: [
+            { title: "#", data:"data_survey_config_id", width:"30px"}
+            , { title: "제목", data:"title", render:function(data, type, row, meta){
+                return '<a href="/adm/userdata/survey/survey_write?data_survey_config_id='+ row.data_survey_config_id + '">' + row.title + '</a>';
+            }}
+            , { title: "", data:"subject", render:function(data, type, row, meta){
+                var str = '<div class="btn btn-warning btn-sm btn-round" onclick="app.export_data(this)" data_survey_config_id="'+ row.data_survey_config_id +'">현황('+row.cnt_inserted+')</div>';
+                return str;
+            }}
+        ]
+    } );
 });
 
 </script>
