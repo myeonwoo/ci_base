@@ -9,6 +9,12 @@ class Oneline extends CI_Controller {
 
 		$this->data = $this->commondata->setHeaderData(null);
 		$this->data['admin_list'] = array('myeonwoo');
+
+		$this->data['ss_mb_id'] = $this->session->userdata('ss_mb_id');
+		$this->data['ss_mb_serial'] = $this->session->userdata('ss_mb_serial');
+		$this->data['ss_mb_name'] = $this->session->userdata('ss_mb_name');
+		$this->data['ss_mb_level'] = $this->session->userdata('ss_mb_level');
+		$this->data['is_login'] = $this->data['ss_mb_level'];
 	}
 
 	public function index()
@@ -17,7 +23,7 @@ class Oneline extends CI_Controller {
 	}
 
 	/*
-	*	한줄 게시판 
+	*	한줄 게시판 페이지
 	*/
 	public function page()
 	{
@@ -71,7 +77,7 @@ class Oneline extends CI_Controller {
 			$this->load->view('/comment/oneline/page', $dataset);
 		}
 	}
-	// API
+	// API : 한줄 게시판 페이지 내 리스트
 	public function page_list(){
 		$dataset = &$this->data;
 
@@ -123,6 +129,113 @@ class Oneline extends CI_Controller {
 		}
 	}
 
+	/*
+	*	한줄 게시판 페이지
+	*/
+	public function teaser()
+	{
+		$dataset = &$this->data;
+
+		$params = array();
+		$dataset['params'] = &$params;
+		$params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
+		$params['yn_reply'] = $this->validate->int($this->input->get_post('yn_reply', true), 0);
+		$params['op_msg_cmt'] = $this->validate->string($this->input->get_post('op_msg_cmt', true), '댓글 작성해주세요.');
+		$params['req_login'] = $this->validate->exist($this->input->get_post('req_login', true));
+		$params['page'] = $this->validate->int($this->input->get_post('page', true), 1);
+		$params['comment_config_id'] = $this->validate->int($this->input->get_post('comment_config_id', true), $this->data['comment_config_id']);
+        $params['limit'] = $this->validate->int($this->input->get_post('limit', true), 10);
+        $params['offset'] = ($params['page']-1) * $params['limit'];
+
+        // 데이타 조정
+        if ($params['req_login'] && !$dataset['is_login']) {
+        	$params['op_msg_cmt'] = '로그인 후 작성이 가능합니다 : D';
+        }
+
+        // 일반글
+        $config = $params;
+        $config['type'] = 3;
+        $dataset['comments'] = $this->m_comment->get_list($config);
+        $dataset['comments_total'] = $this->m_comment->get_list_total($config);
+        $dataset['comments_id'] = array_column($dataset['comments'], 'comment_id');
+        $dataset['comments_replies'] = $this->m_comment->get_comments_replies($dataset['comments_id']);
+
+        // 공지글
+        $config['type'] = 1;
+        $config['limit'] = 10;
+        $config['offset'] = 0;
+        $dataset['notices'] = $this->m_comment->get_list($config);
+
+		$pagination = array();
+        $dataset['pagination'] = &$pagination;
+        $pagination['tpage'] = ceil($dataset['comments_total']/$params['limit']);
+        $pagination['cpage'] = $params['page'];
+        $pagination['fpage'] = min(1, max(1, $pagination['cpage'] - 1));
+        $pagination['ppage'] = max(1, $pagination['cpage'] - 1);
+        $pagination['npage'] = min($pagination['tpage'], $pagination['cpage']+1);
+        $pagination['lpage'] = $pagination['tpage'];
+        $pagination['rf'] = max(1, $pagination['cpage']-2);   // range first
+        $pagination['rl'] = min($pagination['tpage'], $pagination['rf'] + 9);  // range last
+
+		if ($params['render_type'] == 'json') {
+			$dataset['html'] = $this->load->view('/comment/oneline/teaser', $dataset, true);
+			$this->output->set_content_type("application/json")->set_output(json_encode($dataset));return;
+		} else {
+			$this->load->view('/comment/oneline/teaser', $dataset);
+		}
+	}
+	// API : 한줄 게시판 페이지 내 리스트
+	public function teaser_list(){
+		$dataset = &$this->data;
+
+		$params = array();
+		$dataset['params'] = &$params;
+		$params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'json');
+		$params['op_msg_cmt'] = $this->validate->string($this->input->get_post('op_msg_cmt', true), '댓글 작성해주세요.');
+		$params['req_login'] = $this->validate->exist($this->input->get_post('req_login', true));
+		$params['page'] = $this->validate->int($this->input->get_post('page', true), 1);
+		$params['comment_config_id'] = $this->validate->int($this->input->get_post('comment_config_id', true), $this->data['comment_config_id']);
+        $params['limit'] = $this->validate->int($this->input->get_post('limit', true), 10);
+        $params['offset'] = ($params['page']-1) * $params['limit'];
+
+        // 데이타 조정
+        if ($params['req_login'] && !$dataset['is_login']) {
+        	$params['op_msg_cmt'] = '로그인 후 작성이 가능합니다 : D';
+        }
+
+        // 일반글
+        $config = $params;
+        $config['type'] = 3;
+        $dataset['comments'] = $this->m_comment->get_list($config);
+        $dataset['comments_total'] = $this->m_comment->get_list_total($config);
+        $dataset['comments_id'] = array_column($dataset['comments'], 'comment_id');
+        $dataset['comments_replies'] = $this->m_comment->get_comments_replies($dataset['comments_id']);
+
+        // 공지글
+        $config['type'] = 1;
+        $config['limit'] = 10;
+        $config['offset'] = 0;
+        $dataset['notices'] = $this->m_comment->get_list($config);
+
+		$pagination = array();
+        $dataset['pagination'] = &$pagination;
+        $pagination['tpage'] = ceil($dataset['comments_total']/$params['limit']);
+        $pagination['cpage'] = $params['page'];
+        $pagination['fpage'] = min(1, max(1, $pagination['cpage'] - 1));
+        $pagination['ppage'] = max(1, $pagination['cpage'] - 1);
+        $pagination['npage'] = min($pagination['tpage'], $pagination['cpage']+1);
+        $pagination['lpage'] = $pagination['tpage'];
+        $pagination['rf'] = max(1, $pagination['cpage']-2);   // range first
+        $pagination['rl'] = min($pagination['tpage'], $pagination['rf'] + 9);  // range last
+
+		if ($params['render_type'] == 'html') {
+			$this->load->view('/comment/oneline/teaser_list', $dataset);
+		} else {
+			$dataset['html'] = $this->load->view('/comment/oneline/teaser_list', $dataset, true);
+			$this->output->set_content_type("application/json")->set_output(json_encode($dataset));return;
+		}
+	}
+
 	/************************
 	 * API : 리스트
 	 ************************/
@@ -137,7 +250,7 @@ class Oneline extends CI_Controller {
 		$params = array();
 		$dataset['params'] = &$params;
 		$params['type'] = $this->validate->int($this->input->get_post('type', true), 2);
-		$params['author_id'] = $this->data['user']['user_id'];
+		$params['author_id'] = $this->validate->string($this->input->get_post('author_id', true), $this->data['user']['user_id']);
 		$params['comment_config_id'] = $this->validate->int($this->input->get_post('comment_config_id', true), null);
 		$params['nickname'] = $this->validate->string($this->input->get_post('nickname', true), null);
 		$params['desc_content'] = $this->validate->string($this->input->get_post('desc_content', true), null);

@@ -1,0 +1,233 @@
+			<div class="comment_board" id="section_bbs_comment_oneline">
+				<h3><img src="<?=IMG_DIR?>france/promotion/teaser/tit_comment_board.png" alt="프단기 기대평 댓글쓰기 내 마음이 들리니"></h3>
+				<span class="topic"><img src="<?=IMG_DIR?>france/promotion/teaser/img_topic.png" alt="어떤 프랑스어 강의를 원하시나요? 프랑스어에 관심을 갖게 된 계기는 무엇인가요? 프랑스어를 잘하게 되면 뭘 하고 싶으세요?"></span>
+				<div class="comment_box">
+					<div class="input_box">
+						<div class="comment_txt"><img src="<?=IMG_DIR?>france/promotion/teaser/txt_comment.png" alt="여러분의 솔직한 대답을 기다립니다!  언제나 여러분의 소리에 귀 기울이는 프단기가 될게요 :) - 댓글은 10자 이상 ~ 500자 이하로 적어주세요.   - 욕설, 도배, 주제와 관련없는 글은 운영자에 의해 삭제될 수 있습니다."></div>
+						<input class="coment_con" type="text" id="comment_content" name="coment" value="" maxlength="500" placeholder="로그인 후 작성 가능합니다" style="width:510px;" id_valid_length="comment_content_len" onkeyup="javascript:app_comment.valid_textarea_length(this);">
+						<button onclick="javascript:app_comment.insert_oneline_comment();"><img src="<?=IMG_DIR?>france/promotion/teaser/btn_comment.gif" alt="댓글 등록하기"></button>
+					</div>
+					<div id="bbs_comment_one_line_list">
+						<div class="bbs_comment">
+							<table summary="댓글" width="100%">
+								<caption><span class="skip">댓글</span></caption>
+								<colgroup>
+									<col width="163px;">
+									<col width="*;">
+									<col width="110px;">
+								</colgroup>
+								<tbody>
+									<?foreach ($comments as $key => $item):?>
+									<tr id="comment_<?=$item['comment_id'];?>">
+										<td>
+											<?if ($user['is_login'] && ($user['user_level'] > 7 || $item['author_id'] == $user['user_id'])):?>
+											<a href="javascript:void(0);" onclick="javascript:app_comment.delete_oneline_comment(<?=$item['comment_id'];?>);" class="btn_delete">삭제</a>
+											<?endif;?>
+											<span class="user_name"><?=$item['author_id'];?></span>
+										</td>
+										<td>
+											<div class="user_comment"><?=$item['desc_content'];?></div>
+										</td>
+										<td class="date"><?=$item['dt_created_o']->format('Y.m.d');?></td>
+									</tr>
+									<?endforeach;?>
+								</tbody>
+							</table>
+						</div><!-- //bbs_comment -->
+						<div class="paging">
+							<span class="pg_first"><a href="javascript:app_comment.load_page(<?=$pagination['fpage'];?>);">‹ First</a></span>
+							<span class="pg_prev"><a href="javascript:app_comment.load_page(<?=$pagination['ppage'];?>);">&lt;</a></span>
+							<?for ($i=$pagination['rf']; $i <= $pagination['rl']; $i++):?>
+							<?if($i == $params['page']):?>
+							<span class="on"><?=$i;?></span>
+							<?else:?>
+							<span><a href="javascript:app_comment.load_page(<?=$i;?>);"><?=$i;?></a></span>
+							<?endif;?>
+							<?endfor;?>
+							<span class="pg_next"><a href="javascript:app_comment.load_page(<?=$pagination['npage'];?>);">&gt;</a></span>
+							<span class="pg_last"><a href="javascript:app_comment.load_page(<?=$pagination['lpage'];?>);">Last ›</a></span>	
+						</div>
+					</div>
+				</div>
+			</div><!-- //comment_board -->
+
+
+<script type="text/javascript" src="/js/common/common.js"></script>
+<script type="text/javascript" src="/js/extra/min/jquery.min.js"></script>
+<script>
+(function(){
+	window.app_comment = {};
+	app_comment.user = <?=json_encode($user);?>;
+	app_comment.is_login = <?=json_encode($is_login);?>;
+	app_comment.params = <?=json_encode($params);?>;
+	app_comment.notices = <?=json_encode($notices);?>;
+	app_comment.comments = <?=json_encode($comments);?>;
+
+	app_comment.comment_id = null;
+	// 댓글 입력창 생성
+	app_comment.creat_comment_input = function(tag){
+		var data = {};
+		data.tag = tag;
+		data.comment_id = $(tag).attr('data-comment_id');
+
+		app_comment.comment_id = null;
+		if ($('#comment_'+ data.comment_id +'>div[type=comment_input]').length>0) {
+			$('div[type=comment_input]').remove();
+		} else {
+			$('div[type=comment_input]').remove();
+
+			app_comment.comment_id = data.comment_id;
+			$('#comment_'+data.comment_id + '>div:nth-child(1)').after(app_comment.html_comment_input);
+		}
+	}
+	app_comment.load_page = function(page) {
+		$('#bbs_comment_one_line_list').html('');
+		var data = {page:page};
+		data.comment_config_id = app_comment.params.comment_config_id;
+		$.ajax({
+			url: '/comment/oneline/teaser_list',
+			type: 'post',
+			data: data,
+			success: function (data) {
+				app_comment.params = data.params;
+				$('#bbs_comment_one_line_list').html(data.html);
+
+				lib_st.scrollto('section_bbs_comment_oneline');
+			}
+		});
+	}
+	app_comment.insert_oneline_comment = function(){
+
+		if (app_comment.params.req_login && !app_comment.is_login) {
+			lib_st.confirm_to_login('로그인 후 이용가능합니다. \n로그인 페이지로 이동하시겠습니까?');
+			return;
+		}
+
+		var data = {};
+		data.type = 3;
+		if ($('#comment_type:checked').length>0) data.type=1;
+
+		data.author_id = app_comment.user.user_id;
+		data.comment_config_id = app_comment.params.comment_config_id;
+		data.nickname = 'nickname';
+		data.desc_content = $('#comment_content').val();
+
+		if (data.desc_content.length < 2) {
+			alert('답변을 입력해주세요.');
+			return;
+		}
+		else if (data.nickname.length < 1) {
+			alert('닉네임을 입력해주세요.');
+			return;
+		}
+		// console.log(data);return;
+		$.ajax({
+			url: '/comment/oneline/insert_oneline_comment',
+			type: 'post',
+			data: data,
+			success: function (data) {
+				$('#comment_nickname').val('');
+				$('#comment_content').val('');
+				// refresh
+				app_comment.load_page(1);
+			}
+		});
+	}
+	app_comment.delete_oneline_comment = function(comment_id) {
+		if(confirm('삭제 하시겠습니까?')) {
+			var data = {comment_id:comment_id};
+			$.ajax({
+				url: '/comment/oneline/delete_oneline_comment',
+				type: 'post',
+				data: data,
+				success: function (data) {
+					alert(data.msg);
+					app_comment.load_page(app_comment.params.page);
+				}
+			});
+		}
+
+	}
+	app_comment.insert_oneline_comment_reply = function(){
+		var data = {};
+		data.comment_id = app_comment.comment_id;
+		data.nickname = $('#reply_nickname').val();
+		data.desc_content = $('#reply_content').val();
+
+		if (data.nickname.length < 1) {
+			alert('닉네임을 입력해주세요.');
+			return;
+		}
+		else if (data.desc_content.length < 2) {
+			alert('답변을 입력해주세요.');
+			return;
+		}
+
+		$.ajax({
+			url: '/comment/oneline/insert_oneline_comment_reply',
+			type: 'post',
+			data: data,
+			success: function (data) {
+				data.nickname = $('#reply_nickname').val('');
+				data.desc_content = $('#reply_content').val('');
+				$('#comment_' + app_comment.comment_id).html(data.html);
+			}
+		});
+	}
+	app_comment.delete_oneline_comment_reply = function(tag) {
+		if(confirm('댓글 삭제 하시겠습니까?')) {
+			var data = {};
+			data.comment_id = $(tag).attr('data-comment_id');
+			data.comment_reply_id = $(tag).attr('data-comment_reply_id');
+			$.ajax({
+				url: '/comment/oneline/delete_oneline_comment_reply',
+				type: 'post',
+				data: data,
+				success: function (data) {
+					console.log(data);
+					alert(data.msg);
+					$('#comment_' + app_comment.comment_id).html(data.html);
+				}
+			});
+		}
+
+	}
+	app_comment.valid_textarea_length = function(tag){
+		var input_limit = parseInt($('#comment_content').attr('maxlength'));
+		var user_input = $(tag).val();
+		var id = $(tag).attr('id_valid_length');
+
+		if (user_input.length >= input_limit) {
+			alert( '' + input_limit + '자 이내로 입력해주세요.');
+			$(tag).val(user_input.substring(0, input_limit));
+			$('#'+id).html(input_limit);
+		} else {
+			$('#'+id).html(user_input.length);
+		}
+	}
+	app_comment.valid_textarea_length_old = function(tag){
+		var str_input = $(tag).val();
+		str_input = str_input.substring(0, 300);
+		$(tag).val(str_input);
+		if (str_input.length>=300) {
+			alert('300자 이내로 입력해주세요.');
+		} else {
+			var id = $(tag).attr('id_valid_length');
+			$('#'+id).html(str_input.length);
+		}
+	}
+	app_comment.valid_comment_content = function(e){
+		e.stopPropagation();
+		alert('aaa');
+	}
+
+	app_comment.init = function(){
+
+	}
+
+})();
+
+$(document).ready(function(){
+	$(".div_cols_02 ul li:nth-child(even)").css("background-color","#fafafa");
+});
+</script>

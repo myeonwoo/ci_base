@@ -1,0 +1,12 @@
+<div id="content_float_<?=$content['content_id'];?>" class="content_float" style="">
+	<div class="layer_box" style="z-index:100;position:absolute;left:<?=$content['position_x'];?>px;top:<?=$content['position_y'];?>px;">
+		<?if ($content['img1_link_type']=='imagemap'):?>
+		<img src="<?=$content['img1_url'];?>" usemap="#content_img_map_<?=$content['content_id'];?>">
+		<map name="content_img_map_<?=$content['content_id'];?>">
+			<?=$content['img1_link_html'];?>
+		</map>
+		<?elseif ($content['img1_link_type']=='link'):?>
+		<a href="<?=$content['img1_url'];?>"><img src="<?=$content['img1_url'];?>"></a>
+		<?endif;?>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+						<div class="bbs_comment">
+							<table summary="댓글" width="100%">
+								<caption><span class="skip">댓글</span></caption>
+								<colgroup>
+									<col width="163px;">
+									<col width="*;">
+									<col width="110px;">
+								</colgroup>
+								<tbody>
+									<?foreach ($comments as $key => $item):?>
+									<tr id="comment_<?=$item['comment_id'];?>">
+										<td>
+											<?if (in_array($user['user_id'], $admin_list) || $item['author_id'] == $user['user_id']):?>
+											<a href="javascript:void(0);" onclick="javascript:app_comment.delete_oneline_comment(<?=$item['comment_id'];?>);" class="btn_delete">삭제</a>
+											<?endif;?>
+											<span class="user_name"><?=$item['author_id'];?></span>
+										</td>
+										<td>
+											<div class="user_comment"><?=$item['desc_content'];?></div>
+										</td>
+										<td class="date"><?=$item['dt_created_o']->format('Y.m.d');?></td>
+									</tr>
+									<?endforeach;?>
+								</tbody>
+							</table>
+						</div><!-- //bbs_comment -->
+						<div class="paging">
+							<span class="pg_first"><a href="javascript:app_comment.load_page(<?=$pagination['fpage'];?>);">‹ First</a></span>
+							<span class="pg_prev"><a href="javascript:app_comment.load_page(<?=$pagination['ppage'];?>);">&lt;</a></span>
+							<?for ($i=$pagination['rf']; $i <= $pagination['rl']; $i++):?>
+							<?if($i == $params['page']):?>
+							<span class="on"><?=$i;?></span>
+							<?else:?>
+							<span><a href="javascript:app_comment.load_page(<?=$i;?>);"><?=$i;?></a></span>
+							<?endif;?>
+							<?endfor;?>
+							<span class="pg_next"><a href="javascript:app_comment.load_page(<?=$pagination['npage'];?>);">&gt;</a></span>
+							<span class="pg_last"><a href="javascript:app_comment.load_page(<?=$pagination['lpage'];?>);">Last ›</a></span>	
+						</div>

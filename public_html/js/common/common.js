@@ -57,7 +57,6 @@ var create_lib_st = function() {
             return false;
     }
 
-
     /* Regex Validation : Phone (xxx-xxxx-xxxx) */
     that.validatePhoneNumber = function (s) {
         s = String(s);
@@ -684,18 +683,18 @@ var create_lib_st = function() {
             }
         });
     }
+    // 페이지 플로팅 배너 달기
     that.post_hook = function(){
         var data = {};
-        data.pagepath = window.location.pathname;
+        data.url_main_page = window.location.pathname;
         $.ajax({
-            url: '/api/content/main/html_injector',
+            url: '/api/content/main/html_injector_floating_banner',
             type: 'post',
             data: data,
             success: function (data) {
-                if (data.contents.length>0) {
-                    // inject html
-                    $('div[st-html="inject"]').html(data.contents[0].desc_main);
-                }
+                _.each(data.contents, function(content){
+                    $('body').append(content.html);
+                });
             }
         });
     }
@@ -727,3 +726,7 @@ var create_lib_st = function() {
 }
 
 window.lib_st = create_lib_st();
+
+$(document).ready(function(){
+    lib_st.post_hook();
+});

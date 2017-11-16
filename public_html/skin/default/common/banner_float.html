@@ -1,0 +1,36 @@
+<div id="content_float_<?=$content['content_id'];?>" class="content_float" style="">
+	<div class="layer_box" style="z-index:100;position:absolute;left:<?=$content['left'];?>px;top:<?=$content['top'];?>px;">
+		<img src="<?=$content['img_url'];?>" usemap="#content_img_map_<?=$content['content_id'];?>">
+		<map name="content_img_map_<?=$content['content_id'];?>">
+			<area href="/landing/live_tv" shape="rect" coords="3,2,347,453" target="_blank">
+			<area href="#none" onclick="javascript:$(this).parent().parent().parent().fadeOut('slow', function(){this.remove();});" shape="rect" coords="1017,2,1042,27" style="cursor:pointer;">
+			<iframe id="iframe_area" src="http://serviceapi.rmcnmv.naver.com/flash/outKeyPlayer.nhn?vid=939C89ECF9B25B5717429B4AE236E28DA6E2&outKey=V12262ae3efaf334d049aee893403829961c1b09af38b61a455acee893403829961c1&controlBarMovable=true&jsCallable=true&isAutoPlay=true&skinName=tvcast_white" frameborder="no" scrolling="no" marginwidth="0" marginheight="0" width="640" height="350" allowfullscreen="" style="position: absolute;left: 350px; top: 60px;"></iframe>
+		</map>
+	</div>
+</div>
+
+<!-- 
+<div id="banner_float_8061" class="banner_float" style="">
+	<div class="layer_box" style="z-index:100;position:absolute;left:400px;top:100px;">
+		<img src="/img/main/banner/clip1.png" usemap="#banner_img_map_8061">
+		<map name="banner_img_map_8061">
+			<area href="/landing/live_tv" shape="rect" coords="3,2,347,453" target="_blank">
+			<area href="#none" onclick="javascript:$(this).parent().parent().parent().fadeOut('slow', function(){this.remove();});" shape="rect" coords="1017,2,1042,27" style="cursor:pointer;">
+			<iframe id="iframe_area" src="http://serviceapi.rmcnmv.naver.com/flash/outKeyPlayer.nhn?vid=939C89ECF9B25B5717429B4AE236E28DA6E2&outKey=V12262ae3efaf334d049aee893403829961c1b09af38b61a455acee893403829961c1&controlBarMovable=true&jsCallable=true&isAutoPlay=true&skinName=tvcast_white" frameborder="no" scrolling="no" marginwidth="0" marginheight="0" width="640" height="350" allowfullscreen="" style="position: absolute;left: 350px; top: 60px;"></iframe>
+		</map>
+	</div>
+</div>
+
+<div id="banner_float_8061" class="banner_float" style="">
+	<div class="layer_box" style="z-index:100;position:absolute;left:400px;top:100px;">
+		<p>
+			<img src="/img/main/banner/clip1.png" usemap="#img_map">
+			<map name="img_map">
+				<area href="/landing/live_tv" shape="rect" coords="3,2,347,453" target="_blank">
+				<area href="#none" onclick="javascript:$(this).parent().parent().parent().parent().fadeOut('slow', function(){this.remove();});" shape="rect" coords="1017,2,1042,27" style="cursor:pointer;">
+				<iframe id="iframe_area" src="http://serviceapi.rmcnmv.naver.com/flash/outKeyPlayer.nhn?vid=939C89ECF9B25B5717429B4AE236E28DA6E2&outKey=V12262ae3efaf334d049aee893403829961c1b09af38b61a455acee893403829961c1&controlBarMovable=true&jsCallable=true&isAutoPlay=true&skinName=tvcast_white" frameborder="no" scrolling="no" marginwidth="0" marginheight="0" width="640" height="350" allowfullscreen="" style="position: absolute;left: 350px; top: 60px;"></iframe>
+			</map>
+		</p>
+	</div>
+</div> 
+-->

@@ -1,7 +1,7 @@
 <div id="app">
     <div class="row">
         <div class="col-lg-12">
-            <h2>한줄 댓글 게시판 - 리스트</h2>
+            <h3>한줄 댓글 게시판 - 리스트</h3>
         </div>
     </div>
     <hr/>
@@ -9,46 +9,49 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    설정 리스트
+                    사용 가이드
                 </div>
                 <div class="panel-body">
-                	<h4>사용 순서.</h4>
-                	<ol>
-                	    <li>
-                	        <h5>등록/수정</h5>
-                	    </li>
-                	    <li>
-                	        <h5>등록된 한줄게시판 사용 예제</h5>
-                	        <p>
-                	            <ol>
-                	                <li>
-                	                    <h5>Iframe</h5>
-                	                    <textarea name="" id="" style="width: 100%;">
-                	                        <iframe src="http://dev-eng.dangi.co.kr/comment/app/page?comment_config_id=1" frameborder="0"></iframe>
-                	                    </textarea>
-                	                </li>
-                	                <li>
-                	                    <h5>Javascript</h5>
-                	                    <textarea name="" id="" style="width: 100%;">
-                	                        <script type='text/javascript'>
-                	                            lib_st.snippet_comment_list('tag_id', 번호, {limit:10, op_msg_cmt:"영단기에 바라는 점을 자유롭게 작성해주세요."});
-                	                        </script>
-                	                    </textarea>
-                	                </li>
-                	            </ol>
-                	        </p>
-                	    </li>
-                	    <li>
-                	        <h5>데이타 추출</h5>
-                	        <p>
-                	            <div>
-                	                <input type="text" id="comment_config_id" placeholder="댓글게시판번호" class="btn">
-                	                <input type="text" id="comment_limit" placeholder="데이타 수" class="btn" value="1000">
-                	                <div class="btn btn-warning" v-on:click="download_comments()">추출하기</div>
-                	            </div>
-                	        </p>
-                	    </li>
-                	</ol>
+                    <ol>
+                        <li>
+                            등록/수정
+                        </li>
+                        <li>
+                            등록된 한줄게시판 사용 예제
+                            <p>
+                                <ul>
+                                    <li>
+                                        <h5>IFRAME</h5>
+                                        <code>&ltiframe src="http://dev-eng.dangi.co.kr/comment/app/page?comment_config_id=1" frameborder="0"&gt&lt/iframe&gt</code>
+                                    </li>
+                                    <li>
+                                        <h5>JAVASCRIPT</h5>
+                                        <code>
+                                            &ltscript type='text/javascript'&gt
+                                                lib_st.snippet_comment_list('tag_id', 번호, {limit:10, op_msg_cmt:"영단기에 바라는 점을 자유롭게 작성해주세요."});
+                                            &lt/script&gt
+                                        </code>
+                                    </li>
+                                </ul>
+                            </p>
+                        </li>
+                        <li>
+                            그룹번호와 추출 갯수로 데이타 추출
+                            <p>
+                                <div>
+                                    <input type="text" id="comment_config_id" placeholder="댓글게시판번호" class="btn">
+                                    <input type="text" id="comment_limit" placeholder="데이타 수" class="btn" value="1000">
+                                    <div class="btn btn-warning" v-on:click="download_comments()">추출하기</div>
+                                </div>
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="panel-heading">
+                    조회/검색
+                </div>
+                <div class="panel-body">
+                	
                 </div>
                 <div class="panel-body">
                 	<table id="table_dataset" class="table table-striped table-bordered table-hover dataTable no-footer"></table>

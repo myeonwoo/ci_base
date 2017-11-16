@@ -1,1 +1,210 @@
-티져페이지
+<style>
+.france_teaser{position:relative;}
+.france_teaser .cont_box{position:relative;width:1050px;margin:0 auto;}
+.france_teaser .visual_box{overflow:hidden;position:absolute;top:0;left:0;width:100%;height:100%;}
+.france_teaser .visual_box .visual_left{float:left;width:50%;height:100%;background:#244c92;}
+.france_teaser .visual_box .visual_right{float:right;width:49.99%;height:100%;background:#ed2d2e;}
+/*sec_visual*/
+.france_teaser .sec_visual{position:relative;}
+.france_teaser .sec_visual h1 img{z-index:5;position:relative;margin-bottom:-400px;}
+.france_teaser .sec_visual .video_box{z-index:10;position:absolute;top:574px;left:127px;width:800px;height:450px;overflow:hidden;}
+/*sec_benefit*/
+.france_teaser .sec_benefit{position:relative;padding:452px 0 83px;}
+.france_teaser .sec_benefit .visual_box .visual_left{background:#212937;}
+.france_teaser .sec_benefit .visual_box .visual_right{background:#492323;}
+.france_teaser .sec_benefit h2{position:relative;text-align:center;margin-bottom:90px;}
+.france_teaser .sec_benefit .benefit_area{overflow:hidden;}
+.france_teaser .sec_benefit .benefit_area .online{float:left;width:523px;}
+.france_teaser .sec_benefit .benefit_area .offline{float:right;width:523px;}
+.france_teaser .sec_benefit .benefit_area ul{background:#fff;}
+.france_teaser .sec_benefit .benefit_area li{position:relative;}
+.france_teaser .sec_benefit .benefit_area li .txt{position:absolute;left:89px;font-size:9px;color:#737373;letter-spacing:-2px;}
+.france_teaser .sec_benefit .benefit_area .offline li .txt{left:76px;}
+/*sec_ment*/
+.france_teaser .sec_ment{background:#000 url(<?=IMG_DIR?>france/promotion/teaser/bg_ment.jpg) no-repeat center 0;text-align:center;padding:167px 0 410px;}
+/*sec_event*/
+.france_teaser .sec_event{background:#f5f7e2 url(<?=IMG_DIR?>france/promotion/teaser/bg_event.jpg) no-repeat center bottom;padding-bottom:468px;}
+.france_teaser .sec_event h2{text-align:center;}
+.france_teaser .sec_event h2 img{margin-top:-247px;}
+.france_teaser .sec_event .advance_purchase{position:relative;padding:69px 0 107px;}
+.france_teaser .sec_event .advance_purchase h3{text-align:center;margin-bottom:43px;}
+.france_teaser .sec_event .advance_purchase .btn{position:absolute;bottom:134px;left:195px;}
+.france_teaser .sec_event .comment_board{}
+.france_teaser .sec_event .comment_board h3{text-align:center;margin-bottom:26px;}
+.france_teaser .sec_event .comment_board .topic{display:block;text-align:center;}
+.france_teaser .sec_event .comment_box{}
+.france_teaser .sec_event .comment_box .input_box{overflow:hidden;border:3px solid #244c92;background:#f5f8e3;padding:65px 58px 54px 53px;width:672px;margin:22px auto 56px;}
+.france_teaser .sec_event .comment_box .input_box .comment_txt{float:left;width:100%;margin-bottom:24px;}
+.france_teaser .sec_event .comment_box .input_box input[type="text"]{float:left;border:2px solid #244c92;background:#f5f8e3;padding:0 10px;height:52px;line-height:50px;}
+.france_teaser .sec_event .comment_box .input_box button{float:left;}
+.france_teaser .sec_event .comment_box .bbs_comment{width:789px;margin:0 auto;border-top:3px solid #244c92;border-bottom:3px solid #244c92;}
+.france_teaser .sec_event .comment_box .bbs_comment tr:first-child td{border:0;}
+.france_teaser .sec_event .comment_box .bbs_comment td{position:relative;background:#f5f8e3;padding:35px 0;color:#000;font-size:16px;letter-spacing:-1px;border-top:1px solid #c1c3b4;vertical-align:top;}
+.france_teaser .sec_event .comment_box .bbs_comment .btn_delete{position:absolute;top:38px;left:23px;width:27px;height:16px;line-height:14px;background: #b2b2b2;text-align:center;color:#fff;letter-spacing:-1px;font-size:10px;}
+.france_teaser .sec_event .comment_box .bbs_comment .user_name{padding-left:62px;}
+.france_teaser .sec_event .comment_box .bbs_comment .user_comment{overflow:hidden;word-wrap:break-word;word-break:break-all;}
+.france_teaser .sec_event .comment_box .bbs_comment .date{text-align:center;}
+/* paging */
+.france_teaser .sec_event .comment_box .paging{margin-top:36px;text-align:center;}
+.france_teaser .sec_event .comment_box .paging img{vertical-align:middle}
+.france_teaser .sec_event .comment_box .paging .pg_first,.france_teaser .sec_event .comment_box .paging .pg_prev,.paging .pg_next,.france_teaser .sec_event .comment_box .paging .pg_last{padding:0 7px}
+.france_teaser .sec_event .comment_box .paging span{/*padding:0 3px*/}
+.france_teaser .sec_event .comment_box .paging span a{padding:0 3px;font-size:16px;color:#244c92;text-decoration:none;letter-spacing:-1px;}
+.france_teaser .sec_event .comment_box .paging span a.on{font-weight:bold;font-size:16px;color:#244c92;text-decoration:underline;}
+.france_teaser .sec_event .comment_box .paging span.on{font-weight:bold;font-size:16px;color:#244c92;text-decoration:underline}
+</style>
+
+<div class="france_teaser">
+	<div class="sec_visual">
+		<div class="visual_box">
+			<div class="visual_left"></div>
+			<div class="visual_right"></div>
+		</div>
+		<div class="cont_box">
+			<h1><img src="<?=IMG_DIR?>france/promotion/teaser/tit_visual.png" alt="ST Unitas X 신중성 어학원 프랑스어 단기"></h1>
+			<strong class="skip">2017.12. COMING SOON</strong>
+			<div class="video_box">
+				<!-- 800X450 -->
+				<a href="#none" class="btn_video"><img src="<?=IMG_DIR?>/france/promotion/teaser/img_video.jpg" alt="프랑스어 단기 coming soon 영상 보기"></a>
+			</div>
+		</div>
+	</div><!-- //sec_visual -->
+	<div class="sec_benefit">
+		<div class="visual_box">
+			<div class="visual_left"></div>
+			<div class="visual_right"></div>
+		</div>
+		<div class="cont_box">
+			<h2><img src="<?=IMG_DIR?>france/promotion/teaser/tit_benefit.png" alt="온라인 1위 ST와 오프라인 1위 신중성 어학원이 만나 2017년 12월, 최고의 프랑스어 강의로 찾아갑니다."></h2>
+			<div class="benefit_area">
+				<div class="online">
+					<h3><img src="<?=IMG_DIR?>france/promotion/teaser/tit_benefit_online.png" alt="온라인 1위 ST 에스티유니타스"></h3>
+					<ul>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_online_01.png" alt="인강, 학원, 교재까지 영단기가 모두 1위 낡은 토익 시장을 바꾼 영단기">
+							<span class="txt" style="top:358px;">
+								* 취준생이 뽑은 가장 선호하는 토익 인강 사이트<br>(2015년 3월10일~3월 18일 네이버까페 취업대학교 취업 설문조사 결과 기준)<br>
+								* 토익 기본서 베스트셀러 1위 (2015년 2월,YES24 국어 외국어 사전 월별 베스트 셀러 1위 )<br>
+								* 가장 빠르게 토익 고득점이 가능한 어학원 부문 1위(2015년 해럴드 경제 주관 2015 상반기 대학생 선호브랜드 대상 1위)
+							</span>
+						</li>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_online_02.png" alt="정체된 공무원 학원가를 바꾼 공단기 공무원 최종합격생 3명 중 2명은 공단기 수강생">
+							<span class="txt" style="top:335px;">
+								* 2015 국가직 9급 일반행정 전국 : 일반, 고용노동부 지역 : 일반합산 기준, 최종시험일까지 공단기 온/오프라인 수강생 기준
+							</span>
+						</li>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_online_03.png" alt="14년 만에 바뀐 수능 1위 스카이에듀 가격을 올리지 않고 성적을 올리는 대치동 1타들의 책임감">
+							<span class="txt" style="top:321px;">
+								* 2015년 1월 가장 많이 방문하는 수능사이트 1위 (닐슬 코리아 클릭 기준)
+							</span>
+						</li>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_online_04.png" alt="가장 많이 찾는 PEET 온라인 1위 수험생의 믿음에 대한 보답을 착한 혁신으로">
+							<span class="txt" style="top:323px;">
+								* 2017년 4월 3주~5월 1주 PEET  온라인 유료 인강 5개 사이트 순방문자 비교 (출처: 코리안 클릭)
+							</span>
+						</li>
+					</ul>
+				</div><!-- //online -->
+				<div class="offline">
+					<h3><img src="<?=IMG_DIR?>france/promotion/teaser/tit_benefit_offline.png" alt="오프라인 1위 SJS 신중성 어학원"></h3>
+					<ul>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_offline_01.png" alt="프랑스어 교육 30년의 노하우 프랑스어 교육의 최고 권위! 신중성 어학원">
+							<span class="txt" style="top:358px;">
+								* 1988~2017 신중성 원장님의 프랑스어학원 교수 경력 기준
+							</span>
+						</li>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_offline_02.png" alt="가장 많이 찾는 프랑스어 학원 1위 프랑스어 최다 강사진, 공인시험 감독관 출신의 전문 연구진 보유">
+							<span class="txt" style="top:335px;">
+								* 2016년 12월~2017년 11월 네이버 검색어 트렌드 결과 기준 <br>
+								(프랑스어학원 검색 시 노출되는 상위 5개 국내어학원을 기준으로 함)
+							</span>
+						</li>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_offline_03.png" alt="유료 수강생만 11만명 이상, 이미 알만한 사람은 모두 아는 프랑스어 교육의 명가 ">
+							<span class="txt" style="top:321px;">
+								* 국내 프랑스어학원(인강 포함 모든 업체) 17년 11월 수강시간표 강사 수 비교 기준 ,<br>
+								국내 프랑스어학원의 기준 : 17.10.10~10.17 프랑스어학원 검색 시 노출되는 상위 10개 국내어학원을 기준으로 함)<br>
+								* * 07.01'~17.10 신중성 어학원 유료 수강생 수 기준
+							</span>
+						</li>
+						<li>
+							<img src="<?=IMG_DIR?>france/promotion/teaser/img_benefit_offline_04.png" alt="프랑스어 교육 서적 30여권 보유 체계적인 커리큘럼을 뒷받침하는 프랑스어 전문 서적">
+							<span class="txt" style="top:323px;">
+								* 2017.10 신중성 어학원 출간 또는 신중성원장 출판 서적 기준
+							</span>
+						</li>
+					</ul>
+				</div><!-- //offline -->
+			</div><!-- //benefit_area -->
+		</div>
+	</div><!-- //sec_benefit -->
+	<div class="sec_ment">
+		<div class="cont_box">
+			<img src="<?=IMG_DIR?>france/promotion/teaser/img_ment.png" alt="지금까지 1%만 누릴 수 있었던 그 수업. 이제 99%에게도 나눌 수 있도록 프랑스어 단기가 함께 합니다.이번에도 기대하셔도 좋습니다">
+		</div>
+	</div><!-- //sec_ment -->
+	<div class="sec_event">
+		<div class="cont_box">
+			<h2><img src="<?=IMG_DIR?>france/promotion/teaser/tit_event.png" alt="event 저랑 프랑스어 한잔 하실래요?"></h2>
+			<div class="advance_purchase">
+				<h3><img src="<?=IMG_DIR?>france/promotion/teaser/tit_advance_purchase.png" alt="프단기 기대평 댓글 쓰고 사전 구매 시 기초 프랑스어 인강이 900원 구매자 전원에게 스벅 아메리카노 증정!"></h3>
+				<img src="<?=IMG_DIR?>france/promotion/teaser/img_advance_purchase.png" alt="프랑스인들도 사랑하는 스타벅스 커피 전원 증정 본 이벤트는 물량 소진 시 에고 없이 종료될 수 있습니다.">
+				<!-- 사전 구매하기 버튼 -->
+				<a href="javascript:void(0);" onclick="javascript:app.submit_application();" class="btn"><img src="<?=IMG_DIR?>france/promotion/teaser/btn_advance_purchase.gif" alt="사전 구매하기"></a>
+				<!-- //사전 구매하기 버튼 -->
+			</div><!-- //advance_purchase -->
+			<div id="oneline_comment_section">
+				
+			</div>
+		</div>
+	</div><!-- //sec_event -->
+</div><!-- //france_teaser -->
+
+<script>
+(function(){
+	window.app = {};
+	app.submit_application = function(){
+		console.log('submit_application');
+		$.ajax({
+			url: '/france/promotion/teaser/main/submit_application',
+			type: 'post',
+			data: {},
+			success: function (data) {
+				if (data.result_code == 1000) {
+					// 구매페이지 이동
+				}
+				else if (data.result_code == 2000) {
+					alert(data.msg);
+				}
+				else if (data.result_code == 3000) {
+					lib_st.confirm_to_login(data.msg);
+				}
+			}
+		});
+	}
+	app.init = function(){
+		var data = {};
+		data.comment_config_id = 1;
+		data.req_login = 1;
+		data.render_type = 'json';
+
+		$.ajax({
+		    url: '/comment/oneline/teaser',
+		    type: 'post',
+		    data: data,
+		    success: function (data) {
+		        $('#oneline_comment_section').html(data.html);
+		    }
+		});
+	}
+})();
+$(document).ready(function(){
+	app.init();
+});
+
+</script>

@@ -57,13 +57,18 @@ class M_comment extends CI_Model{
 		$this->db->order_by("comment_id", "DESC");
 		$this->db->from('COMMENT A');
 
+		if (isset($options['author_id'])) $this->db->where('author_id',$options['author_id']);
 		if (isset($options['type'])) $this->db->where('type',$options['type']);
 		$this->db->where('comment_config_id',$options['comment_config_id']);
 		$this->db->where('yn_deleted','0');
 		$this->db->limit($options['limit'], $options['offset']);
 
 		$query = $this->db->get();
-		return $query->result_array();
+		$data = $query->result_array();
+		foreach ($data as $key => &$item) {
+			$item['dt_created_o'] = new Datetime($item['dt_created']);
+		}
+		return $data;
 	}
 	public function get_list_total($options=array())
 	{
@@ -72,6 +77,7 @@ class M_comment extends CI_Model{
 		$this->db->select("COUNT(*) as cnt");
 		$this->db->from('COMMENT A');
 
+		if (isset($options['author_id'])) $this->db->where('author_id',$options['author_id']);
 		if (isset($options['type'])) $this->db->where('type',$options['type']);
 		$this->db->where('comment_config_id',$options['comment_config_id']);
 		$this->db->where('yn_deleted','0');

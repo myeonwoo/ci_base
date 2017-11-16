@@ -36,4 +36,28 @@ class Main extends CI_Controller {
 
         $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
     }
+
+    // 플로팅 배너 
+    public function html_injector_floating_banner()
+    {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
+        // 분류값 설정
+        $params['content_category_id'] = 11;
+        $params['url_main_page'] = $this->validate->string($this->input->get_post('url_main_page', true), '/france/promotion/teaser/main');
+
+        $data['now'] = date('Y-m-d H:i:s');
+        $data['contents'] = $this->m_content->get_list(array('content_category_id'=>$params['content_category_id']
+            , 'yn_used' => 1, 'dt_start'=>$data['now'], 'dt_end'=>$data['now']
+            , 'url_main_page'=>$params['url_main_page']));
+        foreach ($data['contents'] as $key => &$item) {
+            $tmp['content'] = $item;
+            $item['html'] = $this->load->view('api/content/html_injector_floating_banner', $tmp, true);
+        }
+        // $data['content'] = $this->m_content->get($params['content_id']);
+
+        $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+    }
 }

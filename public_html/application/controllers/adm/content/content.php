@@ -22,7 +22,7 @@ class Content extends CI_Controller {
                     'super_content_category_id'=>5
                 )
                 ,'floating_banner'=> array(
-                    'super_content_category_id'=>5
+                    'super_content_category_id'=>11
                 )
             )
         );
@@ -355,13 +355,12 @@ class Content extends CI_Controller {
         $data['content_categories'] = $this->m_content->get_category_list_all(array('use_yn'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
 
-        $data['banner'] = array();
+        $data['banner'] = array('position_el_selector'=>'note_txt');
         if($params['content_id']){
             $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
         }
         $data['banner']['super_content_category_id'] = $params['super_content_category_id'];
-        // $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id($data['banner']['content_category_id']);
-        
+
         if ($params['render_type']=='json') {
             $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
         } else {
@@ -379,7 +378,7 @@ class Content extends CI_Controller {
         $params = array();
         $data['params'] = &$params;
 
-        $params['super_content_category_id'] = $data['info']['html_injector']['super_content_category_id'];
+        $params['super_content_category_id'] = $data['info']['floating_banner']['super_content_category_id'];
         $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
         $params['sub_category_id'] = $this->validate->int($this->input->get_post('sub_category_id', true), false);
         $params['type'] = 'banner';
@@ -655,25 +654,28 @@ class Content extends CI_Controller {
         $params['content_category_id'] = $this->validate->int($this->input->get_post('content_category_id', true), null);
         $params['teacher_id'] = $this->validate->string($this->input->get_post('teacher_id', true), '');
         $params['subject'] = $this->validate->string($this->input->get_post('subject', false), null);
+        $params['position_x'] = $this->validate->string($this->input->get_post('position_x', true), 0);
+        $params['position_y'] = $this->validate->string($this->input->get_post('position_y', true), 0);
+        $params['position_el_selector'] = $this->validate->string($this->input->get_post('position_el_selector', true), '');
         $params['desc_main'] = $this->validate->string($this->input->get_post('desc_main', false), null);
         $params['desc_intro'] = $this->validate->string($this->input->get_post('desc_intro', true), '');
         $params['url_main_page'] = $this->validate->string($this->input->get_post('url_main_page', true), '');
         $params['img1_url'] = $this->validate->string($this->input->get_post('img1_url', true), null);
         $params['img1_width'] = $this->validate->string($this->input->get_post('img1_width', true), null);
         $params['img1_link'] = $this->validate->string($this->input->get_post('img1_link', true), null);
-        $params['img1_link_html'] = $this->validate->string($this->input->get_post('img1_link_html', true), '');
+        $params['img1_link_html'] = $this->validate->string($this->input->get_post('img1_link_html', false), '');
         $params['img1_link_target'] = $this->validate->string($this->input->get_post('img1_link_target', true), '');
         $params['img1_link_type'] = $this->validate->string($this->input->get_post('img1_link_type', true), '');
         $params['img2_url'] = $this->validate->string($this->input->get_post('img2_url', true), null);
         $params['img2_width'] = $this->validate->string($this->input->get_post('img2_width', true), null);
         $params['img2_link'] = $this->validate->string($this->input->get_post('img2_link', true), null);
-        $params['img2_link_html'] = $this->validate->string($this->input->get_post('img2_link_html', true), '');
+        $params['img2_link_html'] = $this->validate->string($this->input->get_post('img2_link_html', false), '');
         $params['img2_link_target'] = $this->validate->string($this->input->get_post('img2_link_target', true), '');
         $params['img2_link_type'] = $this->validate->string($this->input->get_post('img2_link_type', true), '');
         $params['img3_url'] = $this->validate->string($this->input->get_post('img3_url', true), null);
         $params['img3_width'] = $this->validate->string($this->input->get_post('img3_width', true), null);
         $params['img3_link'] = $this->validate->string($this->input->get_post('img3_link', true), null);
-        $params['img3_link_html'] = $this->validate->string($this->input->get_post('img3_link_html', true), '');
+        $params['img3_link_html'] = $this->validate->string($this->input->get_post('img3_link_html', false), '');
         $params['img3_link_target'] = $this->validate->string($this->input->get_post('img3_link_target', true), '');
         $params['img3_link_type'] = $this->validate->string($this->input->get_post('img3_link_type', true), '');
         $params['movie1_key'] = $this->validate->string($this->input->get_post('movie1_key', true), '');
@@ -704,6 +706,9 @@ class Content extends CI_Controller {
         }
         else if ($params['content_category_id'] == $data['info']['html_injector']['super_content_category_id'] || in_array($params['content_category_id'], $data['info']['html_injector']['children_ids'])){
             $data['return_url'] = "/adm/content/content/html_injector_list?content_category_id={$params['content_category_id']}";
+        }
+        else if ($params['content_category_id'] == $data['info']['floating_banner']['super_content_category_id'] || in_array($params['content_category_id'], $data['info']['floating_banner']['children_ids'])){
+            $data['return_url'] = "/adm/content/content/floating_banner_list?content_category_id={$params['content_category_id']}";
         }
         // $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
 
