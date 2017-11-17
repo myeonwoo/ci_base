@@ -353,7 +353,7 @@ class Content extends CI_Controller {
         $data['content_categories'] = $this->m_content->get_category_list_all(array('use_yn'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
 
-        $data['banner'] = array('position_el_selector'=>'note_txt');
+        $data['banner'] = array('position_el_selector'=>'.note_txt');
         if($params['content_id']){
             $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
         }
@@ -472,7 +472,24 @@ class Content extends CI_Controller {
         $data['result'] = $this->m_content->update($params['content_id'], $data['update']);
 
         $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
-    }    
+    }
+    public function copy_content()
+    {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
+        $params['content_id'] = $this->validate->int($this->input->get_post('content_id', true), false);
+        $data['content'] = $this->m_content->get_content($params['content_id']);
+
+        unset($data['content']['content_id']);
+        $data['content']['subject'] = 'copy: ' . $data['content']['subject'];
+        $data['content']['yn_used'] = 0;
+
+        $data['result'] = $this->m_content->insert( $data['content']);
+
+        $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+    }   
     public function upload_file()
     {
         $data = array('result'=>array());

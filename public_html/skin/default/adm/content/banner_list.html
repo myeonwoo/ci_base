@@ -79,6 +79,30 @@
                     });
                 }
             }
+            , copy_content: function(tag) {
+
+                if (confirm('복사하시겠습니까?')) {
+                    var data = {};
+                    data.content_id = $(tag).attr('data-content_id');
+
+                    var url="/adm/content/content/copy_content";
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: data,
+                        success: function (data) {
+                            lib_st.refresh_page();
+
+                            // app.banners = _.filter(app.banners, function(item){
+                            //     return item.content_id != data.params.content_id;
+                            // });
+                            // app.datatable.clear();
+                            // app.datatable.rows.add(app.banners);
+                            // app.datatable.draw();
+                        }
+                    });
+                }
+            }
             , onoff_content: function(tag) {
                 var data = {};
                 data.content_id = $(tag).attr('data-content_id');
@@ -208,6 +232,7 @@ $(document).ready(function(){
     app.datatable = $('#table_dataset').DataTable( {
         data: app.banners
         ,pageLength: 25
+        , order: [[ 0, "desc" ]]
         ,columns: [
             { title: "#", data:"content_id", width:"30px"}
             , { title: "content_category_id", data:"content_category_id", width:"30px"}
@@ -233,7 +258,8 @@ $(document).ready(function(){
             , { title: "", data:"subject", render:function(data, type, row, meta){
                 var str = '';
                 str += '<div class="btn btn-info btn-sm btn-round" onclick="app.onoff_content(this)" data-content_id="'+ row.content_id +'">오픈 on/off</div>'
-                // str += '<div class="btn btn-warning btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';
+                str += '<div class="btn btn-warning btn-sm btn-round" onclick="app.copy_content(this)" data-content_id="'+ row.content_id +'">복사</div>';
+                // str += '<div class="btn btn-danger btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';
                 return str;
             }}
         ]

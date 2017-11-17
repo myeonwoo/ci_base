@@ -61,6 +61,21 @@ class M_content extends CI_Model{
 
 		return $data;
 	}
+	public function get_content($content_id){
+		$this->db->select('A.*');
+		$this->db->where('content_id',$content_id);
+		$this->db->from('CONTENT A');
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() < 1) {
+			return null;
+		} else {
+			return $query->row_array();
+		}
+
+		return $data;
+	}
 	//컨텐츠 리스트
 	public function get_list($options=array()){
 		$now = date('Y-m-d H:i:s');
@@ -77,6 +92,7 @@ class M_content extends CI_Model{
 		$this->db->select('A.*, B.subject as content_category_subject');
 		$this->db->from('CONTENT A');
 		$this->db->join('CONTENT_CATEGORY B', 'A.content_category_id = B.content_category_id');
+		// $this->db->order_by("A.content_id", "DESC");
 
 		$query = $this->db->get();
 		// $query = $this->db->get('CONTENT');
