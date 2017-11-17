@@ -213,6 +213,9 @@ $(document).ready(function(){
             , { title: "사용페이지", data:"url_main_page", render:function(data, type, row, meta){
                 return row.url_main_page +  ' <a class="btn btn-info btn-xs" href="'+ row.url_main_page + '" target="_blank">페이지 보기</a>';
             }}
+            ,{ title: "이미지", data:"img1_url", width: "50px", render:function(data, type, row, meta){
+                return '<a target="_blank" href="' + row.img1_url + '" class="preview" title="">' + '<img src="' + row.img1_url + '" alt="" style="width:100%;" alt="Smiley face">' + '</a>';
+            }}
             , { title: "위치", data:"position_x", render:function(data, type, row, meta){
                 return '(X: ' + row.position_x + ', Y: ' + row.position_y + ')';
             }}
