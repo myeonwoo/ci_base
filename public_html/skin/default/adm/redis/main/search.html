@@ -1,1 +1,149 @@
-test
+<div id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Redis: 조회</h3>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    가이드
+                </div>
+                <div class="panel-body">
+                	<select name="" id="redis_key" class="btn" >
+                        <option value="">전체</option>
+                        <option v-for="item in redis_keys" v-bind:value="item.key" >{{item.name}}</option>
+                    </select>
+                    <div class="btn">조회</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<script>
+(function(){
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , redis_keys: <?=json_encode($redis_keys);?>
+        }
+        ,methods: {
+            // 무료 영상 경로 생성
+            convert_playable_url: function(){
+                var data = {};
+                data.media_content_key = $('input[name=movie1_key]').val();
+
+                $.ajax({
+                    url: '/adm/content/content/convert_playable_url',
+                    type: 'post',
+                    data: data,
+                    success: function (data) {
+                        app.banner.movie1_url = data.url_play_flash;
+
+                        var el = $('input[name=movie1_url]');
+
+                        el.fadeOut(550).promise().done(function () {
+                            el.toggleClass("blink-class").fadeIn(550);
+                        });
+                    }
+                });
+            }
+
+            //  카테고리 변경 change_category_select_options
+            , change_category_select_options: function(depth){
+                var data = {};
+                data.category_id = $('#category_selection_'+depth).val();
+                this.set_category_selection(depth, data.category_id);
+            }
+            , set_category_selection: function(depth, content_category_id) {
+                if (depth==1) {
+                    this.category_selection_2_options = [];
+                    if (content_category_id) {
+                        $('#category_selection_2_options').val('');
+                        this.category_selection_2_options = this.category.lookup[content_category_id].children;
+                    }
+
+                    // reset
+                    $('#category_selection_2').val('');
+                }
+                else if (depth==2) {
+
+                }
+                // content_category_id 재설정
+                if (content_category_id) {
+                    this.banner.content_category_id = this.category.lookup[content_category_id].content_category_id;
+                } else if ($('#category_selection_2').val()) {
+                    this.banner.content_category_id = $('#category_selection_2').val();
+                } else if ($('#category_selection_1').val()) {
+                    this.banner.content_category_id = $('#category_selection_1').val();
+                } else {
+                    this.banner.content_category_id = '';
+                }
+            }
+            // banner_category_path 기준으로 select 설정
+            , update_category_select: function() {
+                setTimeout(function(){
+                    if (app.banner_category_path.length>0) {
+                        $('#category_selection_1').val(app.banner_category_path[0].content_category_id);
+                        app.change_category_select_options(1);
+                    }
+                }, 500);
+                
+                setTimeout(function(){
+                    if (app.banner_category_path.length>1) {
+                        $('#category_selection_2').val(app.banner_category_path[1].content_category_id);
+                        app.change_category_select_options(2);
+                    }
+                }, 1000);
+            }
+            , upload_file: function(id){
+                console.log(id);
+                $('#'+id).submit();
+            }
+            , set_upload_file: function (target_form, target_input, callback) {
+                $('#'+target_form).submit(function () {
+                    var formdata = new FormData();
+                    var fileObj = document.getElementById(target_input).files;
+                    for (var i = 0; i < fileObj.length; i++) {
+                        formdata.append("file", fileObj[i]);
+                    }
+                    $.ajax({
+                        type: 'POST', 
+                        url: '/adm/content/content/upload_file',
+                        data: formdata,
+                        contentType: false,
+                        processData: false
+                    }).then(function (data) {
+                        callback(data);
+                    }, function () {
+                        //failCal
+                    });
+                    return false;
+                });
+            }
+            , submit_form: function(){
+                if (!app.banner.content_category_id) {
+                    alert('분류값을 설정해주세요.');
+                } else {
+                    $('form#form1').submit();
+                }
+            }
+            , init: function(){
+                app.category_selection_1_options = app.category.hierarchy_tree;
+                app.update_category_select();
+            }
+        }
+    });
+})();
+
+$(document).ready(function(){
+    
+});
+
+</script>

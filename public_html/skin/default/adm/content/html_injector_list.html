@@ -211,11 +211,11 @@ $(document).ready(function(){
             , { title: "content_category_id", data:"content_category_id", width:"30px"}
             , { title: "분류명", data:"content_category_subject"}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
-                return '<a href="/adm/content/content/html_injector_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
-                // var str = '/adm/content/content/html_injector_write?content_id='+ row.content_id + '&type=';
-                // return '<a target="_blank" href=>' + row.subject + '</a>';
+                return '<a class="btn btn-sm" href="/adm/content/content/html_injector_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
             }}
-            , { title: "사용페이지", data:"url_main_page"}
+            , { title: "사용페이지", data:"url_main_page", render:function(data, type, row, meta){
+                return row.url_main_page +  ' <a class="btn btn-info btn-xs" href="'+ row.url_main_page + '" target="_blank">페이지 보기</a>';
+            }}
             , { title: "태그 Selector", data:"position_el_selector"}
             // , { title: "기간", data:"dt_start", render:function(data, type, row, meta){
             //     var tmp = new Date(row.dt_start);
@@ -224,8 +224,18 @@ $(document).ready(function(){
             //     str += ' ~ '+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
             //     return str;
             // }}
-            , { title: "오픈", data:"yn_used"}
-            , { title: "순서", data:"order"}
+            // , { title: "노출 기간", data:"dt_start", render:function(data, type, row, meta){
+            //     var tmp = new Date(row.dt_start);
+            //     var str = ''+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
+            //     tmp = new Date(row.dt_end);
+            //     str += ' ~ '+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
+            //     return str;
+            // }}
+            , { title: "사용여부", data:"yn_used", render:function(data, type, row, meta){
+                if (row.yn_used == 1) return 'Y';
+                else return 'N';
+            }}
+            // , { title: "순서", data:"order"}
             , { title: "", data:"subject", render:function(data, type, row, meta){
                 var str = '';
                 // str += '<div class="btn btn-warning btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';

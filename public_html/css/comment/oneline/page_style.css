@@ -1,0 +1,191 @@
+@charset "utf-8";
+
+/* 한줄평 남기기 */
+.sec_comment{background:#ffffff;padding:0px 0 80px 0; }
+.sec_comment .cont_input {  }
+.sec_comment .cont_input .input_cnt{display:block;text-align:right;margin-bottom:5px;}
+.sec_comment .cont_input .a_textarea { padding-right:22px;  }
+.sec_comment .cont_input .a_textarea .textarea_text {display:inline-block;width:100%;height:44px;border:1px solid #dddddd;padding:10px 10px 10px 10px;}
+.sec_comment .cont_input .a_info{overflow:hidden;padding:11px 0 32px 0;text-align: left;}
+.sec_comment .cont_input .a_info .info_list{float:left;width:600px;}
+.sec_comment .cont_input .a_info .info_input{float:right;}
+.sec_comment .cont_input .a_info .info_input input{width:94px;height:26px;padding:0 10px;margin:0 0 0 0;border:1px solid #dddddd;}
+.sec_comment .cont_input .a_info .info_input .btn_ok{display:inline-block;width:70px;height:28px;line-height:28px;background:#e54134;color:#fff;text-align:center;vertical-align:middle;margin-left:4px;}
+
+.sec_comment .cont_list {  }
+.sec_comment .div_cols_02 {  }
+.sec_comment .div_cols_02 ul {  }
+.sec_comment .div_cols_02 ul li { border-bottom:1px solid #cecece; color:#000;text-align:left;font-size:12px;vertical-align:middle;line-height:1.6; }
+.sec_comment .div_cols_02 ul li:first-child  { border-top:1px solid #cecece; }
+.sec_comment .div_cols_02 .a_name { zoom:1; }
+.sec_comment .div_cols_02 .a_name:after { clear:both; display:block; content:''; }
+.sec_comment .div_cols_02 .a_name .b_who { float:left; width: 15%;   }
+.sec_comment .div_cols_02 .a_name .b_who > div { padding:11px 15px 11px 45px;   color: #6c6c6c; font-weight: bold; }
+.sec_comment .div_cols_02 .a_name .b_who .notice { color:#000; }
+.sec_comment .div_cols_02 .a_name .b_who .name { color:#000;  }
+.sec_comment .div_cols_02 .a_name .review { float:left; width: 65% }
+.sec_comment .div_cols_02 .a_name .review > div { padding:11px 15px;  }
+.sec_comment .div_cols_02 .a_name .b_btn  { float:left; width: 20%; height:29px; min-height:29px; text-align: right;  }
+.sec_comment .div_cols_02 .a_name .b_btn > div { padding:5px 15px;   }
+.sec_comment .div_cols_02 .a_name .b_btn a:hover{color:#e54134;}
+.sec_comment .div_cols_02 .a_name .b_btn .btn_board {display:inline-block;padding:0 10px;height:29px;line-height:29px;background:#ffffff;border:1px solid #dddddd;color:#000000;text-align:center;font-size:12px;vertical-align:middle;border-radius:6px 6px 6px 6px;}
+.sec_comment .div_cols_02 .a_name .b_btn .reply_num {}
+
+/* 댓글 */
+.sec_comment .div_cols_02 .a_replay { background: #fafafa; border-top:1px solid #cecece; }
+.sec_comment .div_cols_02 .a_replay .in{  padding:15px 15px 15px 45px;}
+.sec_comment .div_cols_02 .a_replay .b_input{padding:0 0;}
+.sec_comment .div_cols_02 .a_replay .b_input .textarea_text {background:#fff;display:inline-block;width:100%;height:30px;border:1px solid #dddddd;padding:10px 10px 10px 10px;}
+.sec_comment .div_cols_02 .a_replay .b_input .input_box { padding:10px 0; }
+.sec_comment .div_cols_02 .a_replay .b_input .input_box:after{content:'';display:block;clear:both;}
+.sec_comment .div_cols_02 .a_replay .b_input .input_box .input_cnt{float:left;padding-left:30px;}
+.sec_comment .div_cols_02 .a_replay .b_input .input_box p{float:right;}
+.sec_comment .div_cols_02 .a_replay .b_input .input_box  input{width:94px;height:26px;line-height:36px;padding:0 10px;border:1px solid #dddddd;}
+.sec_comment .div_cols_02 .a_replay .b_input .input_box .btn_ok{display:inline-block;width:70px;height:26px;line-height:26px;background:#ffffff;border:1px solid #e54134;color:#e54134;text-align:center;vertical-align:middle;margin-left:8px;}
+
+/* 답변입력창 */
+.sec_comment .div_cols_02 .a_comment { zoom:1; border-top:1px solid #cecece; padding-left:20px;}
+.sec_comment .div_cols_02 .a_comment:after { clear:both; display:block; content:''; }
+.sec_comment .div_cols_02 .a_comment .b_who { float:left; width: 15%;   }
+.sec_comment .div_cols_02 .a_comment .b_who > div { padding:5px 5px 5px 45px;  color: #6c6c6c; font-weight: bold; }
+.sec_comment .div_cols_02 .a_comment .b_who .notice {  }
+.sec_comment .div_cols_02 .a_comment .b_answer { float:left; width: 65% }
+.sec_comment .div_cols_02 .a_comment .b_answer > div {  padding:5px 15px; }
+.sec_comment .div_cols_02 .a_comment .b_answer .date { display:inline-block;margin-left:10px;color:#999999;font-size:12px; }
+.sec_comment .div_cols_02 .a_comment .b_btn { float:left; width: 20%; text-align:right;  }
+.sec_comment .div_cols_02 .a_comment .b_btn > div { padding:5px 15px;   }
+
+.btn_del_board {color: #EE8181}
+
+
+
+/* Pagination: 페이지네이션 */
+/* 예제
+	<div class="pagination">
+		<p>without gradient</p>
+		<a href="#" class="page">first</a><a href="#" class=
+		"page">2</a><a href="#" class="page">3</a><span
+		class="page active">4</span><a href="#" class=
+		"page">5</a><a href="#" class="page">6</a><a href="#"
+		class="page">last</a>
+	</div>
+
+	<div class="pagination">
+		<p>with gradient</p>
+		<a href="#" class="page gradient">first</a><a href=
+		"#" class="page gradient">2</a><a href="#" class=
+		"page gradient">3</a><span class=
+		"page active">4</span><a href="#" class=
+		"page gradient">5</a><a href="#" class=
+		"page gradient">6</a><a href="#" class=
+		"page gradient">last</a>
+	</div>
+
+	<div class="pagination dark">
+		<p>dark without gradient</p>
+		<a href="#" class="page dark">first</a><a href="#"
+		class="page dark">2</a><a href="#" class=
+		"page dark">3</a><span class=
+		"page dark active">4</span><a href="#" class=
+		"page dark">5</a><a href="#" class=
+		"page dark">6</a><a href="#" class=
+		"page dark">last</a>
+	</div>
+
+	<div class="pagination dark">
+		<p>dark with gradient</p>
+		<a href="#" class="page dark gradient">first</a><a
+		href="#" class="page dark gradient">2</a><a href="#"
+		class="page dark gradient">3</a><span class=
+		"page dark active">4</span><a href="#" class=
+		"page dark gradient">5</a><a href="#" class=
+		"page dark gradient">6</a><a href="#" class=
+		"page dark gradient">last</a>
+	</div>
+
+ */
+
+body {
+    background: #dfdfdf;
+    color: #666;
+    font: 14px/24px sans-serif;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px; /*optional*/
+    color: #aaa;
+    font-size: .875em;
+}
+
+.pagination {
+    background: #f2f2f2;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.page {
+    display: inline-block;
+    padding: 0px 9px;
+    margin-right: 4px;
+    border-radius: 3px;
+    border: solid 1px #c0c0c0;
+    background: #e9e9e9;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
+    font-size: .875em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #717171;
+    text-shadow: 0px 1px 0px rgba(255,255,255, 1);
+}
+
+.page:hover, .page.gradient:hover {
+    background: #fefefe;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#f0f0f0));
+    background: -moz-linear-gradient(0% 0% 270deg,#FEFEFE, #f0f0f0);
+}
+
+.page.active {
+    border: none;
+    background: #616161;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .8);
+    color: #f0f0f0;
+    text-shadow: 0px 0px 3px rgba(0,0,0, .5);
+}
+
+.page.gradient {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#e9e9e9));
+    background: -moz-linear-gradient(0% 0% 270deg,#f8f8f8, #e9e9e9);
+}
+
+.pagination.dark {
+    background: #414449;
+    color: #feffff;
+}
+
+.page.dark {
+    border: solid 1px #32373b;
+    background: #3e4347;
+    box-shadow: inset 0px 1px 1px rgba(255,255,255, .1), 0px 1px 3px rgba(0,0,0, .1);
+    color: #feffff;
+    text-shadow: 0px 1px 0px rgba(0,0,0, .5);
+}
+
+.page.dark:hover, .page.dark.gradient:hover {
+    background: #3d4f5d;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#547085), to(#3d4f5d));
+    background: -moz-linear-gradient(0% 0% 270deg,#547085, #3d4f5d);
+}
+
+.page.dark.active {
+    border: none;
+    background: #2f3237;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .1);
+}
+
+.page.dark.gradient {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#565b5f), to(#3e4347));
+    background: -moz-linear-gradient(0% 0% 270deg,#565b5f, #3e4347);
+}

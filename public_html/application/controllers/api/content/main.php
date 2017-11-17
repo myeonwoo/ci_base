@@ -17,27 +17,35 @@ class Main extends CI_Controller {
         $this->data['user_level'] = $this->session->userdata('ss_mb_level');
         $this->data['is_login'] = $this->data['user_level'];
     }
-    // html injecting 데이타 조회
+    /**
+     * 유의사항 : html injecting
+     * 분류값 : content_category_id = 3
+     * @return [type] [description]
+     */
     public function html_injector()
     {
         $data = &$this->data;
         $params = array();
         $data['params'] = &$params;
 
-        $params['pagepath'] = $this->validate->string($this->input->get_post('pagepath', true), false);
+        $params['url_main_page'] = $this->validate->string($this->input->get_post('url_main_page', true), '/france/promotion/teaser/main');
 
-        $data['content_category_id'] = 5;
+        $data['content_category_id'] = 3;
+        $data['now'] = date('Y-m-d H:i:s');
         $data['config'] = array(
             'yn_used'=>1, 'content_category_id'=> $data['content_category_id']
-            ,'url_main_page'=>$params['pagepath']
+            ,'url_main_page'=>$params['url_main_page']
         );
         $data['contents'] = $this->m_content->get_list($data['config']);
-
 
         $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
     }
 
-    // 플로팅 배너 
+    /**
+     * 플로팅 배너 : html injecting
+     * 분류값 : content_category_id = 2
+     * @return [type] [description]
+     */
     public function html_injector_floating_banner()
     {
         $data = &$this->data;
@@ -45,7 +53,7 @@ class Main extends CI_Controller {
         $data['params'] = &$params;
 
         // 분류값 설정
-        $params['content_category_id'] = 11;
+        $params['content_category_id'] = 2;
         $params['url_main_page'] = $this->validate->string($this->input->get_post('url_main_page', true), '/france/promotion/teaser/main');
 
         $data['now'] = date('Y-m-d H:i:s');
@@ -56,7 +64,6 @@ class Main extends CI_Controller {
             $tmp['content'] = $item;
             $item['html'] = $this->load->view('api/content/html_injector_floating_banner', $tmp, true);
         }
-        // $data['content'] = $this->m_content->get($params['content_id']);
 
         $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
     }

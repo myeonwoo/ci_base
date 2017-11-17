@@ -40,6 +40,8 @@
 										<?endif;?>
 									</div>
 								</div>
+								<!-- 댓글 버튼 -->
+								<?if ($params['yn_reply']):?>
 								<div class="b_btn" >
 									<div>
 										<a href="javascript:void(0);" onclick="javascript:app_comment.creat_comment_input(this);" data-comment_id="<?=$item['comment_id'];?>"  class="btn_board commentToggleBtn">
@@ -48,9 +50,10 @@
 										</a>
 									</div>
 								</div>
+								<?endif;?>
 							</div>
 							<!-- //댓글 : 1개 이상 -->
-							<?if (isset($comments_replies[$item['comment_id']])): foreach ($comments_replies[$item['comment_id']] as $key => $reply):?>
+							<?if ($params['yn_reply'] && isset($comments_replies[$item['comment_id']])): foreach ($comments_replies[$item['comment_id']] as $key => $reply):?>
 							<div class="a_comment">
 								<div class="b_who">
 									<div>
@@ -85,22 +88,22 @@
 					</ul>
 				</div>
 			</div> <!-- cont_list -->
-			<div class="wrap_paging"> <!-- 공통 페이징 -->
-				<div class="paging">
-					<span class="prev"><a href="javascript:app_comment.load_page(<?=$pagination['ppage'];?>);">이전</a></span>
-					<? if ( 1 <  $pagination['rf']): ?>
-	                <a href="javascript:app_comment.load_page(1);">1</a> ...
-	                <? endif ?>
-					<?for ($i=$pagination['rf']; $i <= $pagination['rl']; $i++):?>
-	                    <?if($i == $params['page']):?>
-	                    <span><?=$i;?></span>
-	                    <?else:?>
-	                    <a href="javascript:app_comment.load_page(<?=$i;?>);"><?=$i;?></a>
-	                    <?endif;?>
-	                <?endfor;?>
-	                <? if ($pagination['rl'] < $pagination['tpage']): ?>
-	                ... <a href="javascript:app_comment.load_page(<?=$pagination['tpage'];?>);"><?=$pagination['tpage'];?></a>
-	                <? endif ?>
-					<span class="next"><a href="javascript:app_comment.load_page(<?=$pagination['npage'];?>);">다음</a></span>
-				</div>
-			</div> <!-- // wrap_paging -->
+			
+			<div class="pagination">
+				<? if ( 1 <  $pagination['rf']): ?>
+				<a href="javascript:app_comment.load_page(1);" class="page">처음</a>
+                <? endif ?>
+				<a href="javascript:app_comment.load_page(<?=$pagination['ppage'];?>);" class="page">이전</a>
+
+				<?for ($i=$pagination['rf']; $i <= $pagination['rl']; $i++):?>
+                    <?if($i == $params['page']):?>
+                    <span class="page active"><?=$i;?></span>
+                    <?else:?>
+                    <a href="javascript:app_comment.load_page(<?=$i;?>);" class="page"><?=$i;?></a>
+                    <?endif;?>
+                <?endfor;?>
+				<a href="javascript:app_comment.load_page(<?=$pagination['npage'];?>);" class="page">다음</a>
+				<? if ($pagination['rl'] < $pagination['tpage']): ?>
+                <a href="javascript:app_comment.load_page(<?=$pagination['tpage'];?>);" class="page"><?=$pagination['tpage'];?></a>
+                <? endif ?>
+			</div>

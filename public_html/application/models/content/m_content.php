@@ -175,12 +175,13 @@ class M_content extends CI_Model{
 		  PRIMARY KEY (`content_id`)
 		) ENGINE=InnoDB AUTO_INCREMENT=1344 DEFAULT CHARSET=utf8 COMMENT='여러 컨텐츠 관련 테이블';
 
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '일반 배너', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '플로팅 배너', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '유의사항', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '학습자료', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('4', '10', '무료자료', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('4', '10', '이벤트자료', '1', now());
 	 */
-
-
-
-
-
 
 	/****
 		* @Desc 	가장 최근 배너 

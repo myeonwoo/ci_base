@@ -1,6 +1,5 @@
 <link rel="stylesheet" type="text/css" href="http://static-cache.dangi.co.kr/css/dangi/reset.css">
-<link rel="stylesheet" type="text/css" href="http://offeng.dangi.co.kr/css/offengdangi/gangnam/common/common.css">
-<link rel="stylesheet" type="text/css" href="http://offeng.dangi.co.kr/css/offengdangi/comment/replay_type02.css">
+<link rel="stylesheet" type="text/css" href="/css/comment/oneline/page_style.css">
 
 	<div class="sec_comment" id="section_bbs_comment_oneline">
 		<div class="cont_input">
@@ -114,31 +113,32 @@
 					</ul>
 				</div>
 			</div> <!-- cont_list -->
-			<div class="wrap_paging"> <!-- 공통 페이징 -->
-				<div class="paging">
-					<span class="prev"><a href="javascript:app_comment.load_page(<?=$pagination['ppage'];?>);">이전</a></span>
-					<? if ( 1 <  $pagination['rf']): ?>
-	                <a href="javascript:app_comment.load_page(1);">1</a> ...
-	                <? endif ?>
-					<?for ($i=$pagination['rf']; $i <= $pagination['rl']; $i++):?>
-	                    <?if($i == $params['page']):?>
-	                    <span><?=$i;?></span>
-	                    <?else:?>
-	                    <a href="javascript:app_comment.load_page(<?=$i;?>);"><?=$i;?></a>
-	                    <?endif;?>
-	                <?endfor;?>
-	                <? if ($pagination['rl'] < $pagination['tpage']): ?>
-	                ... <a href="javascript:app_comment.load_page(<?=$pagination['tpage'];?>);"><?=$pagination['tpage'];?></a>
-	                <? endif ?>
-					<span class="next"><a href="javascript:app_comment.load_page(<?=$pagination['npage'];?>);">다음</a></span>
-				</div>
-			</div> <!-- // wrap_paging -->
+
+			<div class="pagination">
+				<? if ( 1 <  $pagination['rf']): ?>
+				<a href="javascript:app_comment.load_page(1);" class="page">처음</a>
+                <? endif ?>
+				<a href="javascript:app_comment.load_page(<?=$pagination['ppage'];?>);" class="page">이전</a>
+
+				<?for ($i=$pagination['rf']; $i <= $pagination['rl']; $i++):?>
+                    <?if($i == $params['page']):?>
+                    <span class="page active"><?=$i;?></span>
+                    <?else:?>
+                    <a href="javascript:app_comment.load_page(<?=$i;?>);" class="page"><?=$i;?></a>
+                    <?endif;?>
+                <?endfor;?>
+				<a href="javascript:app_comment.load_page(<?=$pagination['npage'];?>);" class="page">다음</a>
+				<? if ($pagination['rl'] < $pagination['tpage']): ?>
+                <a href="javascript:app_comment.load_page(<?=$pagination['tpage'];?>);" class="page"><?=$pagination['tpage'];?></a>
+                <? endif ?>
+			</div>
 		</div>
 	</div>
 
-
+<script type="text/javascript" src="//static.conects.com/common/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/js/common/common.js"></script>
-<script type="text/javascript" src="/js/extra/min/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common/underscore.js"></script>
+
 <script>
 (function(){
 	window.app_comment = {};

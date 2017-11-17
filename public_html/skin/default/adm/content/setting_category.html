@@ -123,8 +123,8 @@
                         </select>
                         <input id="add_category" type="text" class="btn">
                         <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div>
-                        <div class="btn btn-info" v-on:click="display_category()">자식분류 조회</div>
-                        <div class="btn btn-danger" v-on:click="delete_category()">분류 삭제하기</div>
+                        <!-- <div class="btn btn-info" v-on:click="display_category()">자식분류 조회</div> -->
+                        <!-- <div class="btn btn-danger" v-on:click="delete_category()">분류 삭제하기</div> -->
                     </div>
                 </div>
                 <div class="panel-heading">
@@ -297,8 +297,9 @@
                 var data = {};
                 data.parent_id = 0;
                 if (app.banner_category_path.length>2){
-                    alert('분류 설정은 3레벨 이상 지원하지 않습니다.');
-                    return;
+                    data.parent_id = app.banner_category_path[app.banner_category_path.length-1].content_category_id;
+                    // alert('분류 설정은 3레벨 이상 지원하지 않습니다.');
+                    // return;
                 }
                 else if (app.banner_category_path.length<1){
                     // alert('분류 1레벨은 지원하지 않습니다.');

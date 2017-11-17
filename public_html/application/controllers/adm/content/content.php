@@ -12,17 +12,17 @@ class Content extends CI_Controller {
                 'banner'=> array(
                     'super_content_category_id'=>1
                 )
-                ,'free_lecture'=> array(
+                ,'floating_banner'=> array(
                     'super_content_category_id'=>2
                 )
-                ,'event'=> array(
+                ,'html_injector'=> array(
                     'super_content_category_id'=>3
                 )
-                ,'html_injector'=> array(
+                ,'free_lecture'=> array(
                     'super_content_category_id'=>5
                 )
-                ,'floating_banner'=> array(
-                    'super_content_category_id'=>11
+                ,'event'=> array(
+                    'super_content_category_id'=>6
                 )
             )
         );
@@ -291,8 +291,6 @@ class Content extends CI_Controller {
             $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
         }
         $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id($data['banner']['content_category_id']);
-        // $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id(102121212);
-
         
         if ($params['render_type']=='json') {
             $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
@@ -495,78 +493,6 @@ class Content extends CI_Controller {
         }
         $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
     }
-    public function upload_file_on_aws()
-    {
-        $this->load->library('data_file');
-
-        $data = array('result'=>array());
-        $data['_FILES'] = $_FILES;
-        $data['_POST'] = $_POST;
-
-        $data['file_name'] = date('YmdHis').'_thumb_'.md5(floor(array_sum(explode(' ',microtime()))*1000));
-        $data['upload_name'] = 'fileId';
-
-        if($_FILES)
-        {
-            foreach($_FILES as $key => $file)
-            {
-                if(! empty($file['name']))
-                {
-                    $data['result'][$key] = $this->data_file->upload_aws_file($data['file_name'], $data['upload_name']);
-                }
-            }
-        }
-        $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
-
-        if($_FILES['fileId']['name']) {
-            $upload_data = $this->_file_upload_aws(date('YmdHis').'_thumb_'.md5(floor(array_sum(explode(' ',microtime()))*1000)), 'fileId');
-            if($upload_data['upload_result'] === 'true'){
-                $data['img_url'] = $upload_data['file_url'];
-            }
-        }
-    }
-
-    private function _file_upload_aws($file_name, $upload_name) {
-
-        $ext = explode('.', $_FILES[$upload_name]['name']);
-        $ext = $ext[count($ext)-1];
-
-        $dir = DATA_PATH;
-
-        $upload_path = '/banner/main/';
-        $upload_path = explode('/', $upload_path);
-
-        $length = count($val['class_img_url']) - 1;
-        $make_dir = $dir;
-        foreach($upload_path as $idx=>$val){
-            if($val){
-                $make_dir = $make_dir.'/'.$val;
-
-                if(!is_dir($make_dir)){
-                    mkdir($make_dir, 0777, TRUE);
-                }
-            }
-        }
-        $upload_path = implode('/', $upload_path);
-
-        if(_IS_DEV_QA){
-            $upload_path = '/dev_data'.$upload_path;
-        }else{
-            $upload_path = '/data'.$upload_path;
-        }
-
-
-        $aws_result = $this->aws_s3_client_new_biz->uploadFiles($_FILES[$upload_name], $upload_path.$file_name.'.'.$ext);
-
-        if($aws_result['resultMsg'] == "SUCCESS"){
-            $result['file_url'] = AWS_S3_HOST_URL.$aws_result['result']['uploadPath'];
-            $result['upload_result'] = 'true';
-            return $result;
-        } else {
-            $result['upload_result'] = $aws_result['resultMsg'];
-            return $result;
-        }
-    }
 
 
     // 분류 추가
@@ -605,14 +531,8 @@ class Content extends CI_Controller {
         $params['type'] = $this->validate->in_array($this->input->get_post('type', true), array('live','live'), 'live');
         $params['media_content_key'] = $this->validate->string($this->input->get_post('media_content_key', true), null);
 
-        // SET values
-        if ($params['type']=='qa') {
-            $params['KOLLUS_SECURITY_KEY'] = "stc-kollus-dev";
-            $params['custom_key'] = 'f1b98e936f333b55f84dc1de0c82ee87676598bb10aae6321eeb2240fd6fe6ce';   // qa 사용자 키(kollus CMS 설정 페이지에서 확인 할 수 있습니다.)
-        } else {
-            $params['KOLLUS_SECURITY_KEY'] = "stc-kollus";
-            $params['custom_key'] = 'a7822fc2f3dc8e8d0ccd4d08e11742fd5a3e0615426afee4f41350276f7d0dba';   // live 사용자 키(kollus CMS 설정 페이지에서 확인 할 수 있습니다.)
-        }
+        $params['KOLLUS_SECURITY_KEY'] = CATENOID_KOLLUS_SECURITY_KEY;
+        $params['custom_key'] = CATENOID_CUSTOM_KEY;   // live 사용자 키(kollus CMS 설정 페이지에서 확인 할 수 있습니다.)
         $params['media_profile_key'] = '';                      // media_profile 선택 (ex : catenoid-pc1-high, catenoid-tablet2-high, catenoid-mobile1-normal ...)
         $params['client_user_id'] = '';    // 사이트 USER ID
         $params['expire_time'] = time() + 10*365*24*60*60;                   // media_token 만료 시간 초단위

@@ -26,6 +26,12 @@ define('SITE_NAME', '미정');
 define('BIZ_CODE', '미정');
 define('ADM_F', 'adm'); // 관리자폴더
 
+// 카테노이드 무료영상 설정값
+// define('CATENOID_KOLLUS_SECURITY_KEY', 'stc-kollus-dev');
+// define('CATENOID_CUSTOM_KEY', 'f1b98e936f333b55f84dc1de0c82ee87676598bb10aae6321eeb2240fd6fe6ce');
+define('CATENOID_KOLLUS_SECURITY_KEY', 'stc-kollus');
+define('CATENOID_CUSTOM_KEY', 'a7822fc2f3dc8e8d0ccd4d08e11742fd5a3e0615426afee4f41350276f7d0dba');
+
 // 라이브 | QA 분기 설정
 if(_IS_DEV || _IS_QA){
     define('IMG_DIR', '//qa-global.dangi.co.kr/img/');
@@ -38,6 +44,7 @@ if(_IS_DEV || _IS_QA){
 	define('AWS_S3_HOST_PATH', 'https://s3.ap-northeast-2.amazonaws.com/st.dev.dangidata/global_dangicokr');
 	define('AWS_S3_BUCKET', 'st.dev.dangidata');
     // define('AWS_S3_REGION', 'ap-northeast-2');
+
 }
 else{
     define('IMG_DIR', '//qa-global.dangi.co.kr/img/');

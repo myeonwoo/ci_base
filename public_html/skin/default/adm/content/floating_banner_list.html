@@ -209,8 +209,6 @@ $(document).ready(function(){
             , { title: "분류명", data:"content_category_subject"}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
                 return '<a class="btn btn-sm" href="/adm/content/content/flating_banner_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
-                // var str = '/adm/content/content/flating_banner_write?content_id='+ row.content_id + '&type=';
-                // return '<a target="_blank" href=>' + row.subject + '</a>';
             }}
             , { title: "사용페이지", data:"url_main_page", render:function(data, type, row, meta){
                 return row.url_main_page +  ' <a class="btn btn-info btn-xs" href="'+ row.url_main_page + '" target="_blank">페이지 보기</a>';

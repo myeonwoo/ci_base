@@ -667,24 +667,25 @@ var create_lib_st = function() {
         });
     }
     // HTML 삽입(유의사항): Needs to chang on site
-    that.snippet_html = function (class_name){
+    that.snippet_html = function (){
         var url_info = document.location.href.split("://");
         var data = {};
         data.pagepath = url_info[1];
+        data.url_main_page = window.location.pathname;
         $.ajax({
             url: '/api/content/main/html_injector',
             type: 'post',
             data: data,
             success: function (data) {
-                if (data.contents.length>0) {
+                _.each(data.contents, function(content){
                     // inject html
-                    $("."+class_name).html(data.contents[0].desc_main);
-                }
+                    if (content.position_el_selector.length > 3) $(content.position_el_selector).html(content.desc_main);
+                });
             }
         });
     }
     // 페이지 플로팅 배너 달기
-    that.post_hook = function(){
+    that.snippet_floating_banner = function(){
         var data = {};
         data.url_main_page = window.location.pathname;
         $.ajax({
@@ -728,5 +729,6 @@ var create_lib_st = function() {
 window.lib_st = create_lib_st();
 
 $(document).ready(function(){
-    lib_st.post_hook();
+    lib_st.snippet_floating_banner();
+    lib_st.snippet_html();
 });

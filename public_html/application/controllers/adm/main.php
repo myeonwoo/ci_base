@@ -63,8 +63,10 @@ class Main extends CI_Controller {
         $dataset['UPDATE_ROOT_PATH'] = UPDATE_ROOT_PATH;
         $dataset['AWS_S3_ACCESS_KEY'] = AWS_S3_ACCESS_KEY;
         $dataset['AWS_S3_ACCESS_SECRET_KEY'] = AWS_S3_ACCESS_SECRET_KEY;
-        $dataset['AWS_S3_HOST_URL'] = AWS_S3_HOST_URL;
+        $dataset['AWS_S3_HOST_PATH'] = AWS_S3_HOST_PATH;
         $dataset['AWS_S3_BUCKET'] = AWS_S3_BUCKET;
+        $dataset['CATENOID_KOLLUS_SECURITY_KEY'] = CATENOID_KOLLUS_SECURITY_KEY;
+        $dataset['CATENOID_CUSTOM_KEY'] = CATENOID_CUSTOM_KEY;
 
         $data = $this->commondata->get_adm_header_data($data);
         $data['dataset'] = $dataset;

@@ -14,7 +14,7 @@
                 <div class="panel-body">
                     <ol>
                         <li>
-                            등록/수정
+                            <a class="btn btn-sm btn-warning" href="/adm/comment/oneline/config_write">등록/수정</a>
                         </li>
                         <li>
                             등록된 한줄게시판 사용 예제
@@ -41,7 +41,7 @@
                                 <div>
                                     <input type="text" id="comment_config_id" placeholder="댓글게시판번호" class="btn">
                                     <input type="text" id="comment_limit" placeholder="데이타 수" class="btn" value="1000">
-                                    <div class="btn btn-warning" v-on:click="download_comments()">추출하기</div>
+                                    <div class="btn btn-sm btn-warning" v-on:click="download_comments()">추출하기</div>
                                 </div>
                             </p>
                         </li>

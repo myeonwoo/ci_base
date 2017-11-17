@@ -29,7 +29,7 @@
 	<script src="/js/vue/vue.js"></script>
 	<script src="/js/vue/vue_extend.js"></script>
 <style>
-	.base_color {background-color: #faa732;}
+	.base_color {background-color: #759EE5;}
 	.bg_lev1 {font-size: 12px; }
 	.left_menu_selected {background-color: #b2d7e8;}
 	.btn {border: 1px solid #cccccc;}
@@ -49,7 +49,7 @@
     
     /* Set black background color, white text and some padding */
     footer {
-      background-color: #faa732;
+      background-color: #759EE5;
       color: white;
       padding: 15px;
     }
@@ -69,7 +69,7 @@
 			</div>
 			<div class="" id="">
 				<ul class="nav navbar-nav">
-					<li class="active base_color"><a style="background-color: #CB966B;" href="#">ST Unitas global.dangi.co.kr BACKOFFICE SYSTEM</a></li>
+					<li class="active base_color"><a style="background-color: #245792;" href="#">ST Unitas global.dangi.co.kr BACKOFFICE SYSTEM</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" style="color:#333;"><?=$adm_name;?>님</a></li>
@@ -82,13 +82,13 @@
 	<div id="left-menu" class="col-sm-2 sidenav" >
 		<div id="menu" calss="">
 			<div id="lev1_site_info" class="panel list-group">
-				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_site_info" shape="rect">사이트 정보</a>
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_site_info" shape="rect"><b>사이트 정보</b></a>
 				<div class="collapse" id="tree_lev1_site_info" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/main/info_constant" data-ptag-target="lev1_site_info" target="_self">Constant Info</a></li>
 				</div>
 			</div>
 			<div id="lev1_content_management" class="panel list-group">
-				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_content_management" shape="rect">사이트 컨텐츠 관리</a>
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_content_management" shape="rect"><b>사이트 컨텐츠 관리</b></a>
 				<div class="collapse" id="tree_lev1_content_management" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/content/content/setting_category" data-ptag-target="lev1_content_management" target="_self">분류 구조 설정</a></li>
 					<li class="list-group-item"><a href="/adm/content/content/banner_list" data-ptag-target="lev1_content_management" target="_self">일반 배너 관리</a></li>
@@ -99,35 +99,35 @@
 				</div>
 			</div>
 			<div id="lev1_instructor_management" class="panel list-group">
-				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_instructor_management" shape="rect">Instructor 관리</a>
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_instructor_management" shape="rect"><b>Instructor 관리</b></a>
 				<div class="collapse" id="tree_lev1_instructor_management" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/instructor/teacher" data-ptag-target="lev1_instructor_management" target="_self">선생님 관리</a></li>
 				</div>
 			</div>
 			<!-- <div id="lev1_userdata_management" class="panel list-group">
-				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_userdata_management" shape="rect">데이타 수집</a>
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_userdata_management" shape="rect"><b>데이타 수집</b></a>
 				<div class="collapse" id="tree_lev1_userdata_management" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/userdata/survey/survey_list" data-ptag-target="lev1_userdata_management" target="_self">사전예약</a></li>
 				</div>
 			</div> -->
 			<div id="lev1_community_management" class="panel list-group">
-				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_community_management" shape="rect">커뮤니티</a>
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_community_management" shape="rect"><b>커뮤니티</b></a>
 				<div class="collapse" id="tree_lev1_community_management" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/comment/oneline/config_list" data-ptag-target="lev1_community_management" target="_self">한줄 댓글 게시판</a></li>
 				</div>
 			</div>
 			<div id="lev1_redis_management" class="panel list-group">
-				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_redis_management" shape="rect">Redis</a>
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_redis_management" shape="rect"><b>Redis</b></a>
 				<div class="collapse" id="tree_lev1_redis_management" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/redis/main/search" data-ptag-target="lev1_redis_management" target="_self">데이타 조회</a></li>
 				</div>
 			</div>
-			<div id="lev1_stat_management" class="panel list-group">
-				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_stat_management" shape="rect">통계</a>
+			<!-- <div id="lev1_stat_management" class="panel list-group">
+				<a href="#" data-parent="#menu" data-toggle="collapse" class="list-group-item accordion-toggle collapsed" data-target="#tree_lev1_stat_management" shape="rect"><b>통계</b></a>
 				<div class="collapse" id="tree_lev1_stat_management" style="height: auto;">
 					<li class="list-group-item"><a href="/adm/main/info" data-ptag-target="lev1_stat_management" target="_self">통계 관리</a></li>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
