@@ -26,6 +26,8 @@ class M_content extends CI_Model{
 	}
 	public function get_category($options=array()){
 		if (isset($options['subject'])) $this->db->where('subject', $options['subject']);
+		if (isset($options['parent_id'])) $this->db->where('parent_id', $options['parent_id']);
+
 		$this->db->from('CONTENT_CATEGORY');
 
 		$query = $this->db->get();

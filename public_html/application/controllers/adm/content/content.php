@@ -110,7 +110,7 @@ class Content extends CI_Controller {
         if ($params['content_category_id']) {
             $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id_wo_super_parent($params['content_category_id']);
         }
-        $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
+        $data['categories'] = $this->hierarchy->get_childs_grandchild($params['super_content_category_id']);
         $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
         $data['ids_concerned'][] = $params['super_content_category_id'];
 
@@ -182,7 +182,7 @@ class Content extends CI_Controller {
         $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
         $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
-        $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
+        $data['categories'] = $this->hierarchy->get_childs_grandchild($params['super_content_category_id']);
         $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
         $data['ids_concerned'][] = $params['super_content_category_id'];
 
@@ -251,7 +251,7 @@ class Content extends CI_Controller {
         $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
         $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
-        $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
+        $data['categories'] = $this->hierarchy->get_childs_grandchild($params['super_content_category_id']);
         $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
         $data['ids_concerned'][] = $params['super_content_category_id'];
 
@@ -319,7 +319,7 @@ class Content extends CI_Controller {
         $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
         $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
-        $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
+        $data['categories'] = $this->hierarchy->get_childs_grandchild($params['super_content_category_id']);
         $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
         $data['ids_concerned'][] = $params['super_content_category_id'];
 
@@ -385,7 +385,7 @@ class Content extends CI_Controller {
         $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
         $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
-        $data['categories'] = $this->hierarchy->get_all_childs($params['super_content_category_id']);
+        $data['categories'] = $this->hierarchy->get_childs_grandchild($params['super_content_category_id']);
         $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
         $data['ids_concerned'][] = $params['super_content_category_id'];
 
@@ -524,6 +524,14 @@ class Content extends CI_Controller {
         $params['order'] = $this->validate->int($this->input->get_post('order', true), false);
         $params['yn_used'] = $this->validate->int($this->input->get_post('yn_used', true), false);
 
+        $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
+        $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+        $data['category']['hierarchy_tree'] = $data['category']['hierarchy']; // 해당 카테고리 구조 설정
+
+        $data['categories'] = $this->hierarchy->get_childs($params['parent_id']);
+        $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
+        // $data['ids_concerned'][] = $params['parent_id'];
+
         $data['check'] = $this->m_content->get_category($params);
         $data['result'] = null;
         if (!$data['check']) {
@@ -629,7 +637,7 @@ class Content extends CI_Controller {
         $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
         $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
         foreach ($data['info'] as $key => &$item) {
-            $tmp = $this->hierarchy->get_all_childs($item['super_content_category_id']);
+            $tmp = $this->hierarchy->get_childs_grandchild($item['super_content_category_id']);
             $item['children_ids'] = array_map(create_function('$o', 'return $o->content_category_id;'), $tmp);
         }
         if ($params['content_category_id'] == $data['info']['banner']['super_content_category_id'] || in_array($params['content_category_id'], $data['info']['banner']['children_ids'])){

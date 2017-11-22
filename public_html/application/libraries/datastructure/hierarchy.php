@@ -144,8 +144,18 @@ class Hierarchy {
 
 		return array();
 	}
-	// 모든 자식 노드 찾기
-	public function get_all_childs($target_id)
+	// 모든 자식 노드 찾기 (1세대 자식까지)
+	public function get_childs($target_id)
+	{
+		$data = array();
+
+		if (isset(self::$lookup[$target_id])){
+			$data = array_merge($data, self::$lookup[$target_id]->children);
+		}
+		return $data;
+	}
+	// 모든 자식 노드 찾기 (2세대 자식까지)
+	public function get_childs_grandchild($target_id)
 	{
 		$data = array();
 
@@ -154,6 +164,22 @@ class Hierarchy {
 			// return $data;
 			foreach (self::$lookup[$target_id]->children as $key => $item) {
 				$data = array_merge($data, $item->children);
+			}
+		}
+		return $data;
+	}
+	// 모든 자식 노드 찾기 (모든 세대)
+	public function get_all_childs($target_id, $data=null)
+	{
+		if ($data === null)
+			$data = array();
+
+		if (isset(self::$lookup[$target_id])){
+			$data = array_merge($data, self::$lookup[$target_id]->children);
+			// return $data;
+			foreach (self::$lookup[$target_id]->children as $key => $item) {
+				$data = $this->get_all_childs($item->content_category_id, $data);
+				// $data = array_merge($data, $item->children);
 			}
 		}
 		return $data;
