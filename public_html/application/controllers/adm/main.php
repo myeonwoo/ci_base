@@ -67,6 +67,7 @@ class Main extends CI_Controller {
         $dataset['AWS_S3_BUCKET'] = AWS_S3_BUCKET;
         $dataset['CATENOID_KOLLUS_SECURITY_KEY'] = CATENOID_KOLLUS_SECURITY_KEY;
         $dataset['CATENOID_CUSTOM_KEY'] = CATENOID_CUSTOM_KEY;
+        $dataset['MEMBER_HOST'] = MEMBER_HOST;
 
         $data = $this->commondata->get_adm_header_data($data);
         $data['dataset'] = $dataset;

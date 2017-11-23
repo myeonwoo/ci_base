@@ -43,6 +43,28 @@ class M_survey extends CI_Model{
 		return $this->db->update('DATA_SURVEY_CONFIG', $data);
 	}
 
+	public function increment_config($data_survey_config_id)
+    {
+        $this->db->where('data_survey_config_id', $data_survey_config_id);
+        $this->db->set('cnt_inserted', 'cnt_inserted+1', FALSE);
+        return $this->db->update('DATA_SURVEY_CONFIG');
+    }
+
+    public function insert_data($data)
+    {
+        $this->db->insert('DATA_SURVEY', $data);
+        return $this->db->insert_id();
+    }
+    public function update_data($data_survey_id, $data){
+		$this->db->where('data_survey_id', $data_survey_id);
+		return $this->db->update('DATA_SURVEY', $data);
+	}
+	public function get_data_list($data_survey_config_id, $options=array()){
+		$this->db->where('data_survey_config_id', $data_survey_config_id);
+		$query = $this->db->get('DATA_SURVEY');
+		return $query->result_array();
+	}
+
 	/**
 	 * 테이블 구조
 	 	CREATE TABLE `DATA_SURVEY_CONFIG` (
@@ -66,6 +88,7 @@ class M_survey extends CI_Model{
 	 	  `dt_start` datetime DEFAULT NULL COMMENT '이벤트 시작',
 	 	  `dt_end` datetime DEFAULT NULL COMMENT '이벤트 종료',
 	 	  `dt_created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '생성 날자',
+	 	  `msg_onsubmit` varchar(150) DEFAULT '입력 완료되었습니다. 감사합니다' COMMENT '데이타 입력 성공시 출력 메세지',
 	 	  `desc` text COMMENT '이벤트 설명',
 	 	  `note` text COMMENT '유의사항',
 	 	  PRIMARY KEY (`data_survey_config_id`)
@@ -73,25 +96,15 @@ class M_survey extends CI_Model{
 
 	 	CREATE TABLE `DATA_SURVEY` (
 	 	  `data_survey_id` int(11) NOT NULL AUTO_INCREMENT,
-	 	  `event_id` int(11) DEFAULT NULL COMMENT '그룹 아이디',
-	 	  `user_id` varchar(150) DEFAULT NULL,
-	 	  `name` varchar(150) DEFAULT NULL,
-	 	  `tel` varchar(45) DEFAULT NULL,
-	 	  `email` varchar(150) DEFAULT NULL,
-	 	  `upload_path` varchar(255) DEFAULT NULL,
-	 	  `comment1` varchar(255) DEFAULT NULL,
-	 	  `comment2` varchar(255) DEFAULT NULL,
-	 	  `comment3` varchar(255) DEFAULT NULL,
-	 	  `exam_type` char(10) DEFAULT NULL,
-	 	  `exam_score` varchar(255) DEFAULT NULL,
-	 	  `friend_id` char(16) DEFAULT NULL,
-	 	  `title` varchar(255) DEFAULT NULL,
-	 	  `description` text,
-	 	  `upload_path_exam` varchar(255) DEFAULT NULL,
-	 	  `upload_path_user` varchar(255) DEFAULT NULL,
-	 	  `is_temp` tinyint(1) DEFAULT NULL,
-	 	  `quiz_step` smallint(3) DEFAULT '0',
-	 	  `quiz_time` datetime DEFAULT CURRENT_TIMESTAMP,
+	 	  `data_survey_config_id` int(11) DEFAULT NULL COMMENT 'DATA_SURVEY_CONFIG 아이디',
+	 	  `user_id` varchar(150) DEFAULT NULL COMMENT '아이디',
+	 	  `name` varchar(150) DEFAULT NULL COMMENT '이름',
+	 	  `tel` varchar(45) DEFAULT NULL COMMENT '전화번호',
+	 	  `email` varchar(150) DEFAULT NULL COMMENT '이메일',
+	 	  `upload_path` varchar(255) DEFAULT NULL COMMENT '파일경로',
+	 	  `comment1` varchar(255) DEFAULT NULL COMMENT '코멘트 1',
+	 	  `comment2` varchar(255) DEFAULT NULL COMMENT '코멘트 2',
+	 	  `comment3` varchar(255) DEFAULT NULL COMMENT '코멘트 3',
 	 	  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
 	 	  PRIMARY KEY (`data_survey_id`)
 	 	) COMMENT='설문 정보';

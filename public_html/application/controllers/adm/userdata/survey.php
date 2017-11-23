@@ -39,6 +39,7 @@ class Survey extends CI_Controller {
 		$params['data_survey_config_id'] = $this->validate->int($this->input->get_post('data_survey_config_id', true), null);
 
 		$data['data_survey_config'] = $this->m_survey->get_config($params['data_survey_config_id']);
+        if (!$data['data_survey_config']) $data['data_survey_config'] = array();
 
 		if ($params['render_type']=='json') {
 			$this->output->set_content_type("application/json")->set_output(json_encode($data));return;
@@ -60,7 +61,7 @@ class Survey extends CI_Controller {
         $params = array();
         $data['params'] = &$params;
 
-        $data['content_id'] = $this->validate->int($this->input->get_post('content_id', true), '');
+        $data['data_survey_config_id'] = $this->validate->int($this->input->get_post('data_survey_config_id', true), '');
 
         $params['data_survey_config_id'] = $this->validate->int($this->input->get_post('data_survey_config_id', true), null);
         $params['title'] = $this->validate->string($this->input->get_post('title', true), '');
@@ -82,24 +83,48 @@ class Survey extends CI_Controller {
         $params['dt_start'] = $this->validate->string($this->input->get_post('dt_start', true), '');
         $params['dt_end'] = $this->validate->string($this->input->get_post('dt_end', true), null);
         $params['dt_created'] = $this->validate->string($this->input->get_post('dt_created', true), null);
+        $params['msg_onsubmit'] = $this->validate->string($this->input->get_post('msg_onsubmit', false), '');
         $params['desc'] = $this->validate->string($this->input->get_post('desc', false), '');
         $params['note'] = $this->validate->string($this->input->get_post('note', false), '');
 
 
         // 리턴 경로 설정
-        $data['return_url'] = "/adm/content/content/html_injector_list?content_category_id={$params['content_category_id']}";
+        $data['return_url'] = "/adm/userdata/survey/survey_list?data_survey_config_id={$params['data_survey_config_id']}";
 
-        $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        // $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
 
-        if ($data['content_id']) {
-            $this->m_content->update($data['content_id'], $params);
+        if ($data['data_survey_config_id']) {
+            $this->m_survey->update_config($data['data_survey_config_id'], $params);
             alert("수정되었습니다.",$data['return_url']);
         } else {
-            $this->m_content->insert($params);
+            $this->m_survey->insert_config($params);
             alert("입력되었습니다.",$data['return_url']);
         }
 
 
         return;
+    }
+    /**
+     * 데이타 다운로드
+     */
+    public function download_survey()
+    {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+        $params['data_survey_config_id'] = $this->validate->int($this->input->get_post('data_survey_config_id', true), null);
+
+        // $list = $this->m_new_rsvp->get_rsvp_contents($data['data_survey_config_id']);
+        $data['dataset'] = $this->m_survey->get_data_list($params['data_survey_config_id']);
+        // $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+
+        $data['key_names'] = array('번호','survey_id','user_id','upload_path','comment1','comment2','comment3','created_time');
+        $data['keys'] = array('data_survey_id','data_survey_config_id','user_id','upload_path','comment1','comment2','comment3','created_time');
+
+        $data['filename'] ="survey_{$params['data_survey_config_id']}";
+
+        // $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+
+        $this->load->view('/common/xls', $data); 
     }
 }

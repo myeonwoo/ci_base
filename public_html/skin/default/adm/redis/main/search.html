@@ -16,7 +16,7 @@
                         <option value="">전체</option>
                         <option v-for="item in redis_keys" v-bind:value="item.key" >{{item.name}}</option>
                     </select>
-                    <div class="btn">조회</div>
+                    <div class="btn btn-info" v-on:click="get_data()">조회</div>
                 </div>
             </div>
         </div>
@@ -34,8 +34,44 @@
             , redis_keys: <?=json_encode($redis_keys);?>
         }
         ,methods: {
+        	init: function(){
+            }
+            , get_data: function() {
+        		var data = {};
+        		data.key = $('select#redis_key option:selected').val();
+
+            	var selected = null;
+            	_.each(app.redis_keys, function(item){
+            		if (data.key == item.key) {
+            			selected = item;
+            		}
+            	});
+
+            	if (selected) {
+					$.ajax({
+						url: 'http://dev-global.conects.com/api/data/m_redis/get_data',
+						dataType : "jsonp",
+						type : "GET",
+						data : {},
+						cache : false,
+						success: function (data) {
+							console.log(data);
+						}
+					});
+					// $.ajax({
+					// 	url: 'http://dev-global.conects.com/api/data/m_redis/get_data',
+					// 	type: 'post',
+					// 	data: selected,
+					// 	success: function (data) {
+					// 		console.log(data);
+					// 	}
+					// });
+            	}
+        		console.log(data);
+
+            }
             // 무료 영상 경로 생성
-            convert_playable_url: function(){
+            , convert_playable_url: function(){
                 var data = {};
                 data.media_content_key = $('input[name=movie1_key]').val();
 
@@ -133,10 +169,6 @@
                 } else {
                     $('form#form1').submit();
                 }
-            }
-            , init: function(){
-                app.category_selection_1_options = app.category.hierarchy_tree;
-                app.update_category_select();
             }
         }
     });

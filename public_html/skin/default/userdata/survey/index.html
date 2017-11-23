@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>[커넥츠 영단기] 미래를 앞당기는 용기  ::</title>
+	<title></title>
+
+	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">	
+	<script src="/js/bootstrap/3-3-7/bootstrap.min.js"></script>
+	
+	<script src="/js/common/underscore.js"></script>
+	<script src="/js/common/common.js"></script>
+
+</head>
+<body>
+	<div id="content_view" class="container-fluid">
+		<div class="row content">
+			<div id="content_main_body" class="col-sm-12 text-left">
+				<div class="panel panel-default">
+				    <div class="panel-heading" style="background-color: #759EE5; color: #FFFFFF; font-weight: 900; font-size: 16px;">
+				        <?=$survey_config['title'];?>
+				    </div>
+				    <div class="panel-body">
+				    	<form enctype="multipart/form-data" name="frmEvent" method="post" action="/userdata/survey/insert">
+				    		<input type="hidden" name="data_survey_config_id" value="<?=$survey_config['data_survey_config_id'];?>" >
+							<div class="form-group">
+								<label for="exampleTextarea"></label>
+								<div class="alert alert-info" role="alert" style="background-color: #F3F8FF;">
+									<?=$survey_config['desc'];?>
+								</div>
+							</div>
+							<?if ($survey_config['yn_name']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="user_name">이 름</label></div>
+								<div class="col-sm-12"><input type="text" class="form-control" name="user_name" placeholder="이름 입력해주세요."></div>
+								<!-- <small id="usernameHelp" class="form-text text-muted">안녕하세요.</small> -->
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_phone']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="user_phone">전화번호</label></div>
+								<div class="col-sm-12"><input type="text" class="form-control" name="user_phone" placeholder="전화번호 입력해주세요."></div>
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_email']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="user_email">이메일</label></div>
+								<div class="col-sm-12"><input type="text" class="form-control" name="user_email" placeholder="이메일 입력해주세요."></div>
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_bank_name']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="bank_name">은행명</label></div>
+								<div class="col-sm-12"><input type="text" class="form-control" name="bank_name" placeholder="은행명 입력해주세요."></div>
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_bank_account']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="bank_account">계좌번호</label></div>
+								<div class="col-sm-12"><input type="text" class="form-control" name="bank_account" placeholder="계좌번호 입력해주세요."></div>
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_bank_owner']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="bank_owner">예금주명</label></div>
+								<div class="col-sm-12"><input type="text" class="form-control" name="bank_owner" placeholder="예금주명 입력해주세요."></div>
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_address']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12">	
+									<label for="user_address">주소</label>
+								</div>
+								<div class="col-sm-9">									
+									<input type="text" class="form-control col-sm-10" name="user_address" id="user_address" placeholder="주소 입력해주세요.">
+								</div>
+								<div class="col-sm-3" style="padding-left: 15px;">
+									<div class="btn btn-info col-sm-12" onclick="app.sample4_execDaumPostcode()" >주소 찾기</div>
+								</div>
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_user_comment']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="user_comment">코멘트</label></div>
+								<div class="col-sm-12"><textarea class="form-control" id="exampleTextarea" rows="3" name="user_comment"></textarea></div>
+							</div>
+							<?endif;?>
+							<?if ($survey_config['yn_file']):?>
+							<div class="row" style="padding-bottom: 20px;">
+								<div class="col-sm-12"><label for="user_file">첨부 파일</label></div>
+								<div class="col-sm-12"><input type="file" class="form-control-file" name="user_file"></div>
+							</div>
+							<?endif;?>
+							<?if (strlen($survey_config['note'])>10):?>
+							<div class="form-group">
+								<label for="exampleTextarea">유의사항</label>
+								<div class="alert alert-danger" role="alert">
+									<?=$survey_config['note'];?>
+								</div>
+								<input type="checkbox" name="note" id="note">
+								<small id="usernameHelp" class="form-text text-muted"><label for="note">㈜에스티유니타스에 개인정보를 제공하는 것에 동의합니다.</label></small>
+							</div>
+							<?endif;?>
+							<div class="form-group" style="padding-bottom: 20px;">
+								<div class="col-sm-6"></div>
+								<div class="btn btn-warning col-sm-3" onclick="javascript:self.close();void(0);">취소</div>
+								<div class="btn btn-primary col-sm-3" onclick="javascript:app.submit_form();void(0);">확인</div>
+							</div>
+				        </form>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript">
+(function(){
+	window.app = {};
+	app.is_login = <?=json_encode($is_login);?>;
+	app.params = <?=json_encode($params);?>;
+	app.survey_config = <?=json_encode($survey_config);?>;
+	app.accept_numeric = function () {
+		if (!((event.keyCode == 8)||(event.keyCode == 9)||(event.keyCode == 13)||(event.keyCode == 46))){
+			if ((event.keyCode<48)||(event.keyCode>57)){
+				if ((event.keyCode<96)||(event.keyCode>105)){
+					event.preventDefault ? event.preventDefault() : event.returnValue = false;
+					alert("번호만 입력해주세요.");
+				}
+			}
+		}
+	}
+	app.sample4_execDaumPostcode = function () {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	        	console.log(data);
+	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+	            // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	            var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+	            var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+	            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                extraRoadAddr += data.bname;
+	            }
+	            // 건물명이 있고, 공동주택일 경우 추가한다.
+	            if(data.buildingName !== '' && data.apartment === 'Y'){
+	               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	            }
+	            // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	            if(extraRoadAddr !== ''){
+	                extraRoadAddr = ' (' + extraRoadAddr + ')';
+	            }
+	            // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+	            if(fullRoadAddr !== ''){
+	                fullRoadAddr += extraRoadAddr;
+	            }
+
+	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('user_address').value = fullRoadAddr;
+				// $('input[name=user_address]').val(fullRoadAddr);
+	         
+	        }
+	    }).open();
+	}
+	app.submit_form = function(){
+		var data = {};
+		data.user_name = $('input[name=user_name]').val();
+		data.user_phone = $('input[name=user_phone]').val();
+		data.user_address = $('input[name=user_address]').val();
+		data.user_email = $('input[name=user_email]').val();
+		data.user_comment = $('textarea[name=user_comment]').val();
+		data.user_file = $('input[name=user_file]').val();
+		data.note = $('input[name=note]').length;
+
+		data.msg = '';
+		data.result = true;
+		// return;
+
+		if (data.user_name === undefined) {
+			delete data.user_name;
+		}
+		else if (data.user_name.length < 1){
+			data.result = false;
+			alert('이름를 입력해주세요.');
+			document.frmEvent.user_name.focus();
+			return;
+		}
+
+		if (data.user_phone === undefined) {
+			delete data.user_phone;
+		}
+		else if (!lib_st.validatePhoneNumber(data.user_phone)){
+			data.result = false;
+			alert('올바른 전화번호를 입력해주세요.');
+			document.frmEvent.user_phone.focus();
+			return;
+		}
+
+		if (data.user_address === undefined) {
+			delete data.user_address;
+		}
+		else if (data.user_address.length < 1){
+			data.result = false;
+			alert('주소를 입력해주세요.');
+			document.frmEvent.user_phone.focus();
+			return;
+		}
+
+		if (data.user_email === undefined) {
+			delete data.user_email;
+		}
+		else if (!lib_st.validateEmail(data.user_email)){
+			data.result = false;
+			alert('올바른 이메일 주소를 입력해주세요.');
+			document.frmEvent.user_email.focus();
+			return;
+		}
+
+		if (data.user_comment === undefined) {
+			delete data.user_comment;
+		}
+		else if (data.user_comment.length < 1){
+			data.result = false;
+			alert('코멘트 필드에 입력해주세요.');
+			document.frmEvent.user_comment.focus();
+			return;
+		}
+
+		if (data.user_file === undefined) {
+			delete data.user_file;
+		}
+		else if (data.user_file.length < 1){
+			data.result = false;
+			alert('첨부파일을 선택해주세요.');
+			document.frmEvent.user_file.focus();
+			return;
+		}
+
+		if (data.note < 1) {
+			delete data.note;
+		}
+		else if ($('input[name=note]:checked').length < 1){
+			data.result = false;
+			alert('동의란 선택해주세요.');
+			document.frmEvent.note.focus();
+			return;
+		}
+
+		if (data.result) {
+			document.frmEvent.submit();
+		}
+	}
+
+})();
+
+$(document).ready(function (){
+	var h = $('#content_view').height() + 100;
+
+	window.resizeTo(900, h);
+});
+
+
+</script>
+
+</body>
+</html>

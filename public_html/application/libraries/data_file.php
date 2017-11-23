@@ -172,4 +172,26 @@ class Data_file {
 
 		return null;
 	}
+	/**
+     * AWS 로 파일 업로드 : global_dangicokr/user_survey 폴더 아래 저장
+     * @param  string $field_name  제출된 form 파일 이름
+     * @return string              파일 경로
+     */
+	public function upload_aws_file_to_user_survey($field_name) {
+		$data = array();
+
+		if ($_FILES[$field_name]['name']) {
+			$data['field_name'] = $field_name;
+			$data['folder'] = '/global_dangicokr';
+			$data['target_url'] = "/user_survey/".date('Y-m-d')."/" . $this->generateRandomString() . $_FILES[$field_name]['name'];
+			$data['upload_url'] = $data['folder'] . $data['target_url'] ;
+			$data['AWS_S3_HOST_PATH'] = AWS_S3_HOST_PATH . $data['target_url'] ;
+
+			$data['aws_result'] = $this->CI->aws_s3_client_new_biz->uploadFiles($_FILES[$field_name], $data['upload_url']);
+
+			return $data['AWS_S3_HOST_PATH'];
+		}
+
+		return null;
+	}
 }
