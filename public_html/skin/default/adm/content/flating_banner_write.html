@@ -158,10 +158,7 @@
         data: {
             params: <?=json_encode($params);?>
             , category: <?=json_encode($category);?>
-            , category_selection_1_options: []
-            , category_selection_2_options: []
             , banner: <?=json_encode($banner);?>
-            , banner_category_path: <?=json_encode($banner_category_path);?>
         }
         ,methods: {
             // 무료 영상 경로 생성
@@ -183,38 +180,6 @@
                         });
                     }
                 });
-            }
-
-            //  카테고리 변경 change_category_select_options
-            , change_category_select_options: function(depth){
-                var data = {};
-                data.category_id = $('#category_selection_'+depth).val();
-                this.set_category_selection(depth, data.category_id);
-            }
-            , set_category_selection: function(depth, content_category_id) {
-                if (depth==1) {
-                    this.category_selection_2_options = [];
-                    if (content_category_id) {
-                        $('#category_selection_2_options').val('');
-                        this.category_selection_2_options = this.category.lookup[content_category_id].children;
-                    }
-
-                    // reset
-                    $('#category_selection_2').val('');
-                }
-                else if (depth==2) {
-
-                }
-                // content_category_id 재설정
-                if (content_category_id) {
-                    this.banner.content_category_id = this.category.lookup[content_category_id].content_category_id;
-                } else if ($('#category_selection_2').val()) {
-                    this.banner.content_category_id = $('#category_selection_2').val();
-                } else if ($('#category_selection_1').val()) {
-                    this.banner.content_category_id = $('#category_selection_1').val();
-                } else {
-                    this.banner.content_category_id = '';
-                }
             }
             , upload_file: function(id){
                 console.log(id);
@@ -244,12 +209,13 @@
             , submit_form: function(){
                 if (!app.banner.content_category_id) {
                     alert('분류값을 설정해주세요.');
+                }else if (app.banner.subject.length < 2){
+                    alert('충분한 제목을 입력해주세요.');
                 } else {
                     $('form#form1').submit();
                 }
             }
             , init: function(){
-                app.category_selection_1_options = app.category.hierarchy_tree;
             }
         }
     });

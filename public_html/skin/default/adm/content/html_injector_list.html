@@ -17,6 +17,9 @@
                         <div class="col-lg-8">
                             <ol>
                                 <li>
+                                    분류번호(content_category_id) : 3
+                                </li>
+                                <li>
                                     html 페이지내 삽입할 태그 작업: <code>&ltdiv class="note_txt"&gt유의사항&lt/div&gt</code>
                                 </li>
                                 <li>
@@ -49,9 +52,6 @@
             params: <?=json_encode($params);?>
             , banners: <?=json_encode($banners);?>
             , category: <?=json_encode($category);?>
-            , category_selection_1_options: []
-            , category_selection_2_options: []
-            , banner_category_path: <?=json_encode($banner_category_path);?>
         }
         ,methods: {
             delete_content: function(tag) {
@@ -124,101 +124,11 @@
                     }
                 });
             }
-            , change_category_select_options: function(depth){
-                var data = {};
-                data.category_id = $('#category_selection_'+depth).val();
-                
-                this.set_category_selection(depth, data.category_id);
-            }
-            , change_category_selection: function(depth){
-                var data = {};
-                data.content_category_id = $('#select_category_'+depth).val();
-
-                this.set_category_selection(depth, data.content_category_id);
-            }
-            , update_category_select: function() {
-                setTimeout(function(){
-                    if (app.banner_category_path.length>0) {
-                        $('#category_selection_1').val(app.banner_category_path[0].content_category_id);
-                        app.change_category_select_options(1);
-                    }
-                }, 500);
-                
-                setTimeout(function(){
-                    if (app.banner_category_path.length>1) {
-                        $('#category_selection_2').val(app.banner_category_path[1].content_category_id);
-                        app.change_category_select_options(2);
-                    }
-                }, 1000);
-            }
-            , set_category_selection: function(depth, content_category_id) {
-                if (depth==1) {
-                    this.category_selection_2_options = [];
-                    if (content_category_id) {
-                        // 분류 경로 재설정
-                        this.banner_category_path = [this.category.lookup[content_category_id]];
-                        $('#category_selection_2_options').val('');
-                        this.category_selection_2_options = this.category.lookup[content_category_id].children;
-                    } else {
-                        // 분류 경로 재설정
-                        this.banner_category_path = [];
-                    }
-
-                    // reset
-                    $('#category_selection_2').val('');
-                }
-                else if (depth==2) {
-                    if (content_category_id) {
-                        // 분류 경로 재설정
-                        this.banner_category_path[1] = this.category.lookup[content_category_id];
-                    } else {
-                        // 분류 경로 재설정
-                        this.banner_category_path = [this.banner_category_path[0]];
-                    }
-                }
-                // 리스트 조회
-                if (app.banner_category_path.length>0) {
-                    var tmp = this.get_all_content_content_category_id(app.banner_category_path[app.banner_category_path.length-1].content_category_id);
-                    var regex = '^('+tmp.join('|')+')$';
-                    console.log(regex);
-                    app.datatable.columns(1).search(regex, true, true).draw();
-                } else {
-                    app.datatable.columns(1).search('', true, true).draw();
-                }
-            }
-            // 자식 노드 포함 
-            , get_all_content_content_category_id: function(content_category_id){
-                var myapp = this;
-                var data = [];
-                data.push(app.category.lookup[content_category_id].content_category_id);
-                _.each(app.category.lookup[content_category_id].children, function(item){
-                    data.push(item.content_category_id);
-                    if (item.children.length>0) {
-                        data = data.concat(myapp.get_all_content_content_category_id(item.content_category_id));
-                    }
-                });
-
-                return data;
-            }
-            , add_category: function(){
-                var data = {};
-                data.title = $('#add_category').val();
-                data.parent_id = 0;
-                if (app.banner_category_path.length>0){
-                    data.parent_id = app.banner_category_path[app.banner_category_path.length-1].content_category_id;
-                }
-            }
             , goto_write_page: function(){
-                var url = "/adm/content/content/html_injector_write?content_category_id=";
-                if (app.banner_category_path.length>0) {
-                    url += app.banner_category_path[app.banner_category_path.length-1].content_category_id;
-                }
+                var url = "/adm/content/content/html_injector_write";
                 window.location = url;
-
             }
             , init: function(){
-                app.category_selection_1_options = app.category.hierarchy_tree;
-                app.update_category_select();
             }
         }
     });
@@ -233,8 +143,9 @@ $(document).ready(function(){
         , order: [[ 0, "desc" ]]
         ,columns: [
             { title: "#", data:"content_id", width:"30px"}
-            , { title: "content_category_id", data:"content_category_id", width:"30px"}
-            , { title: "분류명", data:"content_category_subject"}
+            , { title: "분류명", data:"content_category_subject", render:function(data, type, row, meta){
+                return row.content_category_subject + '(' + row.content_category_id + ')';
+            }}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
                 return '<a class="btn btn-sm" href="/adm/content/content/html_injector_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
             }}
@@ -242,20 +153,6 @@ $(document).ready(function(){
                 return row.url_main_page +  ' <a class="btn btn-info btn-xs" href="'+ row.url_main_page + '" target="_blank">페이지 보기</a>';
             }}
             , { title: "태그 Selector", data:"position_el_selector"}
-            // , { title: "기간", data:"dt_start", render:function(data, type, row, meta){
-            //     var tmp = new Date(row.dt_start);
-            //     var str = ''+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
-            //     tmp = new Date(row.dt_end);
-            //     str += ' ~ '+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
-            //     return str;
-            // }}
-            // , { title: "노출 기간", data:"dt_start", render:function(data, type, row, meta){
-            //     var tmp = new Date(row.dt_start);
-            //     var str = ''+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
-            //     tmp = new Date(row.dt_end);
-            //     str += ' ~ '+tmp.getFullYear()+'-'+(tmp.getMonth()+1)+'-'+tmp.getDate()+' '+tmp.getHours();
-            //     return str;
-            // }}
             , { title: "사용여부", data:"yn_used", render:function(data, type, row, meta){
                 if (row.yn_used == 1) return 'Y';
                 else return 'N';
@@ -265,7 +162,7 @@ $(document).ready(function(){
                 var str = '';
                 str += '<div class="btn btn-info btn-sm btn-round" onclick="app.onoff_content(this)" data-content_id="'+ row.content_id +'">오픈 on/off</div>'
                 str += '<div class="btn btn-warning btn-sm btn-round" onclick="app.copy_content(this)" data-content_id="'+ row.content_id +'">복사</div>';
-                // str += '<div class="btn btn-danger btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';
+                str += '<div class="btn btn-danger btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';
                 return str;
             }}
         ]

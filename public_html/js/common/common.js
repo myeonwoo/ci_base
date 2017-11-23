@@ -642,30 +642,6 @@ var create_lib_st = function() {
         a.click();
     }
 
-    //유의사항 호출 함수: Needs to chang on site
-    that.notice_call = function (class_name, device_type){
-        var url_info = document.location.href.split("://");
-        var data = {};
-        data.pagepath = url_info[1];
-        $.ajax({
-            url: '/api/content/main/html_injector',
-            type: 'post',
-            data: data,
-            success: function (data) {
-                if (data.contents.length>0) {
-                    // inject html
-                    $("."+class_name).html(data.contents[0].desc_main);
-                }
-            }
-        });
-        return;
-
-        var url_info = document.location.href.split("://");
-        
-        $.post("/notice_information/main",{url:url_info[1],device_type:device_type},function(data){
-            $("."+class_name).html(data);
-        });
-    }
     // HTML 삽입(유의사항): Needs to chang on site
     that.snippet_html = function (){
         var url_info = document.location.href.split("://");
@@ -729,6 +705,9 @@ var create_lib_st = function() {
 window.lib_st = create_lib_st();
 
 $(document).ready(function(){
-    lib_st.snippet_floating_banner();
-    lib_st.snippet_html();
+    // 서비스 페이지인 경우
+    if (window.location.protocol == 'http:') {
+        lib_st.snippet_floating_banner();
+        lib_st.snippet_html();
+    }
 });

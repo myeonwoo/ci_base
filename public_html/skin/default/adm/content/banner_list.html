@@ -14,18 +14,25 @@
                 </div>
                 <div id="" class="panel-body">
                     <div class="col-lg-12">
+                        <ol>
+                            <li> 분류 검색: 
+                                <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
+                                    <option value="">전체</option>
+                                    <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                                </select>
+                                <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
+                                    <option value="">전체</option>
+                                    <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
+                                </select>
+                                <input id="add_category" type="text" class="btn">
+                                
+                                <!-- <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div> -->
+                            </li>
+                            <li>
+                                <div class="btn btn-info btn-sm" v-on:click="goto_write_page()" >새등록</div>
+                            </li>
+                        </ol>
                         <div class="col-lg-8">
-                            <select name="" id="category_selection_1" class="btn" v-on:change="change_category_select_options(1)" >
-                                <option value="">전체</option>
-                                <option v-for="item in category_selection_1_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
-                            </select>
-                            <select v-if="category_selection_2_options.length>0" name="" id="category_selection_2" class="btn" v-on:change="change_category_select_options(2)">
-                                <option value="">전체</option>
-                                <option  v-for="item in category_selection_2_options" v-bind:value="item.content_category_id" >{{item.subject}}</option>
-                            </select>
-                            <input id="add_category" type="text" class="btn">
-                            <div class="btn btn-info" v-on:click="goto_write_page()" >등록</div>
-                            <!-- <div class="btn btn-warning" v-on:click="add_category()">분류 추가하기</div> -->
                         </div>
                     </div>
                 </div>
@@ -235,7 +242,7 @@ $(document).ready(function(){
         , order: [[ 0, "desc" ]]
         ,columns: [
             { title: "#", data:"content_id", width:"30px"}
-            , { title: "content_category_id", data:"content_category_id", width:"30px"}
+            , { title: "cci", data:"content_category_id", width:"30px"}
             , { title: "분류명", data:"content_category_subject"}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
                 return '<a class="btn btn-sm" href="/adm/content/content/banner_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
@@ -259,7 +266,7 @@ $(document).ready(function(){
                 var str = '';
                 str += '<div class="btn btn-info btn-sm btn-round" onclick="app.onoff_content(this)" data-content_id="'+ row.content_id +'">오픈 on/off</div>'
                 str += '<div class="btn btn-warning btn-sm btn-round" onclick="app.copy_content(this)" data-content_id="'+ row.content_id +'">복사</div>';
-                // str += '<div class="btn btn-danger btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';
+                str += '<div class="btn btn-danger btn-sm btn-round" onclick="app.delete_content(this)" data-content_id="'+ row.content_id +'">삭제</div>';
                 return str;
             }}
         ]

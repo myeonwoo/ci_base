@@ -202,12 +202,13 @@ class Content extends CI_Controller {
             $this->load->view(ADM_F.'/tail', $data);
         }
     }
-    //배너 등록 화면
+    //무료 자료 등록 화면
     public function free_lecture_write() {
         $data = &$this->data;
         $params = array();
         $data['params'] = &$params;
 
+        $params['super_content_category_id'] = $data['info']['free_lecture']['super_content_category_id'];
         $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
         $params['content_id'] = $this->validate->int($this->input->get_post('content_id', true), false);
         $params['category_id'] = $this->validate->int($this->input->get_post('category_id', true), false);
@@ -221,6 +222,7 @@ class Content extends CI_Controller {
         if($params['content_id']){
             $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
         }
+        $data['banner']['content_category_id'] = $params['super_content_category_id'];
         $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id($data['banner']['content_category_id']);
         // $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id(102121212);
 

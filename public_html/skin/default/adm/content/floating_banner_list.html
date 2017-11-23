@@ -17,6 +17,9 @@
                         <div class="col-lg-8">
                             <ol>
                                 <li>
+                                    분류번호(content_category_id) : 2
+                                </li>
+                                <li>
                                     본 어드민 페이지에서 해당 페이지 경로로 등록
                                     <div class="btn btn-info btn-sm" v-on:click="goto_write_page()" >등록</div>
                                 </li>
@@ -121,90 +124,6 @@
                     }
                 });
             }
-            , change_category_select_options: function(depth){
-                var data = {};
-                data.category_id = $('#category_selection_'+depth).val();
-                
-                this.set_category_selection(depth, data.category_id);
-            }
-            , change_category_selection: function(depth){
-                var data = {};
-                data.content_category_id = $('#select_category_'+depth).val();
-
-                this.set_category_selection(depth, data.content_category_id);
-            }
-            , update_category_select: function() {
-                setTimeout(function(){
-                    if (app.banner_category_path.length>0) {
-                        $('#category_selection_1').val(app.banner_category_path[0].content_category_id);
-                        app.change_category_select_options(1);
-                    }
-                }, 500);
-                
-                setTimeout(function(){
-                    if (app.banner_category_path.length>1) {
-                        $('#category_selection_2').val(app.banner_category_path[1].content_category_id);
-                        app.change_category_select_options(2);
-                    }
-                }, 1000);
-            }
-            , set_category_selection: function(depth, content_category_id) {
-                if (depth==1) {
-                    this.category_selection_2_options = [];
-                    if (content_category_id) {
-                        // 분류 경로 재설정
-                        this.banner_category_path = [this.category.lookup[content_category_id]];
-                        $('#category_selection_2_options').val('');
-                        this.category_selection_2_options = this.category.lookup[content_category_id].children;
-                    } else {
-                        // 분류 경로 재설정
-                        this.banner_category_path = [];
-                    }
-
-                    // reset
-                    $('#category_selection_2').val('');
-                }
-                else if (depth==2) {
-                    if (content_category_id) {
-                        // 분류 경로 재설정
-                        this.banner_category_path[1] = this.category.lookup[content_category_id];
-                    } else {
-                        // 분류 경로 재설정
-                        this.banner_category_path = [this.banner_category_path[0]];
-                    }
-                }
-                // 리스트 조회
-                if (app.banner_category_path.length>0) {
-                    var tmp = this.get_all_content_content_category_id(app.banner_category_path[app.banner_category_path.length-1].content_category_id);
-                    var regex = '^('+tmp.join('|')+')$';
-                    console.log(regex);
-                    app.datatable.columns(1).search(regex, true, true).draw();
-                } else {
-                    app.datatable.columns(1).search('', true, true).draw();
-                }
-            }
-            // 자식 노드 포함 
-            , get_all_content_content_category_id: function(content_category_id){
-                var myapp = this;
-                var data = [];
-                data.push(app.category.lookup[content_category_id].content_category_id);
-                _.each(app.category.lookup[content_category_id].children, function(item){
-                    data.push(item.content_category_id);
-                    if (item.children.length>0) {
-                        data = data.concat(myapp.get_all_content_content_category_id(item.content_category_id));
-                    }
-                });
-
-                return data;
-            }
-            , add_category: function(){
-                var data = {};
-                data.title = $('#add_category').val();
-                data.parent_id = 0;
-                if (app.banner_category_path.length>0){
-                    data.parent_id = app.banner_category_path[app.banner_category_path.length-1].content_category_id;
-                }
-            }
             , goto_write_page: function(){
                 var url = "/adm/content/content/flating_banner_write?content_category_id=";
                 if (app.banner_category_path.length>0) {
@@ -214,8 +133,6 @@
 
             }
             , init: function(){
-                app.category_selection_1_options = app.category.hierarchy_tree;
-                app.update_category_select();
             }
         }
     });
@@ -230,8 +147,9 @@ $(document).ready(function(){
         , order: [[ 0, "desc" ]]
         ,columns: [
             { title: "#", data:"content_id", width:"30px"}
-            , { title: "분류번호", data:"content_category_id", width:"30px"}
-            , { title: "분류명", data:"content_category_subject"}
+            , { title: "분류명", data:"content_category_subject", render:function(data, type, row, meta){
+                return row.content_category_subject + '(' + row.content_category_id + ')';
+            }}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
                 return '<a class="btn btn-sm" href="/adm/content/content/flating_banner_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
             }}
