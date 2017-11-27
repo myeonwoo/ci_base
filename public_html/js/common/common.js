@@ -145,13 +145,13 @@ var create_lib_st = function() {
         var d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires + ";domain=.dangi.co.kr;path=/";
+        document.cookie = cname + "=" + cvalue + "; " + expires + ";domain=.conects.com;path=/";
     }
     that.deleteCookie = function(cookieName) {
         try {
             var expireDate = new Date();
             expireDate.setFullYear(expireDate.getFullYear() - 2);
-            var c_value = "" + ((expireDate==null) ? "":";expires="+expireDate.toUTCString() + ";domain=.dangi.co.kr;path=/");
+            var c_value = "" + ((expireDate==null) ? "":";expires="+expireDate.toUTCString() + ";domain=.conects.com;path=/");
             document.cookie = cookieName + "=" + c_value;
         } catch(e){
             alert(e.message);
@@ -675,7 +675,39 @@ var create_lib_st = function() {
             }
         });
     }
-     /**
+    // 페이지 딥팝업 달기
+    that.snippet_page_dimpopup = function(){
+        var data = {};
+        data.url_main_page = window.location.pathname;
+        $.ajax({
+            url: '/api/content/main/html_injector_page_dimpopup',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                $('#' + data.tag_id).remove();
+                if (lib_st.getCookie(data.tag_id) == 'y') {
+
+                } else {
+                    $('body').append(data.html);
+                }
+            }
+        });
+    }
+    // 페이지 띠배너 달기
+    that.snippet_page_linebanner = function(){
+        var data = {};
+        data.url_main_page = window.location.pathname;
+        $.ajax({
+            url: '/api/content/main/html_injector_page_linebanner',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                $('body').append(data.html);
+            }
+        });
+    }
+
+    /**
      * 한줄 게시판 삽입: Needs to chang on site
      * @param  {int} tag_id   태그 아이디
      * @param  {int} comment_config_id 그룹 아이디
@@ -709,5 +741,7 @@ $(document).ready(function(){
     if (window.location.protocol == 'http:') {
         lib_st.snippet_floating_banner();
         lib_st.snippet_html();
+        lib_st.snippet_page_dimpopup();
+        lib_st.snippet_page_linebanner();
     }
 });

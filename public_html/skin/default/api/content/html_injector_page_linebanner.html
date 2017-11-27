@@ -1,0 +1,113 @@
+<div id="content_<?=$content['content_id'];?>" class="linebanner_area" style="background:<?=$content['background'];?>">
+	<style>
+		.linebanner_area { display: block; position: fixed; left: 0px; bottom: 0px; z-index: 999; width: 100%; height: 100px; font-size: 15px; font-weight: bold; }
+		.linebanner_area .wide_wrap { position: relative; width: 1080px; height: 100px; margin: 0px auto; top: 0px; left: 86px; }
+		.linebanner_area .wide_ban { position: absolute; bottom: 0px; left: 0px; width: 1050px; }
+		.linebanner_area .bt_cls { display: block; border: 0px; position: absolute; bottom: 70px; right: 0px; width: 25px; height: 25px; no-repeat; text-indent: -999em; white-space: nowrap; overflow: hidden; }
+		.linebanner_area .wide_ban a { display: block; }
+
+		.x {
+		  float:left;
+		  position:relative;
+		  margin:0;
+		  padding:0;
+		  overflow:hidden;
+		  background:#CCC;
+		  border-radius:2px;
+		  border:solid 2px #FFF;
+		  transition: all .3s ease-out;
+		  cursor:pointer;
+		}
+		.x.large { 
+		  width:30px;
+		  height:30px;
+		}
+
+		.x.medium {
+		  width:20px;
+		  height:20px;
+		}
+
+		.x.small {
+		  width:10px;
+		  height:10px;
+		}
+
+		.x.switch {
+		  width:15px;
+		  height:15px;
+		}
+		.x.grow {
+
+		}
+
+		.x.spin:hover{
+		  background:#BB3333;
+		  transform: rotate(180deg);
+		}
+		.x.flop:hover{
+		  background:#BB3333;
+		  transform: rotate(90deg);
+		}
+		.x.t:hover{
+		  background:#BB3333;
+		  transform: rotate(45deg);
+		}
+		.x.shift:hover{
+		  background:#BB3333;
+		}
+
+		.x b{
+		  display:block;
+		  position:absolute;
+		  height:0;
+		  width:0;
+		  padding:0;
+		  margin:0;
+		}
+		.x.small b {
+		  border:solid 5px rgba(255,255,255,0);
+		}
+		.x.medium b {
+		  border:solid 10px rgba(255,255,255,0);
+		}
+		.x.large b {
+		  border:solid 15px rgba(255,255,255,0);
+		}
+		.x.switch b {
+		  border:solid 10px rgba(255,255,255,0);
+		}
+
+		.x b:nth-child(1){
+		  border-top-color:#FFF;
+		  top:-2px;
+		}
+		.x b:nth-child(2){
+		  border-left-color:#FFF;
+		  left:-2px;
+		}
+		.x b:nth-child(3){
+		  border-bottom-color:#FFF;
+		  bottom:-2px;
+		}
+		.x b:nth-child(4){
+		  border-right-color:#FFF;
+		  right:-2px;
+		}
+	</style>
+	<div class="wide_wrap">
+		<div class="wide_ban">
+			<?if ($content['img1_link_type']=='imagemap'):?>
+			<img src="<?=$content['img1_url'];?>" usemap="#content_img_map_<?=$content['content_id'];?>">
+			<map name="content_img_map_<?=$content['content_id'];?>">
+				<?=$content['img1_link_html'];?>
+			</map>
+			<?elseif ($content['img1_link_type']=='link'):?>
+			<div class="bt_cls x spin medium" onclick="javascript:lib_st.remove_me('content_<?=$content['content_id'];?>');"><b></b><b></b><b></b><b></b></div>
+			<a href="<?=$content['img1_link'];?>">
+				<img src="<?=$content['img1_url'];?>" alt="배너">
+			</a>
+			<?endif;?>
+		</div>
+	</div>
+</div>

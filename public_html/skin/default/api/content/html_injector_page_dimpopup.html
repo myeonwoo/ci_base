@@ -1,0 +1,48 @@
+<style>
+.page-dimpopup-btn-group button {
+    background-color: #759EE5; /* Green background */
+    border: 1px solid blue; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+.page-dimpopup-btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.page-dimpopup-btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Add a background color on hover */
+.page-dimpopup-btn-group button:hover {
+    background-color: #245792;
+}
+</style>
+
+<div id="content_<?=$content['content_id'];?>">
+	<div class="" style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 200; background: rgb(0, 0, 0); opacity: 0.8;"></div>
+	<div id="dim_layer_popup" style="z-index: 300; left: 50%; top: 145px; width: <?=$content['img1_width'];?>px; margin-left: -328px; position: absolute;">
+		<div class="page-dimpopup-btn-group" >
+			<button onclick="javascript:lib_st.setCookie('content_<?=$content['content_id'];?>','y', 7);$('#content_<?=$content['content_id'];?>').remove();" style="width: 33%;">일주일 동안 보지 않기</button>
+			<button onclick="javascript:lib_st.setCookie('content_<?=$content['content_id'];?>','y', 1);$('#content_<?=$content['content_id'];?>').remove();" style="width: 33%;">하루 동안 보지 않기</button>
+			<button onclick="javascript:$('#content_<?=$content['content_id'];?>').remove();" style="width: 34%;">닫기</button>
+		</div>
+		<?if ($content['img1_link_type']=='imagemap'):?>
+		<img src="<?=$content['img1_url'];?>" usemap="#content_img_map_<?=$content['content_id'];?>" style="width: 100%;">
+		<map name="content_img_map_<?=$content['content_id'];?>">
+			<?=$content['img1_link_html'];?>
+		</map>
+		<?elseif ($content['img1_link_type']=='link'):?>
+		<a href="<?=$content['img1_link'];?>" style="" target="">
+			<img src="<?=$content['img1_url'];?>" style="width: 100%;" alt="">
+		</a>
+		<?endif;?>
+		
+	</div>
+</div>

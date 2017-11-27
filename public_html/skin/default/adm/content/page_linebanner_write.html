@@ -1,0 +1,261 @@
+
+<div id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>페이지 딥팝업: 등록</h3>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    등록
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form1" id = "form1"  method = "post"  action = "/adm/content/content/submit_banner" enctype="multipart/form-data" >
+                        <input type="hidden" name="content_id" v-bind:value="banner.content_id" >
+                        <input type="hidden" name="content_category_id" v-bind:value="banner.content_category_id" >
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">제목: subject</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="subject" class="form-control" v-model="banner.subject">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">설명(소개): desc_intro</label>
+                            <div class="col-lg-8">
+                                <input type="input" name="desc_intro" class="form-control"  v-model="banner.desc_intro" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">주용하는 페이지 경로: url_main_page</label>
+                            <div class="col-lg-8">
+                                <input type="input" name="url_main_page" class="form-control"  v-model="banner.url_main_page" >
+                                <p>
+                                    <strong style="color:#ff3333">예제) xxx.dangi.co.kr/promotion/freepass => /promotion/freepass 로 설정</strong>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">배경색상: background</label>
+                            <div class="col-lg-2">
+                                <input type="text" name="background" class="form-control" v-model="banner.background">
+                            </div>
+                            <div class="col-lg-8"><strong style="color:#ff3333">#로 시작하는 생상 hex value(#포함)</strong></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번(경로): img1_url</label>
+                            <div class="row col-lg-10">
+                            	
+                        		<div style="margin-bottom: 20px;">
+                        			<input id="img_file1" type="file" name="img_file1" class="col-lg-3" >
+                        			<div class="btn btn-sm btn-info" v-on:click="upload_file('upload_file1')">이미지 올리기</div>
+                        			<strong style="color:#ff3333">이미지 올린후 저장하세요.(제한: 파일 사이즈 200KB)</strong>
+                        		</div>
+                        		<div class="col-lg-12" style="margin-bottom: 20px;">
+                        			<input type="input" name="img1_url" class="form-control" v-model="banner.img1_url">
+                        		</div>
+                                <div class="col-lg-12" style="margin-bottom: 20px;">
+                                	<a v-bind:href="banner.img1_url" target="_blank">
+                                    	<img v-bind:src="banner.img1_url" width="100" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번(사이즈): img1_width</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="img1_width" class="btn" v-model="banner.img1_width">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번(타겟): img1_link_target</label>
+                            <div class="col-lg-10">
+                                <label><input class="uniform" type="radio" name="img1_link_target" value="_self" v-model="banner.img1_link_target" /> 이동</label>
+                                <label><input class="uniform" type="radio" name="img1_link_target" value="_blank" v-model="banner.img1_link_target" /> 새창</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번(스타일): img1_link_type</label>
+                            <div class="col-lg-10">
+                                 <label><input type="radio" name="img1_link_type" value="link" v-model="banner.img1_link_type"> 단일링크 </label>
+                                 <label><input type="radio" name="img1_link_type" value="imagemap" v-model="banner.img1_link_type"> ImageMap </label>
+                                 <!-- <label><input type="radio" name="img1_link_type" value="floating" v-model="banner.img1_link_type"> 플로팅 </label>
+                                 <label><input type="radio" name="img1_link_type" value="notehtml" v-model="banner.img1_link_type"> 유의사항 </label> -->
+                            </div>
+                        </div>
+                        <div class="form-group" id="link_type_link" v-show="banner.img1_link_type === 'link'">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번(링크): img1_link</label>
+                            <div class="col-lg-10">
+                                 <input type="text" name="img1_link" class="form-control" v-model="banner.img1_link">
+                            </div>
+                        </div>
+                        <div class="form-group" id="link_type_imagemap" v-show="banner.img1_link_type === 'imagemap'">
+                            <label for="text1" class="control-label col-lg-2">이미지 1번(이미지맵): img1_link_html</label>
+                            <div class="col-lg-10">
+                                <textarea name="img1_link_html" class="btn col-lg-12" style="text-align: left;height:150px" v-model="banner.img1_link_html"></textarea>
+                                <br /><strong style="color:#ff3333">&lt;map&gt; 태그 안쪽의 내용만 입력해주세요.</strong> 
+                                ex) &lt;area shape="rect" coords="10,20,30,40" href="http://eng.dangi.co.kr"/&gt;
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">사용여부: yn_used</label>
+                            <div class="col-lg-8">
+                                <label><input class="uniform" type="radio" name="yn_used" value="1" v-model="banner.yn_used" /> Y</label>
+                                <label><input class="uniform" type="radio" name="yn_used" value="0" v-model="banner.yn_used" /> N</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text1" class="control-label col-lg-2">기간: dt_start ~ dt_end</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="dt_start" class="btn date_picker"  style="width:180px;" v-bind:value="banner.dt_start"> ~
+                                <input type="text" name="dt_end" class="btn date_picker"  style="width:180px;" v-bind:value="banner.dt_end">
+                            </div>
+                        </div>
+
+                        <div class="form-group " >
+                        	<div class="col-lg-2"></div>
+                        	<input type="input" value="취소" class="btn btn-info col-lg-2" onclick="lib_st.goBack();">
+                            <!-- <input type="input" value="취소" class="btn btn-info col-lg-2" onclick="window.close();"> -->
+                            <!-- <input type="submit" value="저장" class="btn btn-danger col-lg-2"> -->
+                            <input type="input" value="저장" class="btn btn-danger col-lg-2" v-on:click="submit_form();">
+                        </div>
+                        <div class="form-group">
+                        	<label for="text1" class="control-label col-lg-2">미리보기</label>
+                        	<div class="col-lg-8">
+                        		<div v-show="banner.img1_link_type == 'link'">
+                        			<a v-bind:href="banner.img1_link">
+                        				<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="">
+                        			</a>
+                        		</div>
+                        		<div v-show="banner.img1_link_type == 'imagemap'">
+                        			<img v-bind:src="banner.img1_url" v-bind:width="banner.img1_width" alt="" usemap="#banner_">
+                                	<map name="banner_" v-html="banner.img1_link_html">
+                                	</map>
+                        		</div>
+                        		
+                        	</div>
+                        </div>
+
+        	        </form>
+        	    </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+<form id="upload_file1" action="/adm/content/content/upload_file" method="post" enctype="multipart/form-data"></form>
+<form id="upload_file2" action="/adm/content/content/upload_file" method="post" enctype="multipart/form-data"></form>
+<form id="upload_file3" action="/adm/content/content/upload_file" method="post" enctype="multipart/form-data"></form>
+
+<script>
+(function(){
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            params: <?=json_encode($params);?>
+            , category: <?=json_encode($category);?>
+            , banner: <?=json_encode($banner);?>
+        }
+        ,methods: {
+            // 무료 영상 경로 생성
+            convert_playable_url: function(){
+                var data = {};
+                data.media_content_key = $('input[name=movie1_key]').val();
+
+                $.ajax({
+                    url: '/adm/content/content/convert_playable_url',
+                    type: 'post',
+                    data: data,
+                    success: function (data) {
+                        app.banner.movie1_url = data.url_play_flash;
+
+                        var el = $('input[name=movie1_url]');
+
+                        el.fadeOut(550).promise().done(function () {
+                            el.toggleClass("blink-class").fadeIn(550);
+                        });
+                    }
+                });
+            }
+            , upload_file: function(id){
+                console.log(id);
+                $('#'+id).submit();
+            }
+            , set_upload_file: function (target_form, target_input, callback) {
+                $('#'+target_form).submit(function () {
+                    var formdata = new FormData();
+                    var fileObj = document.getElementById(target_input).files;
+                    for (var i = 0; i < fileObj.length; i++) {
+                        formdata.append("file", fileObj[i]);
+                    }
+                    $.ajax({
+                        type: 'POST', 
+                        url: '/adm/content/content/upload_file',
+                        data: formdata,
+                        contentType: false,
+                        processData: false
+                    }).then(function (data) {
+                        callback(data);
+                    }, function () {
+                        //failCal
+                    });
+                    return false;
+                });
+            }
+            , submit_form: function(){
+                if (!app.banner.content_category_id) {
+                    alert('분류값을 설정해주세요.');
+                }else if (app.banner.subject.length < 2){
+                    alert('충분한 제목을 입력해주세요.');
+                } else {
+                    $('form#form1').submit();
+                }
+            }
+            , init: function(){
+            }
+        }
+    });
+
+})();
+
+
+
+$(document).ready(function(){
+    app.init();
+
+	$(".date_picker").datetimepicker({
+	     lang:'ko',
+	     format:'Y-m-d H:i'
+	});
+
+	app.set_upload_file('upload_file1', 'img_file1', function(data){
+		app.banner.img1_url = data.result.file;
+	});
+    app.set_upload_file('upload_file2', 'img_file2', function(data){
+        app.banner.img2_url = data.result.file;
+    });
+    app.set_upload_file('upload_file3', 'img_file3', function(data){
+        app.banner.img3_url = data.result.file;
+    });
+
+    tinymce.init({
+        forced_root_block : "" ,
+        force_br_newlines : true,
+        force_p_newlines : false,
+        selector: "textarea.tinymce",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste textcolor"
+        ],
+        toolbar: "insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    });
+  
+});
+
+</script>

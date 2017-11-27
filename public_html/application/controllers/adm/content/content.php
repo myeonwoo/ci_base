@@ -9,20 +9,33 @@ class Content extends CI_Controller {
 
         $this->data = array(
             'info' => array(
+                // 일반배너
                 'banner'=> array(
                     'super_content_category_id'=>1
                 )
+                // 플로팅배너
                 ,'floating_banner'=> array(
-                    'super_content_category_id'=>2
-                )
-                ,'html_injector'=> array(
                     'super_content_category_id'=>3
                 )
-                ,'free_lecture'=> array(
+                // 페이지 유의사항
+                ,'html_injector'=> array(
+                    'super_content_category_id'=>4
+                )
+                // 페이지 딤팝업
+                ,'page_dim_popup'=> array(
                     'super_content_category_id'=>5
                 )
-                ,'event'=> array(
+                // 페이지 하단 띠배너
+                ,'page_bottom_banner'=> array(
                     'super_content_category_id'=>6
+                )
+                // 무료자료
+                ,'free_lecture'=> array(
+                    'super_content_category_id'=>8
+                )
+                // 이벤트 자료
+                ,'event'=> array(
+                    'super_content_category_id'=>9
                 )
             )
         );
@@ -304,7 +317,7 @@ class Content extends CI_Controller {
         }
     }
 
-    // HTML Injector 리스트
+    // HTML Injector 리스트 : 유의사항
     public function html_injector_list()
     {
         $data = &$this->data;
@@ -371,7 +384,7 @@ class Content extends CI_Controller {
         }
     }
 
-    // HTML Injector 리스트
+    // HTML Injector 리스트: 페이지 플로팅 배너
     public function floating_banner_list()
     {
         $data = &$this->data;
@@ -434,6 +447,138 @@ class Content extends CI_Controller {
             $data = $this->commondata->get_adm_header_data($data);
             $this->load->view(ADM_F.'/head', $data);
             $this->load->view(ADM_F.'/content/flating_banner_write', $data);
+            $this->load->view(ADM_F.'/tail', $data);
+        }
+    }
+    
+    // HTML Injector 리스트 : 페이지 딥팝업
+    public function page_dimpopup_list()
+    {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
+        $params['super_content_category_id'] = $data['info']['page_dim_popup']['super_content_category_id'];
+        $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
+        $params['sub_category_id'] = $this->validate->int($this->input->get_post('sub_category_id', true), false);
+        $params['type'] = 'banner';
+
+        $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
+        $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+        $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
+        $data['categories'] = $this->hierarchy->get_childs_grandchild($params['super_content_category_id']);
+        $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
+        $data['ids_concerned'][] = $params['super_content_category_id'];
+
+        $data['banner_category_path'] = array();
+        $data['banners'] = array();
+        $data['banners'] = $this->m_content->get_list(array(
+            'yn_deleted'=>0
+            , 'in_content_category_id'=> $data['ids_concerned']
+        ));
+
+        if ($params['render_type']=='json') {
+            $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        } else {
+            $data = $this->commondata->get_adm_header_data($data);
+            $this->load->view(ADM_F.'/head', $data);
+            $this->load->view(ADM_F.'/content/page_dimpopup_list', $data);
+            $this->load->view(ADM_F.'/tail', $data);
+        }
+    }
+    //HTML Injector 등록 화면
+    public function page_dimpopup_write() {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
+        $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
+
+        $params['content_id'] = $this->validate->int($this->input->get_post('content_id', true), false);
+        $params['category_id'] = $this->validate->int($this->input->get_post('category_id', true), false);
+
+        $data['content_categories'] = $this->m_content->get_category_list_all(array('use_yn'=>1));    //카테고리 리스트 전체 
+        $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+
+        $data['banner'] = array('img1_width'=> 600);
+        if($params['content_id']){
+            $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
+        }
+        $data['banner']['super_content_category_id'] = $params['super_content_category_id'];
+        // $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id($data['banner']['content_category_id']);
+        
+        if ($params['render_type']=='json') {
+            $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        } else {
+            $data = $this->commondata->get_adm_header_data($data);
+            $this->load->view(ADM_F.'/head', $data);
+            $this->load->view(ADM_F.'/content/page_dimpopup_write', $data);
+            $this->load->view(ADM_F.'/tail', $data);
+        }
+    }
+
+    // HTML Injector 리스트 : 페이지 하단띠배너
+    public function page_linebanner_list()
+    {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
+        $params['super_content_category_id'] = $data['info']['page_bottom_banner']['super_content_category_id'];
+        $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
+        $params['sub_category_id'] = $this->validate->int($this->input->get_post('sub_category_id', true), false);
+        $params['type'] = 'banner';
+
+        $data['content_categories'] = $this->m_content->get_category_list_all(array('yn_used'=>1));    //카테고리 리스트 전체 
+        $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+        $data['category']['hierarchy_tree'] = $data['category']['lookup'][$params['super_content_category_id']]->children; // 해당 카테고리 구조 설정
+        $data['categories'] = $this->hierarchy->get_childs_grandchild($params['super_content_category_id']);
+        $data['ids_concerned'] = array_map(create_function('$o', 'return $o->content_category_id;'), $data['categories']);
+        $data['ids_concerned'][] = $params['super_content_category_id'];
+
+        $data['banner_category_path'] = array();
+        $data['banners'] = array();
+        $data['banners'] = $this->m_content->get_list(array(
+            'yn_deleted'=>0
+            , 'in_content_category_id'=> $data['ids_concerned']
+        ));
+
+        if ($params['render_type']=='json') {
+            $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        } else {
+            $data = $this->commondata->get_adm_header_data($data);
+            $this->load->view(ADM_F.'/head', $data);
+            $this->load->view(ADM_F.'/content/page_linebanner_list', $data);
+            $this->load->view(ADM_F.'/tail', $data);
+        }
+    }
+    //HTML Injector 등록 화면
+    public function page_linebanner_write() {
+        $data = &$this->data;
+        $params = array();
+        $data['params'] = &$params;
+
+        $params['render_type'] = $this->validate->string($this->input->get_post('render_type', true), 'html');
+
+        $params['content_id'] = $this->validate->int($this->input->get_post('content_id', true), false);
+        $params['category_id'] = $this->validate->int($this->input->get_post('category_id', true), false);
+
+        $data['content_categories'] = $this->m_content->get_category_list_all(array('use_yn'=>1));    //카테고리 리스트 전체 
+        $data['category'] = $this->hierarchy->load_data($data['content_categories'], 'content_category_id', 'parent_id');
+
+        $data['banner'] = array('img1_width'=> 600, 'background'=>'#759EE5');
+        if($params['content_id']){
+            $data['banner'] = $this->m_content->get($params['content_id']);  //배너정보
+        }
+        $data['banner']['super_content_category_id'] = $params['super_content_category_id'];
+        // $data['banner_category_path'] = $this->hierarchy->find_path_on_parent_id($data['banner']['content_category_id']);
+        
+        if ($params['render_type']=='json') {
+            $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
+        } else {
+            $data = $this->commondata->get_adm_header_data($data);
+            $this->load->view(ADM_F.'/head', $data);
+            $this->load->view(ADM_F.'/content/page_linebanner_write', $data);
             $this->load->view(ADM_F.'/tail', $data);
         }
     }
@@ -603,6 +748,7 @@ class Content extends CI_Controller {
         $params['subject'] = $this->validate->string($this->input->get_post('subject', false), null);
         $params['position_x'] = $this->validate->string($this->input->get_post('position_x', true), 0);
         $params['position_y'] = $this->validate->string($this->input->get_post('position_y', true), 0);
+        $params['background'] = $this->validate->string($this->input->get_post('background', true), '');
         $params['position_el_selector'] = $this->validate->string($this->input->get_post('position_el_selector', true), '');
         $params['desc_main'] = $this->validate->string($this->input->get_post('desc_main', false), null);
         $params['desc_intro'] = $this->validate->string($this->input->get_post('desc_intro', true), '');
@@ -656,6 +802,12 @@ class Content extends CI_Controller {
         }
         else if ($params['content_category_id'] == $data['info']['floating_banner']['super_content_category_id'] || in_array($params['content_category_id'], $data['info']['floating_banner']['children_ids'])){
             $data['return_url'] = "/adm/content/content/floating_banner_list?content_category_id={$params['content_category_id']}";
+        }
+        else if ($params['content_category_id'] == $data['info']['page_dim_popup']['super_content_category_id'] || in_array($params['content_category_id'], $data['info']['page_dim_popup']['children_ids'])){
+            $data['return_url'] = "/adm/content/content/page_dimpopup_list?content_category_id={$params['content_category_id']}";
+        }
+        else if ($params['content_category_id'] == $data['info']['page_bottom_banner']['super_content_category_id'] || in_array($params['content_category_id'], $data['info']['page_bottom_banner']['children_ids'])){
+            $data['return_url'] = "/adm/content/content/page_linebanner_list?content_category_id={$params['content_category_id']}";
         }
         // $this->output->set_content_type("application/json")->set_output(json_encode($data));return;
 

@@ -158,6 +158,7 @@ class M_content extends CI_Model{
 		  `subject` varchar(255) DEFAULT '미정' COMMENT '제목',
 		  `position_x` int(11) DEFAULT 0 COMMENT '컨텐츠 위치 (x)',
 		  `position_y` int(11) DEFAULT 0 COMMENT '컨텐츠 위치 (y)',
+		  `background` varchar(45) DEFAULT '' COMMENT 'css 스타일 background  - HEX value',
 		  `position_el_selector` varchar(255) NOT NULL DEFAULT '' COMMENT '컨텐츠 위치: element selector (ID, class, element 혼용)',
 		  `desc_main` text COMMENT '설명: 메인',
 		  `desc_intro` text COMMENT '설명: 소개',
@@ -194,11 +195,16 @@ class M_content extends CI_Model{
 		) ENGINE=InnoDB AUTO_INCREMENT=1344 DEFAULT CHARSET=utf8 COMMENT='여러 컨텐츠 관련 테이블';
 
 		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '일반 배너', '1', now());
-		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '플로팅 배너', '1', now());
-		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '유의사항', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '페이지 HTML INJECTOR', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('2', '10', '플로팅 배너', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('2', '10', '유의사항', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('2', '10', '딤팝업', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('2', '10', '하단띠배너', '1', now());
+
 		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('0', '10', '학습자료', '1', now());
-		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('4', '10', '무료자료', '1', now());
-		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('4', '10', '이벤트자료', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('7', '10', '무료자료', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('7', '10', '이벤트자료', '1', now());
+		INSERT INTO `global_dangicokr`.`CONTENT_CATEGORY` (`parent_id`, `order`, `subject`, `yn_used`, `dt_created`) VALUES ('1', '10', '메인 티저', '1', now());
 	 */
 
 	/****

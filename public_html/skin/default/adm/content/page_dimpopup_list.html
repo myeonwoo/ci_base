@@ -1,8 +1,7 @@
-
 <div id="wrap">
     <div class="row">
         <div class="col-lg-12">
-            <h3>페이지 플로팅 배너 관리</h3>
+            <h3>페이지 딥팝업 관리</h3>
         </div>
     </div>
     <hr/>
@@ -17,7 +16,7 @@
                         <div class="col-lg-8">
                             <ol>
                                 <li>
-                                    분류번호(content_category_id) : 2
+                                    분류번호(content_category_id) : 5
                                 </li>
                                 <li>
                                     본 어드민 페이지에서 해당 페이지 경로로 등록
@@ -49,8 +48,6 @@
             params: <?=json_encode($params);?>
             , banners: <?=json_encode($banners);?>
             , category: <?=json_encode($category);?>
-            , category_selection_1_options: []
-            , category_selection_2_options: []
             , banner_category_path: <?=json_encode($banner_category_path);?>
         }
         ,methods: {
@@ -125,7 +122,7 @@
                 });
             }
             , goto_write_page: function(){
-                var url = "/adm/content/content/flating_banner_write?content_category_id=";
+                var url = "/adm/content/content/page_dimpopup_write?content_category_id=";
                 if (app.banner_category_path.length>0) {
                     url += app.banner_category_path[app.banner_category_path.length-1].content_category_id;
                 }
@@ -151,7 +148,7 @@ $(document).ready(function(){
                 return row.content_category_subject + '(' + row.content_category_id + ')';
             }}
             , { title: "제목", data:"subject", render:function(data, type, row, meta){
-                return '<a class="btn btn-sm" href="/adm/content/content/flating_banner_write?content_id='+ row.content_id + '">' + row.subject + '</a>';
+                return '<a class="btn btn-sm" href="/adm/content/content/page_dimpopup_write?content_id='+ row.content_id + '">수정: ' + row.subject + '</a>';
             }}
             , { title: "사용페이지", data:"url_main_page", width:"30px", render:function(data, type, row, meta){
                 if (row.url_main_page.length > 2) {
@@ -162,9 +159,6 @@ $(document).ready(function(){
             }}
             ,{ title: "이미지", data:"img1_url", width: "50px", render:function(data, type, row, meta){
                 return '<a target="_blank" href="' + row.img1_url + '" class="preview" title="">' + '<img src="' + row.img1_url + '" alt="" style="width:100%;" alt="Smiley face">' + '</a>';
-            }}
-            , { title: "위치", data:"position_x", render:function(data, type, row, meta){
-                return '(X: ' + row.position_x + ', Y: ' + row.position_y + ')';
             }}
             , { title: "노출 기간", data:"dt_start", render:function(data, type, row, meta){
                 var tmp = new Date(row.dt_start);

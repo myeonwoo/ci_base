@@ -33,7 +33,7 @@ class Login extends CI_Controller
 				$decrypt_info_arr = json_decode($decrypt_info);
 
 				$this->session->set_userdata('adm_mb_id', $decrypt_info_arr->userid);
-				$this->session->set_userdata('adm_name', iconv('EUC-KR', 'UTF-8', urldecode($decrypt_info_arr->display_name)) );
+				$this->session->set_userdata('adm_name', $decrypt_info_arr->display_name);
 				$this->session->set_userdata('adm_mb_level', 8);
 			}
 		}
